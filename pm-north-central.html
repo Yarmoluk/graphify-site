@@ -61,6 +61,9 @@
   ul { margin: 8px 0 16px 20px; }
   li { margin-bottom: 6px; font-size: 15px; }
 
+  .dan-note { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.25); border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+  .dan-note-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; color: #3b82f6; margin-bottom: 8px; }
+
   .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #27272a; text-align: center; }
   .footer .brand-lg { font-size: 20px; font-weight: 900; color: #fafafa; }
   .footer .brand-lg span { color: #3b82f6; }
@@ -85,71 +88,102 @@
   <div class="meta-bar">
     <div class="meta-item"><strong>Generated:</strong> Mar 12, 2026</div>
     <div class="meta-item"><strong>Analysis time:</strong> ~90 seconds</div>
-    <div class="meta-item"><strong>Method:</strong> Knowledge graph reasoning</div>
+    <div class="meta-item"><strong>Method:</strong> Knowledge graph reasoning + analyst review</div>
     <div class="meta-item"><strong>Analyst:</strong> Dan Yarmoluk</div>
+  </div>
+
+  <!-- ───────────────────────────────────────── -->
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p>Justin — you said it yourself: <em>"it doesn't feel right to ask 'how can I sell product mgmt.'"</em> Your instinct is correct. That's a supply-side question, and it's producing supply-side answers. Your "Justin clone" gave you a solid directional framework — the tier structure is sound, the "strategy through delivery" moat is real, and the AI-Augmented Product Operating Model as Tier 1 is where budget is actually moving. But the output reads like it could be for any Slalom region. You need the North Central lens on this.</p>
+    <p>I ran your prompt through my system. Below is what came back — along with my own commentary on what I'd push back on and what I'd do differently. This isn't a replacement for your clone's output; it's a second opinion with sharper teeth.</p>
+    <p style="margin-bottom:0;"><strong>The whole analysis took about 90 seconds.</strong> That's the difference between flat prompting and structured intelligence — the graph already knows Slalom's positioning, the North Central market, and the competitive landscape. Your clone had to reason from scratch. Mine started from structure.</p>
   </div>
 
   <!-- ───────────────────────────────────────── -->
   <h2>What the Original Analysis Got Right</h2>
 
-  <p>The tier structure is sound. "Strategy through delivery" as Slalom's moat is correct. AI-Augmented Product Operating Model as Tier 1 is the right call — that's where budget is moving. The competitive positioning ("we sit at the seam between product vision and engineering execution") is strong language.</p>
+  <p>Credit where it's due — the Justin clone nailed several things:</p>
+  <ul>
+    <li><strong>Tier structure</strong> is sound — Build First / Develop Next / Plant Seeds is the right tempo</li>
+    <li><strong>"Strategy through delivery"</strong> as Slalom's moat is correct and well-articulated</li>
+    <li><strong>AI-Augmented Product Operating Model</strong> as Tier 1 is the right call — that's where budget is moving</li>
+    <li><strong>"We sit at the seam between product vision and engineering execution"</strong> — this is great language, lead with it everywhere</li>
+  </ul>
+
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p style="margin-bottom:0;">The bones are good. The problem isn't what the clone said — it's what it <em>didn't</em> say. It gave you a generic catalog when you needed a battle plan with names, addresses, and specific pain points. That's the gap I'm filling below.</p>
+  </div>
 
   <!-- ───────────────────────────────────────── -->
-  <h2>Four Challenges</h2>
+  <h2>Four Challenges to the Original Output</h2>
 
   <div class="challenge">
-    <div class="challenge-label">Challenge 1 — The Framing Is Wrong</div>
-    <p>"How can I sell product management" is a <strong>supply-side question</strong>. The better frame: <strong>"Which North Central clients have product problems they don't know how to solve?"</strong> Then you work backwards to the offering. Supply-side thinking produces catalogs. Demand-side thinking produces wins.</p>
+    <div class="challenge-label">Challenge 1 — The Framing IS Wrong (And You Know It)</div>
+    <p>You flagged this in your own prompt: <em>"it doesn't feel right."</em> Trust that instinct. "How can I sell product management" is a <strong>supply-side question</strong>. It produces catalogs. The better frame:</p>
+    <p><strong>"Which North Central clients have product problems they don't know how to solve?"</strong></p>
+    <p>Then you work backwards to the offering. Demand-side thinking produces wins. Supply-side thinking produces slide decks that sit in SharePoint.</p>
   </div>
 
   <div class="challenge">
-    <div class="challenge-label">Challenge 2 — Too Many Offerings, Too Fast</div>
-    <p>Six offerings is a catalog. Launch with <strong>ONE offering</strong>, prove it, then expand. The AI-Augmented Product Operating Model is the one. Everything else is a distraction until that's sold and delivered 2-3 times. You don't need a menu — you need a wedge.</p>
+    <div class="challenge-label">Challenge 2 — Six Offerings Is a Catalog, Not a Strategy</div>
+    <p>You don't need a menu. You need a <strong>wedge</strong>. Launch with <strong>ONE offering</strong>, sell it, deliver it 2-3 times, prove it works, <em>then</em> expand. The AI-Augmented Product Operating Model is the one. Everything else is a distraction until that first win is on the board.</p>
   </div>
 
   <div class="challenge">
-    <div class="challenge-label">Challenge 3 — Missing the North Central Client Lens</div>
-    <p>The original output is generic — it could apply to any Slalom region. North Central = Minneapolis, Chicago, Detroit, Milwaukee. The industries that dominate have <strong>different product maturity levels</strong>:</p>
+    <div class="challenge-label">Challenge 3 — This Could Be for Any Slalom Region</div>
+    <p>The output is generic. It doesn't mention a single company by name. North Central = Minneapolis, Chicago, Detroit, Milwaukee. These markets have <strong>different product maturity levels</strong>, and a pitch that doesn't acknowledge that won't land:</p>
     <ul>
-      <li><strong>Healthcare</strong> — drowning in AI governance questions</li>
-      <li><strong>Financial services</strong> — needs portfolio rationalization</li>
-      <li><strong>Manufacturing</strong> — needs product-led transformation (still project-led)</li>
+      <li><strong>Healthcare (UHG, Medtronic, Mayo ecosystem)</strong> — drowning in AI governance questions, product orgs built for devices not software</li>
+      <li><strong>Financial services (US Bancorp, Ameriprise, Thrivent)</strong> — needs portfolio rationalization, too many AI experiments with no PM discipline</li>
+      <li><strong>Manufacturing / CPG (3M, General Mills, Cargill, Target)</strong> — still project-led, needs product-led transformation, hasn't made the mindset shift</li>
     </ul>
-    <p>A single generic pitch won't land. Each vertical needs its own pain-point entry.</p>
+    <p>Each vertical needs its own pain-point entry. One generic pitch across all three will be mediocre at all three.</p>
   </div>
 
   <div class="challenge">
-    <div class="challenge-label">Challenge 4 — Service Catalog vs. Industry Playbook</div>
+    <div class="challenge-label">Challenge 4 — Be the Expert Who Sees the Pattern, Not the Vendor With a Menu</div>
     <p>Instead of "here are 6 offerings, pick one," the pitch to clients should be:</p>
     <p><em>"We've seen how the best product orgs in [your industry] are restructuring around AI. Here's the gap we see in yours."</em></p>
-    <p>This positions Slalom as the expert who sees the pattern, not the vendor with a menu.</p>
+    <p>This is an industry playbook pitch, not a service catalog pitch. It positions Slalom as the practitioner who sees what they can't — because you've done it across their peer set.</p>
   </div>
 
   <!-- ───────────────────────────────────────── -->
-  <h2>Recommended Action Plan</h2>
+  <h2>What I'd Actually Do — Four Steps</h2>
 
-  <div class="rec">
-    <div class="rec-label">Step 1 — Pick 3 Target Accounts</div>
-    <p>One in healthcare, one in financial services, one in manufacturing. <strong>Existing Slalom relationships preferred.</strong> Don't build the offering in a vacuum — build it against real client problems you can see.</p>
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p style="margin-bottom:0;">Justin, here's what I'd do if this were my offering to build. Not theory — the literal next moves.</p>
   </div>
 
   <div class="rec">
-    <div class="rec-label">Step 2 — Build One Offering</div>
-    <p><strong>"AI-Ready Product Operating Model Assessment"</strong> — 2-week sprint, fixed price. Deliverable: current-state assessment + 90-day transformation roadmap. This is a wedge engagement that leads to longer build work. It's low-risk for the client, high-signal for Slalom.</p>
+    <div class="rec-label">Step 1 — Pick 3 Target Accounts (This Week)</div>
+    <p>One healthcare, one financial services, one manufacturing. <strong>Existing Slalom relationships only.</strong> Don't build the offering in a vacuum — build it against real client problems you can already see. You're not going cold. You're going to accounts where Slalom already has trust and you can say: <em>"We see this pattern in your peer set. Let us show you where you stand."</em></p>
   </div>
 
   <div class="rec">
-    <div class="rec-label">Step 3 — Use Existing Proof Points</div>
-    <p>Package Slalom's AI wins as case studies — Voyageur, GenAI partner awards, any agentic delivery work. Show PM + AI integration in action. Proof is more persuasive than positioning.</p>
+    <div class="rec-label">Step 2 — Build One Offering (The Wedge)</div>
+    <p><strong>"AI-Ready Product Operating Model Assessment"</strong> — 2-week sprint, fixed price. Deliverable: current-state assessment + 90-day transformation roadmap. This is a wedge engagement: low-risk for the client, high-signal for Slalom. The assessment leads to the build. The build leads to the embedded team. That's the revenue arc.</p>
   </div>
 
   <div class="rec">
-    <div class="rec-label">Step 4 — Rename the Offering</div>
-    <p>Stop calling it <strong>"Product Management"</strong> — that sounds like staff aug. Call it <strong>"Product-Led AI Transformation."</strong> This signals strategy + delivery, which is what Slalom actually does and what commands premium pricing.</p>
+    <div class="rec-label">Step 3 — Package Proof Points (Not Positioning Decks)</div>
+    <p>Slalom already has AI wins — Voyageur, GenAI partner awards, agentic delivery work. Package these as <strong>case studies that show PM + AI integration in action</strong>. Proof is more persuasive than positioning. Clients don't buy frameworks; they buy evidence that you've done it before.</p>
+  </div>
+
+  <div class="rec">
+    <div class="rec-label">Step 4 — Stop Calling It "Product Management"</div>
+    <p><strong>"Product Management"</strong> sounds like staff aug. Staff aug gets you $150/hr. Call it <strong>"Product-Led AI Transformation."</strong> Transformation gets you $300/hr. Same work, different frame, 2x the rate. This signals strategy + delivery, which is what Slalom actually does and what commands premium pricing.</p>
   </div>
 
   <!-- ───────────────────────────────────────── -->
   <h2>North Central Target Accounts</h2>
+
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p style="margin-bottom:0;">These aren't random Fortune 500 picks. These are companies headquartered in our backyard with specific, identifiable product org problems that match the offering. I've worked across these verticals — the pain points below are real patterns I've seen, not AI-generated guesses.</p>
+  </div>
 
   <table>
     <thead>
@@ -206,7 +240,10 @@
   <!-- ───────────────────────────────────────── -->
   <h2>Better Prompt</h2>
 
-  <p>The original prompt was too broad, producing a generic catalog. Here's a tighter version that forces specificity:</p>
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p style="margin-bottom:0;">Your prompt was too broad — it let the AI hedge across six tiers instead of committing. The fix isn't a better AI model, it's a better question. Constraint produces specificity. Here's the prompt I'd use instead:</p>
+  </div>
 
   <div class="prompt-box">
     "I lead Product Management offerings for Slalom in North Central (Minneapolis, Chicago, Detroit). Our differentiation is strategy-through-delivery — we embed, build capability, and leave teams stronger. Given the current AI disruption of product organizations, what is the single highest-leverage offering I should build first, targeting healthcare, financial services, and manufacturing clients? Be specific about the client pain point, the deliverable, the pricing model, and the 3 companies I should pitch first."
@@ -217,7 +254,7 @@
   <!-- ───────────────────────────────────────── -->
   <h2>Revised Offering Tiers</h2>
 
-  <p>The original tiers are directionally right. Here's a sharpened version with the North Central lens applied:</p>
+  <p>Your clone's tiers are directionally right. Here's a sharpened version with the North Central lens applied and the "Scaled Agile" offering folded into the operating model work (it's not a separate offering — it's how you deliver the first one):</p>
 
   <table>
     <thead>
@@ -260,8 +297,12 @@
   <h2>The One-Line Pitch</h2>
 
   <div class="callout green">
-    <strong>"We sit at the seam between product vision and engineering execution — and we build your team's capability while we deliver."</strong><br><br>
-    This is already in the original analysis and it's the right message. Lead with this everywhere. It's Slalom's moat in one sentence.
+    <strong>"We sit at the seam between product vision and engineering execution — and we build your team's capability while we deliver."</strong>
+  </div>
+
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p style="margin-bottom:0;">This line was already in your clone's output and it's the best thing in there. It's Slalom's moat in one sentence. Put it in every deck, every email, every conversation. When someone asks "why Slalom for PM?" — this is the answer. Don't bury it in a slide. Lead with it.</p>
   </div>
 
   <!-- ───────────────────────────────────────── -->
@@ -281,6 +322,17 @@
 
     <h3>Tier 3 — Plant Seeds</h3>
     <p><strong>6. Product Explainability for AI-Mediated Markets</strong> — Products increasingly evaluated by AI systems before people interact. Early but legitimate differentiator.</p>
+  </div>
+
+  <!-- ───────────────────────────────────────── -->
+  <h2>What This Demo Shows</h2>
+
+  <div class="dan-note">
+    <div class="dan-note-label">Dan's Take</div>
+    <p>Justin — you sent me your prompt and your clone's output. I fed it into my system and had this full analysis back in about 90 seconds. Not because I'm faster at typing. Because the intelligence is structured before the AI ever touches it.</p>
+    <p>Your clone started from zero context and produced a reasonable generic answer. My system started from a knowledge graph that already understands Slalom's positioning, the North Central market, the competitive landscape, and the PM discipline — and produced a specific, actionable answer with named companies and concrete next steps.</p>
+    <p>That's the difference between prompting and intelligence. Same AI model under the hood. Different structure going in. Different quality coming out.</p>
+    <p style="margin-bottom:0;">This is what I'm building with <strong>Graphify.md</strong> — structured intelligence that makes any AI tool smarter. Happy to show you more. The graph is the product.</p>
   </div>
 
   <!-- ───────────────────────────────────────── -->
