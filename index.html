@@ -487,6 +487,183 @@
     color: var(--text-dim);
   }
 
+  /* --- Persona Cards --- */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .persona-card {
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .persona-card:hover {
+    border-color: rgba(59, 130, 246, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .persona-quote {
+    font-size: 1.05rem;
+    color: var(--text-bright);
+    font-style: italic;
+    line-height: 1.55;
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 20px;
+    border-left: 3px solid var(--blue);
+  }
+  .persona-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .persona-role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    background: var(--blue-dim);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .persona-pain {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .persona-answer {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .persona-answer strong { color: var(--green); }
+
+  /* --- Value Grid --- */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .value-card {
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .value-card:hover {
+    border-color: rgba(59, 130, 246, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .value-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+  .value-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .value-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; }
+
+  /* --- Case Studies --- */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .case-card {
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .case-card:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .case-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .tag-sales { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+  .tag-strategy { background: rgba(155, 123, 247, 0.12); color: #9b7bf7; }
+  .tag-gtm { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+  .tag-ops { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+  .tag-research { background: rgba(6, 182, 212, 0.12); color: #06b6d4; }
+
+  .case-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .case-client {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .case-desc {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .case-results {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .case-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 70px;
+    text-align: center;
+  }
+  .case-num {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .case-label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .case-method {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .persona-grid, .value-grid, .case-grid { grid-template-columns: 1fr; }
+  }
+
   /* --- Animations --- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -550,7 +727,10 @@
 <nav>
   <div class="container">
     <a href="#" class="logo">Graphify<span class="ext">.md</span></a>
-    <a href="context-architecture.html" style="color:var(--text-dim); text-decoration:none; font-size:0.9rem; font-weight:500;">The Science</a>
+    <div style="display:flex; gap:24px; align-items:center;">
+      <a href="#case-studies" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">Case Studies</a>
+      <a href="context-architecture.html" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">The Science</a>
+    </div>
     <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary">Book a Free Demo</a>
   </div>
 </nav>
@@ -771,6 +951,217 @@
       <span>HopRAG &mdash; ACL 2025</span>
       <span>Microsoft GraphRAG &mdash; 2024</span>
       <span>StepChain &mdash; 2025</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Personas — Sound Familiar? -->
+<section id="personas">
+  <div class="container">
+    <span class="section-label">Sound Familiar?</span>
+    <h2>Every role has the same problem.<br>Not enough signal. Too much noise.</h2>
+
+    <div class="persona-grid">
+
+      <div class="persona-card">
+        <div class="persona-quote">"I've got 200 accounts and no idea which 15 to call this week. My CRM tells me what happened — not what to do next."</div>
+        <div class="persona-meta">
+          <span class="persona-role">Sales Leader</span>
+          <span class="persona-pain">Territory intelligence</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> Maps your entire territory into a knowledge graph — account tiers, buying signals, competitive positioning, and next-best-action by account. Your CRM shows history. The graph shows the future.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-quote">"We spend $40K a year on travel, coaching, and camps — and I still can't tell you if my daughter is developing or just busy."</div>
+        <div class="persona-meta">
+          <span class="persona-role">Sports Parent</span>
+          <span class="persona-pain">Outcome visibility</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> Built the investor intelligence model for a girls-only sports academy — mapping the entire athlete development stack, enrollment economics, and college placement pathways into a structured graph investors can underwrite.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-quote">"Our ops team runs on tribal knowledge. When someone leaves, we lose six months of context."</div>
+        <div class="persona-meta">
+          <span class="persona-role">Operations Director</span>
+          <span class="persona-pain">Process & institutional knowledge</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> Extracts operational knowledge from your team's heads and encodes it as a traversable graph — processes, dependencies, exception paths, and decision rules. When someone leaves, the knowledge stays.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-quote">"I can see the market is moving, but I can't map the relationships fast enough. By the time I have a picture, it's already changed."</div>
+        <div class="persona-meta">
+          <span class="persona-role">Founder / CEO</span>
+          <span class="persona-pain">Competitive intelligence</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> Built a real-time strategic intelligence briefing — 4 parallel web searches, 14 entities, 16 relationships, embedded visualizations — in a single session. The graph compresses an analyst team's output into one terminal run.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-quote">"We have 50 target accounts across 3 verticals, but our go-to-market is a spreadsheet with names and guesses."</div>
+        <div class="persona-meta">
+          <span class="persona-role">Account Manager</span>
+          <span class="persona-pain">Go-to-market strategy</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> Transformed a flat prospect list into a tiered account intelligence system with per-account strategy briefs, talking points, competitive positioning, and event-driven timing windows. The spreadsheet became a playbook.</div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-quote">"Every AI demo looks the same — they paste my data in and show me a chatbot. Where's the actual intelligence?"</div>
+        <div class="persona-meta">
+          <span class="persona-role">Technology Buyer</span>
+          <span class="persona-pain">AI ROI skepticism</span>
+        </div>
+        <div class="persona-answer"><strong>Graphify.md:</strong> We don't build chatbots. We build the knowledge layer underneath — structured domain graphs that make ANY AI tool reason with your specific context. The model is commodity. The graph is the product.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- What's In It For Me -->
+<section id="value">
+  <div class="container">
+    <span class="section-label">What's In It For You</span>
+    <h2>What changes when your AI actually knows your business.</h2>
+
+    <div class="value-grid">
+
+      <div class="value-card">
+        <div class="value-icon" style="background: var(--green-dim); color: var(--green);">&#x21E7;</div>
+        <h3>93% Token Compression</h3>
+        <p>Same intelligence in 93% fewer tokens. Your AI costs drop. Your accuracy rises. Every entity and relationship earns its place — or gets cut.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon" style="background: var(--blue-dim); color: var(--blue);">&#x27F3;</div>
+        <h3>Compounding Knowledge</h3>
+        <p>Every session builds on the last. The graph remembers. New insights layer on existing ones. Month 6 is dramatically smarter than month 1.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon" style="background: rgba(155,123,247,0.12); color: #9b7bf7;">&#x2B21;</div>
+        <h3>Model Agnostic</h3>
+        <p>Your knowledge graph works across Claude, GPT, Gemini, Llama — any model. You're not locked to a vendor. You own the intelligence layer.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon" style="background: rgba(245,158,11,0.12); color: #f59e0b;">&#x23F1;</div>
+        <h3>Hours Back in Your Week</h3>
+        <p>Research that took 2 days takes 20 minutes. Territory analysis, competitive briefs, account strategies — delivered in a single session, not a sprint.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon" style="background: var(--red-dim); color: var(--red);">&#x2717;</div>
+        <h3>Kill the Hallucination</h3>
+        <p>Graphs constrain the LLM to YOUR facts, relationships, and rules. Every answer traces back through the graph — node by node. No more guessing.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon" style="background: var(--green-dim); color: var(--green);">&#x1F4CE;</div>
+        <h3>Portable Intelligence</h3>
+        <p>Your graph exports as markdown. Load it into any AI tool, any model, any team member's workflow. The business owns the context — forever.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Case Studies -->
+<section id="case-studies">
+  <div class="container">
+    <span class="section-label">Case Studies</span>
+    <h2>Real graphs. Real results. Real businesses.</h2>
+    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">Every case study below was built with knowledge graph methodology — structured domain intelligence delivered through context architecture.</p>
+
+    <div class="case-grid">
+
+      <div class="case-card">
+        <div class="case-tag tag-sales">Sales Intelligence</div>
+        <h3>Territory Intelligence Hub</h3>
+        <p class="case-client">Enterprise Construction Tools — Field Sales</p>
+        <p class="case-desc">Transformed a 200+ account territory from a flat CRM export into a tiered intelligence system with competitive positioning, buying signal mapping, and next-best-action recommendations per account.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">200+</span><span class="case-label">Accounts Mapped</span></div>
+          <div class="case-stat"><span class="case-num">4</span><span class="case-label">Tiers with Strategy</span></div>
+          <div class="case-stat"><span class="case-num">1</span><span class="case-label">Interactive Dashboard</span></div>
+        </div>
+        <div class="case-method">Graph: account entities → competitive relationships → territory heat map → action prioritization</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-strategy">Strategic Analysis</div>
+        <h3>AI Industry Power Graph</h3>
+        <p class="case-client">Competitive Intelligence — Market Landscape</p>
+        <p class="case-desc">Real-time strategic intelligence briefing mapping the $1.1T AI industry. 4 parallel web searches, entity extraction, relationship mapping, and embedded SVG visualizations — built in a single terminal session.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">14</span><span class="case-label">Entities</span></div>
+          <div class="case-stat"><span class="case-num">16</span><span class="case-label">Relationships</span></div>
+          <div class="case-stat"><span class="case-num">93%</span><span class="case-label">Token Compression</span></div>
+        </div>
+        <div class="case-method">Graph: capital flows → strategic positioning → market share → structural gap analysis</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-gtm">Go-to-Market</div>
+        <h3>Multi-Vertical Account Strategy</h3>
+        <p class="case-client">Emerging Hardware Technology — Airport & Hospitality</p>
+        <p class="case-desc">Built a complete go-to-market intelligence system across 50+ target accounts in 2 verticals. Per-account strategy briefs, contact mapping, event-driven timing windows, and email templates — all from a knowledge graph of the market.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">50+</span><span class="case-label">Accounts Profiled</span></div>
+          <div class="case-stat"><span class="case-num">2</span><span class="case-label">Verticals Launched</span></div>
+          <div class="case-stat"><span class="case-num">5+</span><span class="case-label">Expansion Scoped</span></div>
+        </div>
+        <div class="case-method">Graph: venue entities → decision-maker relationships → event timing → tier-based outreach strategy</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-ops">Operations</div>
+        <h3>Investor Intelligence Model</h3>
+        <p class="case-client">Sports Academy — $92.8M Capital Raise</p>
+        <p class="case-desc">Structured a 24-slide investor deck from raw operational data — enrollment models, P&L projections, PropCo/OpCo separation, unit economics, and team profiles. Knowledge graph mapped every financial dependency and risk pathway.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">$92.8M</span><span class="case-label">Capital Modeled</span></div>
+          <div class="case-stat"><span class="case-num">24</span><span class="case-label">Slides Produced</span></div>
+          <div class="case-stat"><span class="case-num">5-Year</span><span class="case-label">P&L Projection</span></div>
+        </div>
+        <div class="case-method">Graph: revenue architecture → cost structure → enrollment ramp → risk pathways → capital stack</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-research">Rapid Intelligence</div>
+        <h3>Entity Knowledge Graph in 20 Minutes</h3>
+        <p class="case-client">Executive Research — From LinkedIn to Full Graph</p>
+        <p class="case-desc">Starting from a single LinkedIn URL, built a complete knowledge graph of an executive's domain: 16 entities, 27 relationships, 6 domains researched, 12 published sources — all in ~20 minutes.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">16</span><span class="case-label">Entities Extracted</span></div>
+          <div class="case-stat"><span class="case-num">27</span><span class="case-label">Relationships</span></div>
+          <div class="case-stat"><span class="case-num">20min</span><span class="case-label">Total Build Time</span></div>
+        </div>
+        <div class="case-method">Graph: person → roles → organizations → publications → domain expertise → connection map</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-ops">Operations</div>
+        <h3>AI Product Coaching System</h3>
+        <p class="case-client">Enterprise PM Enablement — SDLC/PDLC Intelligence</p>
+        <p class="case-desc">Graph-powered coaching platform mapping the full product development lifecycle — methodology frameworks, decision gates, artifact templates, and competency models. AI coach reasons through the graph to give context-specific guidance.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">Full</span><span class="case-label">SDLC Coverage</span></div>
+          <div class="case-stat"><span class="case-num">Graph</span><span class="case-label">Powered Coaching</span></div>
+          <div class="case-stat"><span class="case-num">Role</span><span class="case-label">Specific Guidance</span></div>
+        </div>
+        <div class="case-method">Graph: methodology → phases → artifacts → competencies → decision points → coaching triggers</div>
+      </div>
+
     </div>
   </div>
 </section>

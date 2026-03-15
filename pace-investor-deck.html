@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACE Women's Sports Academy — Investor Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0c0c14;
+    --surface: #13131e;
+    --surface2: #1a1a2a;
+    --border: #252538;
+    --text: #eaeaf2;
+    --text-dim: #9090aa;
+    --text-muted: #606078;
+    --navy: #1e3a5f;
+    --gold: #c8a44e;
+    --gold-light: #e8cc7a;
+    --gold-dim: rgba(200,164,78,0.15);
+    --green: #2dd4a0;
+    --green-dim: rgba(45,212,160,0.12);
+    --red: #f06060;
+    --red-dim: rgba(240,96,96,0.1);
+    --blue: #5b8def;
+    --blue-dim: rgba(91,141,239,0.1);
+    --purple: #9b7bf7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── SLIDE SYSTEM ─── */
+  .slide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide-divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .slide-divider hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .slide-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    opacity: 0.7;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  h1 {
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  p, li { color: var(--text-dim); font-size: 0.95rem; }
+  p { margin-bottom: 0.75rem; }
+  strong, b { color: var(--text); font-weight: 600; }
+
+  .headline {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+    max-width: 750px;
+  }
+
+  .thesis {
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    font-weight: 600;
+    border-left: 3px solid var(--gold);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    line-height: 1.6;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(200,164,78,0.3);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-dim);
+    margin-bottom: 2.5rem;
+    width: fit-content;
+  }
+
+  .hero h1 {
+    color: var(--text);
+    max-width: 800px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .hero-stat .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-stat .val {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .hero-stat .val .unit {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    margin: 0.75rem 0;
+  }
+
+  .card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .card-label::before { content: '◆'; font-size: 0.4rem; }
+
+  /* ─── GRIDS ─── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .slide { padding: 3rem 1.5rem; }
+    .hero { padding: 3rem 1.5rem; }
+  }
+
+  /* ─── STAT CARDS ─── */
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .stat .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat .value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .stat .note {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+  }
+
+  /* ─── TABLES ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+  }
+
+  th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    font-weight: 600;
+  }
+
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(37,37,56,0.6);
+    color: var(--text-dim);
+  }
+
+  tr:hover td { background: rgba(200,164,78,0.02); }
+
+  td.highlight { color: var(--gold-light); font-weight: 600; }
+  td.green { color: var(--green); font-weight: 600; }
+  td.red { color: var(--red); font-weight: 500; }
+  td.bold { color: var(--text); font-weight: 600; }
+
+  /* ─── BARS ─── */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .bar-label {
+    width: 120px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 26px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .bar-fill.gold { background: linear-gradient(90deg, rgba(200,164,78,0.7), rgba(200,164,78,0.3)); }
+  .bar-fill.green { background: linear-gradient(90deg, rgba(45,212,160,0.6), rgba(45,212,160,0.25)); }
+  .bar-fill.blue { background: linear-gradient(90deg, rgba(91,141,239,0.6), rgba(91,141,239,0.25)); }
+  .bar-fill.purple { background: linear-gradient(90deg, rgba(155,123,247,0.6), rgba(155,123,247,0.25)); }
+
+  /* ─── PROBLEM/SOLUTION ─── */
+  .problem {
+    background: var(--red-dim);
+    border: 1px solid rgba(240,96,96,0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .problem h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .solution {
+    background: var(--green-dim);
+    border: 1px solid rgba(45,212,160,0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .solution h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  ul { list-style: none; padding: 0; }
+
+  ul.check li {
+    padding-left: 1.4rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  ul.check li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  ul.x li::before {
+    content: '×';
+    color: var(--red);
+  }
+
+  /* ─── FLOW ─── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .flow-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+  }
+
+  .flow-node .f-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  .flow-node .f-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .flow-arrow {
+    color: var(--gold);
+    font-size: 1.2rem;
+    padding: 0 0.3rem;
+  }
+
+  /* ─── TEAM ─── */
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+
+  .team-card .name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .team-card .role {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .team-card .bio {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .team-card .highlight-stat {
+    display: inline-block;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,164,78,0.2);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── MOAT ─── */
+  .moat-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .moat-item h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .moat-item p {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer .brand {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer .brand em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .footer .sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .footer .conf {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── SVG ─── */
+  .svg-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+
+  .svg-container svg { max-width: 100%; height: auto; }
+
+  /* ─── PILL ─── */
+  .pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .pill.gold { background: var(--gold-dim); color: var(--gold-light); border: 1px solid rgba(200,164,78,0.2); }
+  .pill.green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(45,212,160,0.2); }
+  .pill.blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(91,141,239,0.2); }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ SLIDE 1: HERO ════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">Confidential — Investor Materials</div>
+  <h1>PACE Women's<br>Sports <em>Academy</em></h1>
+  <p class="headline">
+    A premium girls-only sports boarding academy converting fragmented youth sports spend
+    into recurring tuition revenue with institutional campus economics.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="label">Location</div>
+      <div class="val">DFW <span class="unit">Metroplex</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="label">Boarding Beds</div>
+      <div class="val">180</div>
+    </div>
+    <div class="hero-stat">
+      <div class="label">Enrollment Cap</div>
+      <div class="val">250</div>
+    </div>
+    <div class="hero-stat">
+      <div class="label">Net Tuition (Stabilized)</div>
+      <div class="val">$17.4<span class="unit">M</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="label">Total Revenue (Y5)</div>
+      <div class="val">$20.4<span class="unit">M</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="label">Total Capital</div>
+      <div class="val">~$92.8<span class="unit">M</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 2: STRUCTURAL WHITESPACE ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">02 — Market Gap</div>
+  <h2>Structural Whitespace</h2>
+  <p class="headline">The market lacks a scaled, purpose-built institution that combines integrated academics, sports science, structured residential life, and a girls-only safeguarding model.</p>
+
+  <div class="thesis">PACE = the first institutional girls-only athlete development campus.<br>The switching barrier is trust + coordination — not "better coaching."</div>
+
+  <div class="card">
+    <div class="card-label">Competitive Landscape Gaps</div>
+    <table>
+      <thead>
+        <tr><th>Category</th><th>What They Offer</th><th>What's Missing</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Elite Sports Academies</td>
+          <td>Integrated training</td>
+          <td class="red">Girls program is not the organizing principle; mixed-campus culture; safeguarding tradeoffs</td>
+        </tr>
+        <tr>
+          <td class="bold">Girls Boarding Schools</td>
+          <td>Strong academics & residential life</td>
+          <td class="red">Sport is additive; training constrained by school-first schedule</td>
+        </tr>
+        <tr>
+          <td class="bold">Club / Travel Systems</td>
+          <td>High sport intensity</td>
+          <td class="red">No integrated academics/boarding; travel burden; supervision variability</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 3: PARENT PROBLEM ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">03 — The Problem</div>
+  <h2>The Parent Problem</h2>
+  <p class="headline">The current elite athlete development stack is fragmented: school + club + travel + private coaching + camps + ad hoc strength/medical support.</p>
+
+  <div class="thesis">PACE does not create new spending — it consolidates fragmented spending into one accountable operator.</div>
+
+  <div class="grid-4" style="margin: 2rem 0;">
+    <div class="problem">
+      <h4>Coordination Failure</h4>
+      <ul class="x">
+        <li>Schedule conflicts</li>
+        <li>Double training loads</li>
+      </ul>
+    </div>
+    <div class="problem">
+      <h4>Logistics Burden</h4>
+      <ul class="x">
+        <li>Constant travel</li>
+        <li>Multiple coaches</li>
+        <li>Academic tradeoffs</li>
+      </ul>
+    </div>
+    <div class="problem">
+      <h4>Outcome Uncertainty</h4>
+      <ul class="x">
+        <li>Unclear recruiting path</li>
+        <li>Inconsistent development</li>
+        <li>Injury & burnout risk</li>
+      </ul>
+    </div>
+    <div class="problem">
+      <h4>Misaligned Incentives</h4>
+      <ul class="x">
+        <li>Clubs optimize for team</li>
+        <li>Families optimize for individual + college</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="text-align:center; color:var(--text); font-weight:600; font-size:0.95rem;">High spend ≠ integrated outcomes. Parents seek a coherent, supervised, measurable pathway.</p>
+</div>
+
+<!-- ════════════════════════ SLIDE 4: SOLUTION ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">04 — The Solution</div>
+  <h2>The Athlete Development Stack</h2>
+  <p class="headline">Integrated campus model: accredited academics + sport training + performance infrastructure + supervised residential life under a single governance system.</p>
+
+  <div class="card">
+    <div class="card-label">Full Stack — One Operator</div>
+    <table>
+      <thead><tr><th>Layer</th><th>PACE Implementation</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Coaching</td><td>Full-time elite coaches</td></tr>
+        <tr><td class="bold">Strength & Conditioning</td><td>On-campus performance center</td></tr>
+        <tr><td class="bold">Sports Medicine</td><td>Embedded medical & recovery</td></tr>
+        <tr><td class="bold">Analytics</td><td>Athlete performance tracking</td></tr>
+        <tr><td class="bold">Mental Performance</td><td>Structured leadership curriculum</td></tr>
+        <tr><td class="bold">Recruiting</td><td>Dedicated college placement program</td></tr>
+        <tr><td class="bold">Academics</td><td>Integrated academic schedule</td></tr>
+        <tr><td class="bold">Residential Life</td><td>Supervised boarding environment</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="thesis">PACE owns the full athlete development stack. Measurable development, durability control, and college recruiting readiness.</div>
+</div>
+
+<!-- ════════════════════════ SLIDE 5: WHY WOMEN'S SPORTS ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">05 — Market Tailwind</div>
+  <h2>Why Women's Sports. Why Now.</h2>
+  <p class="headline">Women's sports have entered a structural growth phase — shifting from a participation story to a commercial growth market.</p>
+
+  <div class="grid-3" style="margin: 2rem 0;">
+    <div class="stat">
+      <div class="label">US HS Girls Athletes</div>
+      <div class="value" style="color:var(--gold)">3.5M</div>
+      <div class="note">Participation base</div>
+    </div>
+    <div class="stat">
+      <div class="label">Pro Pathways</div>
+      <div class="value" style="color:var(--green)">Expanding</div>
+      <div class="note">NWSL, LOVB, WNBA, etc.</div>
+    </div>
+    <div class="stat">
+      <div class="label">Missing Layer</div>
+      <div class="value" style="color:var(--red)">Development</div>
+      <div class="note">Infrastructure lags by 5–10 years</div>
+    </div>
+  </div>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 800 80" xmlns="http://www.w3.org/2000/svg" style="font-family: Inter, sans-serif;">
+      <rect width="800" height="80" fill="var(--surface)" rx="8"/>
+      <!-- Flywheel -->
+      <rect x="20" y="20" width="130" height="40" rx="6" fill="var(--gold-dim)" stroke="rgba(200,164,78,0.3)" stroke-width="1"/>
+      <text x="85" y="44" text-anchor="middle" fill="var(--gold-light)" font-size="9" font-weight="700">Participation Growth</text>
+
+      <text x="165" y="44" text-anchor="middle" fill="rgba(200,164,78,0.5)" font-size="14">→</text>
+
+      <rect x="180" y="20" width="130" height="40" rx="6" fill="var(--gold-dim)" stroke="rgba(200,164,78,0.3)" stroke-width="1"/>
+      <text x="245" y="44" text-anchor="middle" fill="var(--gold-light)" font-size="9" font-weight="700">Pro Pathways</text>
+
+      <text x="325" y="44" text-anchor="middle" fill="rgba(200,164,78,0.5)" font-size="14">→</text>
+
+      <rect x="340" y="20" width="140" height="40" rx="6" fill="var(--gold-dim)" stroke="rgba(200,164,78,0.3)" stroke-width="1"/>
+      <text x="410" y="44" text-anchor="middle" fill="var(--gold-light)" font-size="9" font-weight="700">Capital + Investment</text>
+
+      <text x="495" y="44" text-anchor="middle" fill="rgba(200,164,78,0.5)" font-size="14">→</text>
+
+      <rect x="510" y="20" width="140" height="40" rx="6" fill="var(--gold-dim)" stroke="rgba(200,164,78,0.3)" stroke-width="1"/>
+      <text x="580" y="44" text-anchor="middle" fill="var(--gold-light)" font-size="9" font-weight="700">Visibility + Role Models</text>
+
+      <text x="665" y="44" text-anchor="middle" fill="rgba(200,164,78,0.5)" font-size="14">→</text>
+
+      <rect x="680" y="20" width="100" height="40" rx="6" fill="rgba(45,212,160,0.1)" stroke="rgba(45,212,160,0.3)" stroke-width="1.5"/>
+      <text x="730" y="40" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="700">Youth</text>
+      <text x="730" y="52" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="700">Aspirations</text>
+    </svg>
+  </div>
+
+  <div class="thesis">The flywheel is accelerating. The missing layer is development infrastructure. Upstream infrastructure historically lags professional league growth by 5–10 years.</div>
+</div>
+
+<!-- ════════════════════════ SLIDE 6: FAMILY SPEND ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">06 — Demand Validation</div>
+  <h2>Families Already Spend Academy-Level Money</h2>
+  <p class="headline">High-spend families already assemble comparable annual spend across school, sport, travel, and training — framed as "ROI via outcomes," not just training.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Current Fragmented Spend ($16K–40K+/yr)</div>
+      <div class="bar-row"><div class="bar-label">Club team dues</div><div class="bar-track"><div class="bar-fill gold" style="width:62%">$4K–10K</div></div></div>
+      <div class="bar-row"><div class="bar-label">Tournament travel</div><div class="bar-track"><div class="bar-fill gold" style="width:50%">$4K–8K</div></div></div>
+      <div class="bar-row"><div class="bar-label">Private coaching</div><div class="bar-track"><div class="bar-fill gold" style="width:50%">$3K–8K</div></div></div>
+      <div class="bar-row"><div class="bar-label">Camps / showcases</div><div class="bar-track"><div class="bar-fill gold" style="width:35%">$2K–5K</div></div></div>
+      <div class="bar-row"><div class="bar-label">Performance / S&C</div><div class="bar-track"><div class="bar-fill gold" style="width:40%">$2K–6K</div></div></div>
+      <div class="bar-row"><div class="bar-label">Equipment + misc.</div><div class="bar-track"><div class="bar-fill gold" style="width:22%">$1K–3K</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">The Math</div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+          <span style="color:var(--text-dim)">Private school tuition</span>
+          <span style="color:var(--text); font-weight:600;">~$30–40K</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+          <span style="color:var(--text-dim)">Sports stack</span>
+          <span style="color:var(--text); font-weight:600;">~$16–40K</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:0.75rem 0; border-bottom:2px solid var(--gold); margin-top:0.5rem;">
+          <span style="color:var(--gold-light); font-weight:700;">= Academy equivalent</span>
+          <span style="color:var(--gold-light); font-weight:700;">$46–80K</span>
+        </div>
+      </div>
+      <div style="background:var(--gold-dim); border-radius:6px; padding:1rem; text-align:center;">
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:0.35rem;">PACE Integrated Tuition</div>
+        <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light);">$65K – $85K</div>
+      </div>
+      <p style="font-size:0.82rem; margin-top:1rem; text-align:center; color:var(--text-dim);">Parents are buying structured environment + integrated development + outcomes + time control — <strong>not incremental spending.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 7: SPORTS PORTFOLIO ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">07 — Sports Portfolio</div>
+  <h2>Four Sports. Engineered for Fill.</h2>
+  <p class="headline">Portfolio selected for recruiting depth, facility capital efficiency, NCAA pathway breadth, and bed-fill mechanics.</p>
+
+  <div class="card">
+    <div class="card-label">Anchor Sports — Participation Base</div>
+    <table>
+      <thead><tr><th>Sport</th><th>HS Participation</th><th>Strategic Rationale</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Volleyball</td><td class="highlight">~492K</td><td>Largest participation pool; consistent recruiting and bed fill with soccer</td></tr>
+        <tr><td class="bold">Soccer</td><td class="highlight">~393K</td><td>Core outdoor anchor; strong roster density and scalable boarding demand</td></tr>
+        <tr><td class="bold">Basketball</td><td class="highlight">~370K</td><td>Strong participation; NCAA breadth; efficient indoor court utilization</td></tr>
+        <tr><td class="bold">Golf</td><td>~85K</td><td>Boutique program; partner-course access; improves mix without golf-course CapEx</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 8: RECRUITING ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">08 — Recruiting Engine</div>
+  <h2>Fill Beds First. Optimize Mix Second.</h2>
+
+  <div class="thesis">DFW is an air-travel node; day-student anchor — but boarding recruiting is national/international.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Recruiting Sources</div>
+      <ul class="check">
+        <li>National club ecosystems</li>
+        <li>International athletes (SEVP/DSO capacity)</li>
+        <li>Camps, clinics, and showcases</li>
+        <li>Digital scouting</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Admissions Flywheel</div>
+      <ul class="check">
+        <li>Camps/clinics = trial products + evaluation channels</li>
+        <li>"Monetizable recruiting" principle</li>
+        <li>Transparent roster tiers: scholarship elite, competitive, full-pay aspirational</li>
+        <li>Outcomes reporting builds credibility signals</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 9: OUTCOMES ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">09 — Athlete Outcomes</div>
+  <h2>The Outcomes System</h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">College Pathway Infrastructure</div>
+      <ul class="check">
+        <li>Recruiting visibility & film/stat packaging</li>
+        <li>Performance analytics dashboards</li>
+        <li>Academic eligibility management</li>
+        <li>Coach relationship network</li>
+        <li>Communication cadence + compliance support</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Operating Discipline</div>
+      <ul class="check">
+        <li>Standardized athlete profiles</li>
+        <li>Periodic dashboards: sport, strength, academics, wellbeing</li>
+        <li>Auditable definitions: "commitments" vs "roster spots"</li>
+        <li>Alumni network as recruiting asset</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="thesis">Primary KPI driving pricing power over time: college placement rate by graduating cohort.</div>
+</div>
+
+<!-- ════════════════════════ SLIDE 10: REVENUE ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">10 — Revenue Architecture</div>
+  <h2>Tuition-Anchored. Upside Unmodeled.</h2>
+
+  <div class="grid-3">
+    <div class="stat">
+      <div class="label">Net Tuition (Y5)</div>
+      <div class="value" style="color:var(--gold)">$17.43M</div>
+    </div>
+    <div class="stat">
+      <div class="label">Auxiliary Net Revenue</div>
+      <div class="value" style="color:var(--green)">$2.96M</div>
+    </div>
+    <div class="stat">
+      <div class="label">Total Revenue (Y5)</div>
+      <div class="value" style="color:var(--text)">$20.39M</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Underwritten Base (~85.5% of Y5 Revenue)</div>
+      <ul class="check">
+        <li>Net tuition / tuition-adjacent</li>
+        <li>Sponsorships, camps/clinics</li>
+        <li>Campus events, program partnerships</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Upside — Not Underwritten</div>
+      <ul class="check">
+        <li>Media / content</li>
+        <li>Research partnerships</li>
+        <li>NIL</li>
+      </ul>
+      <p style="font-size:0.8rem; margin-top:0.75rem; color:var(--text-muted);">Auxiliary lines are additive, not load-bearing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 11: OPERATING SYSTEM ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">11 — Operating System</div>
+  <h2>Difficult to Replicate by Design</h2>
+  <p class="headline">The operating system requires synchronized academics, residential life, performance science, and recruiting infrastructure.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Integrated Daily Schedule</div>
+      <p style="font-size:0.88rem;">Aligns academics, training, recovery, mental skills, and nutrition into a single coordinated program.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Performance Science Center of Excellence</div>
+      <p style="font-size:0.88rem;">Female-specific training protocols, ACL risk mitigation, and durability monitoring embedded on campus.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Outcomes Reporting</div>
+      <p style="font-size:0.88rem;">Strengthens admissions conversion, pricing power, and investor transparency.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Designed for Auditability</div>
+      <ul class="check" style="margin:0;">
+        <li>Re-enrollment rate</li>
+        <li>Effective discount rate</li>
+        <li>Safeguarding protocol compliance</li>
+        <li>College placement outcomes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 12: SAFEGUARDING + MOATS ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">12 — Safeguarding + Moats</div>
+  <h2>Trust Is the Moat</h2>
+
+  <div class="thesis">Safeguarding is the primary trust driver in girls boarding sports programs and is embedded into the operating model — not bolted on.</div>
+
+  <div class="card" style="margin-bottom:2rem;">
+    <div class="card-label">Safeguarding Architecture</div>
+    <ul class="check">
+      <li>Staffing/supervision ratios</li>
+      <li>Residential house structure</li>
+      <li>Athlete health oversight</li>
+      <li>Independent safeguarding committee with broad oversight</li>
+      <li>Incident governance including external audits</li>
+    </ul>
+  </div>
+
+  <div class="grid-3">
+    <div class="moat-item">
+      <h4>Trust</h4>
+      <p>Girls-only safeguarding OS + supervision ratios + transparent parent communications</p>
+    </div>
+    <div class="moat-item">
+      <h4>Operating System</h4>
+      <p>Schedule architecture + performance science + durability/return-to-play protocols</p>
+    </div>
+    <div class="moat-item">
+      <h4>Credibility</h4>
+      <p>Auditable outcomes reporting + investor-grade controls (metrics, gates)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 13: SCHOLARSHIP GOVERNANCE ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">13 — Scholarship Governance</div>
+  <h2>Preserve Pricing Power</h2>
+
+  <div class="thesis">Scholarships are governed as capital allocation, not discount drift.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Core Discount Trajectory</div>
+      <div style="display:flex; align-items:center; gap:1rem; margin:1rem 0;">
+        <div class="stat" style="flex:1; text-align:center;">
+          <div class="label">Y1</div>
+          <div class="value" style="font-size:1.4rem; color:var(--red)">24%</div>
+        </div>
+        <div style="color:var(--gold); font-size:1.5rem;">→</div>
+        <div class="stat" style="flex:1; text-align:center;">
+          <div class="label">Y5</div>
+          <div class="value" style="font-size:1.4rem; color:var(--green)">13%</div>
+        </div>
+      </div>
+      <p style="font-size:0.82rem;">Compression ≤3%/year. Golf modeled at full-pay (0%). Governance trigger: step-up freeze if trailing discount >15% entering Y5.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Donor-Funded Scholarship Foundation</div>
+      <ul class="check">
+        <li>Tax-deductible contributions</li>
+        <li>Preserves tuition integrity</li>
+        <li>Prevents discount drift</li>
+        <li>Funds high-impact "signal" athletes</li>
+        <li>Independent governance tied to outcomes + brand</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 14: UNIT ECONOMICS ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">14 — Unit Economics</div>
+  <h2>Conservative by Design</h2>
+  <p class="headline">Not a mature operating state. Investor payoff occurs after stabilization and credibility compounding.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Campus Economics (Y5)</div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Total Revenue</span><span class="pill gold">$20.39M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">EBITDA Pre-Rent</span><span class="pill green">$4.70M (23.1%)</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Stabilized Rent</span><span style="color:var(--text-dim)">$3.11M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">EBITDA Post-Rent</span><span class="pill blue">$1.59M (7.8%)</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0;">
+        <span style="color:var(--text-dim)">Min. Economic Threshold</span><span style="color:var(--text)">225–230 students</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Student Economics (Y5)</div>
+      <div class="grid-3" style="margin:0.5rem 0;">
+        <div class="stat" style="text-align:center;">
+          <div class="label">Revenue/Student</div>
+          <div class="value" style="font-size:1.3rem; color:var(--gold)">$81.6K</div>
+        </div>
+        <div class="stat" style="text-align:center;">
+          <div class="label">EBITDA/Student</div>
+          <div class="value" style="font-size:1.3rem; color:var(--green)">$18.8K</div>
+        </div>
+        <div class="stat" style="text-align:center;">
+          <div class="label">Rent/Student</div>
+          <div class="value" style="font-size:1.3rem; color:var(--text-dim)">$12.4K</div>
+        </div>
+      </div>
+      <p style="font-size:0.82rem; margin-top:1rem;">Long-term value creation: higher realized tuition, discount compression, better fixed-cost absorption, selective capacity expansion.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 15: FINANCIAL PROJECTIONS ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">15 — Financial Projections</div>
+  <h2>Years 1–5 P&L</h2>
+  <p class="headline">Losses during ramp reflect fixed staffing, supervised boarding requirements, and rent stepping — not negative gross demand economics.</p>
+
+  <div class="card">
+    <div class="card-label">5-Year Operating Model</div>
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Total Revenue</th><th>Direct Cost</th><th>Overhead</th><th>EBITDA (Pre-Rent)</th><th>Post-Rent EBITDA</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Y1</td><td>$6.51M</td><td>$9.00M</td><td>$1.60M</td><td class="red">$(4.09M)</td><td class="red">$(5.29M)</td></tr>
+        <tr><td class="bold">Y2</td><td>$9.71M</td><td>$10.70M</td><td>$1.80M</td><td class="red">$(2.79M)</td><td class="red">$(4.89M)</td></tr>
+        <tr><td class="bold">Y3</td><td>$13.19M</td><td>$12.30M</td><td>$1.95M</td><td class="red">$(1.06M)</td><td class="red">$(3.96M)</td></tr>
+        <tr><td class="bold">Y4</td><td>$17.12M</td><td>$13.20M</td><td>$2.00M</td><td class="green">$1.92M</td><td class="red">$(1.19M)</td></tr>
+        <tr style="background:rgba(200,164,78,0.03);"><td class="bold">Y5</td><td class="highlight">$20.39M</td><td>$13.65M</td><td>$2.04M</td><td class="green">$4.70M</td><td class="green">$1.59M</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-4" style="margin-top:1.5rem;">
+    <div class="stat" style="text-align:center;">
+      <div class="label">Enrollment (Y5)</div>
+      <div class="value" style="font-size:1.4rem;">250</div>
+    </div>
+    <div class="stat" style="text-align:center;">
+      <div class="label">Boarding %</div>
+      <div class="value" style="font-size:1.4rem;">70%</div>
+    </div>
+    <div class="stat" style="text-align:center;">
+      <div class="label">Rent Coverage</div>
+      <div class="value" style="font-size:1.4rem; color:var(--green);">1.51×</div>
+    </div>
+    <div class="stat" style="text-align:center;">
+      <div class="label">Y5 EBITDA Margin</div>
+      <div class="value" style="font-size:1.4rem; color:var(--green);">23.1%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 16: ENROLLMENT MODEL ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">16 — Enrollment Ramp</div>
+  <h2>Enrollment Model</h2>
+
+  <div class="card">
+    <div class="card-label">Sport-Level Build to Stabilization</div>
+    <table>
+      <thead><tr><th>Sport</th><th>Y1 Squads</th><th>Y1 Athletes / Boarding</th><th>Y3 Athletes / Boarding</th><th>Y5 Athletes / Boarding</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Volleyball</td><td>3</td><td>45 / 21 (47%)</td><td>65 / 37 (57%)</td><td class="highlight">70 / 41 (59%)</td></tr>
+        <tr><td class="bold">Soccer</td><td>2</td><td>45 / 24 (54%)</td><td>75 / 54 (72%)</td><td class="highlight">90 / 65 (72%)</td></tr>
+        <tr><td class="bold">Basketball</td><td>3</td><td>25 / 18 (72%)</td><td>40 / 32 (80%)</td><td class="highlight">50 / 39 (78%)</td></tr>
+        <tr><td class="bold">Golf</td><td>1</td><td>15 / 9 (60%)</td><td>25 / 14 (56%)</td><td class="highlight">40 / 30 (75%)</td></tr>
+        <tr style="background:rgba(200,164,78,0.03); border-top:2px solid var(--border);">
+          <td class="bold" style="color:var(--gold)">TOTAL</td><td>—</td>
+          <td class="bold">130 / 72 (55%)</td>
+          <td class="bold">205 / 137 (67%)</td>
+          <td class="highlight" style="font-size:0.95rem;">250 / 175 (70%)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display:flex; gap:2rem; margin-top:1rem; font-size:0.8rem; color:var(--text-muted);">
+      <span>Y1: Beds 72/180 · Cap 130/250</span>
+      <span>Y3: Beds 137/180 · Cap 205/250</span>
+      <span>Y5: Beds 175/180 · Cap 250/250</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 17: PROPCO ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">17 — PropCo Structure</div>
+  <h2>Real Estate: Institutional DSCR</h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Development Scope (~12 Acres)</div>
+      <ul class="check">
+        <li>Land acquisition</li>
+        <li>Dormitories (180 beds)</li>
+        <li>Fieldhouse & performance center</li>
+        <li>Academic facilities</li>
+        <li>Outdoor athletic area</li>
+      </ul>
+      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border);">
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:0.3rem;">Total Development Cost</div>
+        <div style="font-size:1.8rem; font-weight:800; color:var(--gold);">~$57.78M</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Capital Stack & Efficiency</div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Equity</span><span style="color:var(--text); font-weight:600;">$28.49M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Construction Debt</span><span style="color:var(--text); font-weight:600;">$29.29M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Debt Service (7%/25yr)</span><span style="color:var(--text-dim)">~$2.48M/yr</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Stabilized Rent (DSCR ≥1.25×)</span><span style="color:var(--gold-light); font-weight:600;">~$3.11M</span>
+      </div>
+      <div style="display:flex; gap:2rem; margin-top:1.25rem;">
+        <div><span style="font-size:0.7rem; color:var(--text-muted);">$/Bed</span><br><span style="font-weight:700; color:var(--text);">~$321K</span></div>
+        <div><span style="font-size:0.7rem; color:var(--text-muted);">$/Student (cap)</span><br><span style="font-weight:700; color:var(--text);">~$231K</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thesis">Real estate is designed to produce institutional DSCR independent of OpCo expansion assumptions. Survivability gates protect OpCo during ramp.</div>
+</div>
+
+<!-- ════════════════════════ SLIDE 18: OPCO ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">18 — OpCo Structure</div>
+  <h2>Academy Operations</h2>
+
+  <div class="card">
+    <div class="card-label">Y5 Cost Structure</div>
+    <div class="grid-3" style="margin:0.5rem 0;">
+      <div class="stat" style="text-align:center;">
+        <div class="label">Direct Labor</div>
+        <div class="value" style="font-size:1.3rem;">$9.52M</div>
+      </div>
+      <div class="stat" style="text-align:center;">
+        <div class="label">Direct Non-Labor</div>
+        <div class="value" style="font-size:1.3rem;">$4.13M</div>
+      </div>
+      <div class="stat" style="text-align:center;">
+        <div class="label">Overhead</div>
+        <div class="value" style="font-size:1.3rem;">$2.04M</div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem; margin-top:0.75rem; color:var(--text-dim);">Total direct: $13.65M. Overhead includes compliance, facilities ops, insurance escalation. International enrollment infrastructure ~$275K embedded in Y5 overhead.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Primary Management Levers</div>
+    <div class="grid-3" style="margin:0;">
+      <div style="text-align:center; padding:0.75rem;">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--gold);">Tuition Rate</div>
+        <div style="font-size:0.8rem; color:var(--text-dim);">Realized / discount rate</div>
+      </div>
+      <div style="text-align:center; padding:0.75rem;">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--gold);">Enrollment Mix</div>
+        <div style="font-size:0.8rem; color:var(--text-dim);">Boarding vs. day ratio</div>
+      </div>
+      <div style="text-align:center; padding:0.75rem;">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--gold);">Staffing Absorption</div>
+        <div style="font-size:0.8rem; color:var(--text-dim);">Fixed cost leverage</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 19: CAPITAL PLAN ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">19 — Capital Plan</div>
+  <h2>Total Raise: ~$92.8M</h2>
+
+  <div class="thesis">Real estate risk and operating risk are intentionally separated.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">PropCo — $57.78M</div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Equity</span><span style="color:var(--text); font-weight:600;">$28.49M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0;">
+        <span style="color:var(--text-dim)">Debt</span><span style="color:var(--text); font-weight:600;">$29.29M</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">OpCo — ~$35M</div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Cumulative burn (Y1–Y4)</span><span style="color:var(--text); font-weight:600;">$15.33M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Working capital buffer</span><span style="color:var(--text); font-weight:600;">$8.73M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">OpCo FF&E</span><span style="color:var(--text); font-weight:600;">$5.52M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border);">
+        <span style="color:var(--text-dim)">Contingency (10%)</span><span style="color:var(--text); font-weight:600;">$2.96M</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0.75rem 0; margin-top:0.5rem; border-top:2px solid var(--gold);">
+        <span style="color:var(--gold-light); font-weight:700;">Required Raise</span><span style="color:var(--gold-light); font-weight:700;">~$35M</span>
+      </div>
+      <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0.5rem;">Defensive raise: $40M under stress triggers. 10% CapEx overrun: ~$5.78M incremental (50/50 equity/debt).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 20: DFW ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">20 — Location Advantage</div>
+  <h2>DFW: Purpose-Built for PACE</h2>
+
+  <div class="grid-3">
+    <div class="stat" style="text-align:center;">
+      <div class="label">Metro Population</div>
+      <div class="value" style="color:var(--gold)">7.8M</div>
+    </div>
+    <div class="stat" style="text-align:center;">
+      <div class="label">US Metro Growth</div>
+      <div class="value" style="color:var(--green)">#1</div>
+    </div>
+    <div class="stat" style="text-align:center;">
+      <div class="label">Median HHI</div>
+      <div class="value" style="color:var(--text)">$87K</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem;">
+    <div class="card-label">Club Sports Capital</div>
+    <ul class="check">
+      <li>Densest concentration of elite club programs in the Southwest</li>
+      <li>National hub for volleyball, soccer, and competitive athletics at the youth level</li>
+      <li>Major air-travel node for national/international boarding recruitment</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 21: VALUE CREATION BRIDGE ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">21 — Year 7–10 Bridge</div>
+  <h2>Value Creation Beyond Stabilization</h2>
+
+  <div class="card">
+    <div class="card-label">Stabilization Gates</div>
+    <div class="grid-3" style="margin:0.5rem 0;">
+      <div style="text-align:center; padding:0.5rem;">
+        <div style="font-size:1.2rem; font-weight:800; color:var(--green);">250</div>
+        <div style="font-size:0.75rem; color:var(--text-dim);">Students w/ ~70% boarding</div>
+      </div>
+      <div style="text-align:center; padding:0.5rem;">
+        <div style="font-size:1.2rem; font-weight:800; color:var(--green);">≤13%</div>
+        <div style="font-size:0.75rem; color:var(--text-dim);">Core discount by Y5</div>
+      </div>
+      <div style="text-align:center; padding:0.5rem;">
+        <div style="font-size:1.2rem; font-weight:800; color:var(--green);">1.51×</div>
+        <div style="font-size:0.75rem; color:var(--text-dim);">Rent coverage</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">EBITDA Expansion Levers</div>
+      <ul class="check">
+        <li>Tuition ladder execution</li>
+        <li>Discount governance</li>
+        <li>Auxiliary margin protection</li>
+        <li>Staffing plateau after 200–250 band</li>
+      </ul>
+      <p style="font-size:0.82rem; margin-top:0.75rem; color:var(--text-muted);">Operating discipline — not "hockey stick."</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Capacity Expansion Triggers</div>
+      <ul class="check">
+        <li>≥85% bed utilization for 2 consecutive terms</li>
+        <li>Safeguarding capacity to hold ratios</li>
+        <li>Expanded dorm capacity</li>
+        <li>Additional sports</li>
+        <li>Pricing power from demonstrated outcomes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 22: VISION ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">22 — Institutional Vision</div>
+  <h2>An Institution, Not a Single Campus</h2>
+
+  <div class="thesis">PACE is designed to become a durable institution in elite female athlete development — combining sport, education, leadership, research, and innovation.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Institutional Outcomes</div>
+      <ul class="check">
+        <li>Collegiate athletics placement</li>
+        <li>Professional pathways</li>
+        <li>Coaching and sports leadership</li>
+        <li>Business and entrepreneurship</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Research & Innovation</div>
+      <ul class="check">
+        <li>Female athlete physiology</li>
+        <li>Injury prevention and durability</li>
+        <li>Training load management</li>
+        <li>Leadership and athlete development</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-label">Leadership Outcomes</div>
+    <div class="flow">
+      <div class="flow-node"><div class="f-text">Athletics</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="f-text">Confidence</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="f-text">College Placement</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="border-color:var(--gold);"><div class="f-text" style="color:var(--gold);">Leadership Outcomes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 23: FOUNDING TEAM ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">23 — Founding Team</div>
+  <h2>Built to Execute</h2>
+  <p class="headline">Sports commercialization, operating strategy, and real estate development — complemented by targeted education, safeguarding, and sport-specific advisors.</p>
+
+  <div class="grid-3" style="margin-top:2rem;">
+    <div class="team-card">
+      <div class="name">Darnell Jones</div>
+      <div class="role">Consumer Sports Brand Builder</div>
+      <div class="bio">
+        Founder of <strong>POWERHANDZ</strong> — partnerships with NBA, NFL, MLB, UFC, and WNBA.
+        Multiple exits. Founder of Jones Innovation Group. Former pro athlete, nonprofit founder, active investor in emerging sports and media.
+      </div>
+      <div class="highlight-stat">$100M+ Combined Exits</div>
+    </div>
+    <div class="team-card">
+      <div class="name">Chris Chaney</div>
+      <div class="role">Sports Industry Operator</div>
+      <div class="bio">
+        Strategy, operations, finance, and growth execution across sports industry. Architect and operator of <strong>Infinite Esports & Entertainment</strong> — the first ever esports team roll-up.
+        Founder of the <strong>Ivy Sports Symposium</strong>. Investor across esports, media, and sports-adjacent ventures.
+      </div>
+      <div class="highlight-stat">First Esports Roll-Up</div>
+    </div>
+    <div class="team-card">
+      <div class="name">Derrick Evers</div>
+      <div class="role">Real Estate & Capital Markets</div>
+      <div class="bio">
+        Co-founder and managing partner of <strong>Kaizen Development Partners</strong>. 20+ years across development, entitlements, construction, and capital markets. Former CEO and Partner of Neal Richards Group.
+      </div>
+      <div class="highlight-stat">$5B+ Development Experience</div>
+      <p style="font-size:0.75rem; margin-top:0.5rem; color:var(--text-muted);">Institutional pedigree: JLL (Staubach) · Trammell Crow (CBRE)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SLIDE 24: TEAM BUILDOUT ════════════════════════ -->
+<div class="slide-divider"><hr></div>
+<div class="slide">
+  <div class="slide-num">24 — Operating Team Buildout</div>
+  <h2>Planned Hires & Advisory Architecture</h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">Early Senior Hires</div>
+      <ul class="check">
+        <li>Head of School</li>
+        <li>Residential Life Lead</li>
+        <li>Volleyball Program Director</li>
+        <li>Soccer Program Director</li>
+        <li>Basketball Program Director</li>
+        <li>Golf Program Director</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Target Advisor Architecture</div>
+      <ul class="check">
+        <li>Academic leadership & school operations</li>
+        <li>Boarding and student life</li>
+        <li>Compliance, safeguarding, international governance</li>
+        <li>Elite sport performance (per sport)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ FOOTER ════════════════════════ -->
+<div class="footer">
+  <div class="brand">PACE Women's Sports <em>Academy</em></div>
+  <div class="sub">The first institutional girls-only athlete development campus.</div>
+  <p style="margin-top:1.5rem; color:var(--text-dim); font-size:0.85rem;">
+    Dallas–Fort Worth Metroplex &nbsp;·&nbsp; 180 Beds &nbsp;·&nbsp; 250 Students &nbsp;·&nbsp; 4 Sports &nbsp;·&nbsp; ~$92.8M Total Capital
+  </p>
+  <div class="conf">Confidential — For Intended Recipients Only</div>
+</div>
+
+</body>
+</html>
