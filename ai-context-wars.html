@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Context Wars — Why Models Converge But Context Diverges</title>
+<meta name="description" content="An interactive knowledge graph showing why the AI race is shifting from model intelligence to context architecture.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0a0f;
+  color: #e0e0e0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Constellation background */
+.stars {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(30, 60, 120, 0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(60, 30, 100, 0.1) 0%, transparent 50%);
+  z-index: 0;
+}
+
+.content {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px;
+}
+
+/* Header */
+.header {
+  text-align: center; margin-bottom: 48px;
+}
+.header .tag {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2));
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 20px; padding: 6px 18px;
+  font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: #7db4f5; margin-bottom: 16px;
+}
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #7db4f5 50%, #a78bfa 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1.15; margin-bottom: 16px;
+}
+.header .subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #999; max-width: 700px; margin: 0 auto; line-height: 1.6;
+}
+
+/* Knowledge Graph SVG */
+#graph-container {
+  width: 100%;
+  height: 520px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: radial-gradient(ellipse at center, rgba(20, 25, 45, 0.8), rgba(10, 10, 15, 0.95));
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+#graph-container svg { width: 100%; height: 100%; }
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  background: rgba(15, 15, 25, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.85rem; line-height: 1.5;
+  color: #ccc; max-width: 280px;
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+.tooltip .tt-title { color: #fff; font-weight: 700; margin-bottom: 4px; font-size: 0.95rem; }
+.tooltip .tt-type { color: #7db4f5; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+
+/* Big Takeaway */
+.takeaway {
+  text-align: center;
+  padding: 48px 32px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.06));
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 16px;
+  margin-bottom: 48px;
+}
+.takeaway .label {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #7db4f5; margin-bottom: 12px;
+}
+.takeaway blockquote {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700; line-height: 1.4;
+  color: #fff; max-width: 800px; margin: 0 auto 20px;
+}
+.takeaway .proof {
+  font-size: 0.95rem; color: #888; max-width: 600px; margin: 0 auto;
+  line-height: 1.6;
+}
+.takeaway .proof strong { color: #a78bfa; }
+
+/* Three columns */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.col-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 28px;
+}
+.col-card h3 {
+  font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 6px;
+}
+.col-card .col-sub {
+  font-size: 0.8rem; color: #7db4f5; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.col-card p { font-size: 0.9rem; color: #aaa; line-height: 1.6; }
+.col-card .metric {
+  display: inline-block; margin-top: 14px;
+  background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 8px; padding: 8px 14px;
+  font-size: 0.85rem; color: #7db4f5; font-weight: 600;
+}
+
+/* Experiment badge */
+.experiment-bar {
+  text-align: center; padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 24px;
+}
+.experiment-bar span {
+  font-size: 0.8rem; color: #666; letter-spacing: 0.03em;
+}
+.experiment-bar a { color: #7db4f5; text-decoration: none; }
+.experiment-bar a:hover { text-decoration: underline; }
+
+/* Legend */
+.legend {
+  display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 32px; font-size: 0.8rem; color: #888;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="content">
+
+  <div class="header">
+    <div class="tag">Interactive Knowledge Graph</div>
+    <h1>The AI Context Wars</h1>
+    <p class="subtitle">Every major lab is racing on model intelligence. But models are converging. The real differentiator is shifting to what you feed them — and how it's structured.</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div> AI Labs (Converging)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> The Problem</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div> Context Architecture</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div> Outcomes</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div> Evidence</div>
+  </div>
+
+  <div id="graph-container">
+    <svg id="graph"></svg>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+  <div class="takeaway">
+    <div class="label">The Big Takeaway</div>
+    <blockquote>The AI race isn't about who builds the smartest model. It's about who structures the best context to feed it.</blockquote>
+    <p class="proof">
+      Experiment at the University of St. Thomas (Spring 2026, Anthropic-funded): zero-prep to a 21-slide deployable presentation in <strong>15 minutes</strong> — not because the model was smarter, but because it had structured context from the start. The methodology, the domain knowledge, and the session history were all graph-structured before the model touched them.
+    </p>
+  </div>
+
+  <div class="columns">
+    <div class="col-card">
+      <h3>Model Convergence</h3>
+      <div class="col-sub">The race everyone's watching</div>
+      <p>GPT-4o, Claude Opus, Gemini 2.0, Llama 4 — benchmark gaps are narrowing every quarter. Intelligence is becoming a commodity. The differentiation ceiling is dropping.</p>
+      <div class="metric">~5% benchmark spread across top models</div>
+    </div>
+    <div class="col-card">
+      <h3>Context Divergence</h3>
+      <div class="col-sub">The race that actually matters</div>
+      <p>Same model, different context, wildly different output. A knowledge graph compressed to .md gives the model 170x more reasoning paths in 7% of the token budget. Structure is the multiplier.</p>
+      <div class="metric">170x context density · 93% token compression</div>
+    </div>
+    <div class="col-card">
+      <h3>The Shift</h3>
+      <div class="col-sub">From model selection to context architecture</div>
+      <p>The winning question in 2026 isn't "which model?" It's "how structured is the context feeding it?" Knowledge graphs, compressed to portable .md, are the infrastructure layer underneath every architecture — RAG, long context, agents.</p>
+      <div class="metric">Works across every model & architecture</div>
+    </div>
+  </div>
+
+  <div class="experiment-bar">
+    <span>Built with structured context by <a href="https://graphifymd.com">Graphify.md</a> · Experiment data from SEIS 666, University of St. Thomas · Made with <a href="https://claude.ai/code" target="_blank">Claude Code</a></span>
+  </div>
+
+</div>
+
+<script>
+// Knowledge graph data
+const nodes = [
+  // AI Labs (converging)
+  { id: "openai", label: "OpenAI", group: "lab", desc: "GPT-4o, o1, o3 — pushing reasoning and multimodal. But the model alone isn't the moat anymore." },
+  { id: "anthropic", label: "Anthropic", group: "lab", desc: "Claude Opus, Sonnet, Haiku — leading on safety and long context (200K tokens). Model intelligence alone doesn't solve the context problem." },
+  { id: "google", label: "Google DeepMind", group: "lab", desc: "Gemini 2.0, 1M token context — biggest window, but more tokens ≠ better reasoning without structure." },
+  { id: "meta", label: "Meta AI", group: "lab", desc: "Llama 4 open-source — commoditizing intelligence. When the model is free, context becomes the only differentiator." },
+
+  // Convergence
+  { id: "convergence", label: "Model Convergence", group: "problem", desc: "Top models are within ~5% on major benchmarks. Intelligence is becoming a commodity. The race is shifting." },
+  { id: "token_waste", label: "Token Waste", group: "problem", desc: "200K context windows stuffed with unstructured text. 93% of tokens carry no structural information. Expensive, slow, and the model still misses connections." },
+  { id: "lost_middle", label: "Lost in the Middle", group: "problem", desc: "Critical information buried in large contexts gets ignored. The model's attention dilutes. Retrieval helps but fragments relationships." },
+
+  // Context Architecture
+  { id: "knowledge_graph", label: "Knowledge Graph", group: "context", desc: "Entities, relationships, hierarchies, and provenance — all structurally explicit. The model reads connections, not fragments." },
+  { id: "compression", label: ".md Compression", group: "context", desc: "A full domain knowledge graph compressed to portable markdown. 7% of original tokens. Works in Claude, GPT, Gemini, Llama — any model that reads text." },
+  { id: "context_arch", label: "Context Architecture", group: "context", desc: "The discipline of structuring knowledge before any model sees it. Not prompt engineering. Not retrieval. The layer underneath both." },
+  { id: "preprocessing", label: "Preprocessing Layer", group: "context", desc: "Structure the knowledge first. Then decide how to deliver it — RAG, long context, agents, or direct injection. The graph makes every downstream architecture more effective." },
+
+  // Outcomes
+  { id: "density", label: "170x Reasoning Density", group: "outcome", desc: "170x more reasoning paths available to the model per token. Not from a smarter model — from structured context." },
+  { id: "portable", label: "Model-Agnostic", group: "outcome", desc: "Plain .md files. No vendor lock-in. No vector DB. No proprietary embeddings. The intelligence is in the structure, not the platform." },
+  { id: "first_pass", label: "First-Pass Accuracy", group: "outcome", desc: "The model reasons correctly on the first pass because relationships are explicit. No re-retrieval, no chain-of-thought recovery, no retries." },
+
+  // Evidence
+  { id: "experiment", label: "UST Experiment", group: "evidence", desc: "Spring 2026, SEIS 666 at University of St. Thomas. Anthropic-funded ($1,750 stipend). Zero-prep to 21-slide deployable presentation in 15 minutes using structured context." },
+  { id: "verticals", label: "7 Verticals Deployed", group: "evidence", desc: "Healthcare, defense, legal, finance, education, IoT, sales intelligence. Same context architecture every time. Domain-agnostic infrastructure." },
+];
+
+const links = [
+  // Labs converge
+  { source: "openai", target: "convergence", label: "converging" },
+  { source: "anthropic", target: "convergence", label: "converging" },
+  { source: "google", target: "convergence", label: "converging" },
+  { source: "meta", target: "convergence", label: "converging" },
+
+  // Problems
+  { source: "convergence", target: "token_waste", label: "causes" },
+  { source: "convergence", target: "lost_middle", label: "doesn't solve" },
+
+  // Context Architecture solves
+  { source: "token_waste", target: "knowledge_graph", label: "solved by" },
+  { source: "lost_middle", target: "knowledge_graph", label: "solved by" },
+  { source: "knowledge_graph", target: "compression", label: "compressed to" },
+  { source: "compression", target: "context_arch", label: "enables" },
+  { source: "context_arch", target: "preprocessing", label: "implements" },
+
+  // Outcomes
+  { source: "compression", target: "density", label: "produces" },
+  { source: "compression", target: "portable", label: "enables" },
+  { source: "preprocessing", target: "first_pass", label: "achieves" },
+
+  // Evidence
+  { source: "context_arch", target: "experiment", label: "validated by" },
+  { source: "context_arch", target: "verticals", label: "deployed across" },
+  { source: "experiment", target: "density", label: "measured" },
+];
+
+const colors = {
+  lab: "#f97316",
+  problem: "#ef4444",
+  context: "#3b82f6",
+  outcome: "#8b5cf6",
+  evidence: "#10b981"
+};
+
+const svg = document.getElementById("graph");
+const container = document.getElementById("graph-container");
+const tooltip = document.getElementById("tooltip");
+const W = container.clientWidth;
+const H = container.clientHeight;
+
+// Create SVG elements
+const ns = "http://www.w3.org/2000/svg";
+
+// Defs for glow
+const defs = document.createElementNS(ns, "defs");
+Object.entries(colors).forEach(([group, color]) => {
+  const filter = document.createElementNS(ns, "filter");
+  filter.setAttribute("id", `glow-${group}`);
+  filter.setAttribute("x", "-50%"); filter.setAttribute("y", "-50%");
+  filter.setAttribute("width", "200%"); filter.setAttribute("height", "200%");
+  const blur = document.createElementNS(ns, "feGaussianBlur");
+  blur.setAttribute("stdDeviation", "4"); blur.setAttribute("result", "blur");
+  const merge = document.createElementNS(ns, "feMerge");
+  const m1 = document.createElementNS(ns, "feMergeNode"); m1.setAttribute("in", "blur");
+  const m2 = document.createElementNS(ns, "feMergeNode"); m2.setAttribute("in", "SourceGraphic");
+  merge.appendChild(m1); merge.appendChild(m2);
+  filter.appendChild(blur); filter.appendChild(merge);
+  defs.appendChild(filter);
+});
+svg.appendChild(defs);
+
+// Draw links
+const linkGroup = document.createElementNS(ns, "g");
+const linkEls = links.map(l => {
+  const line = document.createElementNS(ns, "line");
+  line.setAttribute("stroke", "rgba(255,255,255,0.08)");
+  line.setAttribute("stroke-width", "1");
+  linkGroup.appendChild(line);
+  return { el: line, source: l.source, target: l.target };
+});
+svg.appendChild(linkGroup);
+
+// Draw edge labels
+const edgeLabelGroup = document.createElementNS(ns, "g");
+const edgeLabelEls = links.map(l => {
+  const text = document.createElementNS(ns, "text");
+  text.setAttribute("fill", "rgba(255,255,255,0.18)");
+  text.setAttribute("font-size", "9");
+  text.setAttribute("text-anchor", "middle");
+  text.setAttribute("dominant-baseline", "middle");
+  text.textContent = l.label;
+  edgeLabelGroup.appendChild(text);
+  return { el: text, source: l.source, target: l.target };
+});
+svg.appendChild(edgeLabelGroup);
+
+// Draw nodes
+const nodeGroup = document.createElementNS(ns, "g");
+const nodeEls = nodes.map(n => {
+  const g = document.createElementNS(ns, "g");
+  g.style.cursor = "pointer";
+
+  const r = n.group === "context" ? 22 : n.group === "problem" ? 16 : 14;
+  const circle = document.createElementNS(ns, "circle");
+  circle.setAttribute("r", r);
+  circle.setAttribute("fill", colors[n.group]);
+  circle.setAttribute("opacity", "0.85");
+  circle.setAttribute("filter", `url(#glow-${n.group})`);
+  g.appendChild(circle);
+
+  const text = document.createElementNS(ns, "text");
+  text.setAttribute("fill", "#fff");
+  text.setAttribute("font-size", r > 16 ? "11" : "9.5");
+  text.setAttribute("font-weight", "600");
+  text.setAttribute("text-anchor", "middle");
+  text.setAttribute("dy", r + 14);
+  text.textContent = n.label;
+  g.appendChild(text);
+
+  g.addEventListener("mouseenter", (e) => {
+    tooltip.querySelector(".tt-title")?.remove();
+    tooltip.querySelector(".tt-type")?.remove();
+    tooltip.querySelector(".tt-desc")?.remove();
+    const title = document.createElement("div"); title.className = "tt-title"; title.textContent = n.label;
+    const type = document.createElement("div"); type.className = "tt-type"; type.textContent = n.group;
+    const desc = document.createElement("div"); desc.className = "tt-desc"; desc.textContent = n.desc;
+    tooltip.innerHTML = "";
+    tooltip.appendChild(title); tooltip.appendChild(type); tooltip.appendChild(desc);
+    tooltip.style.opacity = "1";
+    const rect = container.getBoundingClientRect();
+    tooltip.style.left = (e.clientX - rect.left + 16) + "px";
+    tooltip.style.top = (e.clientY - rect.top - 10) + "px";
+    circle.setAttribute("opacity", "1");
+    circle.setAttribute("r", r + 3);
+  });
+  g.addEventListener("mouseleave", () => {
+    tooltip.style.opacity = "0";
+    circle.setAttribute("opacity", "0.85");
+    circle.setAttribute("r", r);
+  });
+
+  nodeGroup.appendChild(g);
+  return { el: g, node: n, x: 0, y: 0, vx: 0, vy: 0, r };
+});
+svg.appendChild(nodeGroup);
+
+// Simple force simulation
+const cx = W / 2, cy = H / 2;
+
+// Initial positions by group
+nodeEls.forEach((ne, i) => {
+  const g = ne.node.group;
+  const angle = (i / nodes.length) * Math.PI * 2;
+  const spread = g === "lab" ? 0.35 : g === "problem" ? 0.2 : g === "context" ? 0.05 : g === "outcome" ? 0.3 : 0.4;
+  const groupAngle = g === "lab" ? -Math.PI/2 : g === "problem" ? -Math.PI/4 : g === "context" ? 0 : g === "outcome" ? Math.PI/4 : Math.PI/2;
+  ne.x = cx + Math.cos(groupAngle + (i * 0.7)) * (W * spread) + (Math.random() - 0.5) * 60;
+  ne.y = cy + Math.sin(groupAngle + (i * 0.7)) * (H * spread) + (Math.random() - 0.5) * 60;
+});
+
+function findNode(id) { return nodeEls.find(n => n.node.id === id); }
+
+function simulate() {
+  const alpha = 0.3;
+
+  // Center gravity
+  nodeEls.forEach(n => {
+    n.vx += (cx - n.x) * 0.002;
+    n.vy += (cy - n.y) * 0.002;
+  });
+
+  // Link springs
+  linkEls.forEach(l => {
+    const s = findNode(l.source), t = findNode(l.target);
+    if (!s || !t) return;
+    const dx = t.x - s.x, dy = t.y - s.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const target = 120;
+    const f = (dist - target) * 0.003;
+    s.vx += (dx / dist) * f;
+    s.vy += (dy / dist) * f;
+    t.vx -= (dx / dist) * f;
+    t.vy -= (dy / dist) * f;
+  });
+
+  // Repulsion
+  for (let i = 0; i < nodeEls.length; i++) {
+    for (let j = i + 1; j < nodeEls.length; j++) {
+      const a = nodeEls[i], b = nodeEls[j];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      if (dist < 200) {
+        const f = 800 / (dist * dist);
+        a.vx -= (dx / dist) * f;
+        a.vy -= (dy / dist) * f;
+        b.vx += (dx / dist) * f;
+        b.vy += (dy / dist) * f;
+      }
+    }
+  }
+
+  // Apply velocity
+  nodeEls.forEach(n => {
+    n.vx *= 0.85;
+    n.vy *= 0.85;
+    n.x += n.vx;
+    n.y += n.vy;
+    // Bounds
+    n.x = Math.max(60, Math.min(W - 60, n.x));
+    n.y = Math.max(40, Math.min(H - 40, n.y));
+    n.el.setAttribute("transform", `translate(${n.x},${n.y})`);
+  });
+
+  // Update links
+  linkEls.forEach(l => {
+    const s = findNode(l.source), t = findNode(l.target);
+    if (!s || !t) return;
+    l.el.setAttribute("x1", s.x); l.el.setAttribute("y1", s.y);
+    l.el.setAttribute("x2", t.x); l.el.setAttribute("y2", t.y);
+  });
+
+  // Update edge labels
+  edgeLabelEls.forEach(l => {
+    const s = findNode(l.source), t = findNode(l.target);
+    if (!s || !t) return;
+    l.el.setAttribute("x", (s.x + t.x) / 2);
+    l.el.setAttribute("y", (s.y + t.y) / 2);
+  });
+}
+
+// Run simulation
+let frame = 0;
+function tick() {
+  simulate();
+  frame++;
+  if (frame < 300) requestAnimationFrame(tick);
+}
+tick();
+
+// Drag support
+let dragging = null, dragOffX = 0, dragOffY = 0;
+svg.addEventListener("mousedown", (e) => {
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX; pt.y = e.clientY;
+  const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+  for (const n of nodeEls) {
+    const dx = svgPt.x - n.x, dy = svgPt.y - n.y;
+    if (Math.sqrt(dx*dx + dy*dy) < n.r + 10) {
+      dragging = n; dragOffX = dx; dragOffY = dy;
+      break;
+    }
+  }
+});
+svg.addEventListener("mousemove", (e) => {
+  if (!dragging) return;
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX; pt.y = e.clientY;
+  const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+  dragging.x = svgPt.x - dragOffX;
+  dragging.y = svgPt.y - dragOffY;
+  dragging.vx = 0; dragging.vy = 0;
+  frame = 0; tick();
+});
+svg.addEventListener("mouseup", () => { dragging = null; });
+
+</script>
+</body>
+</html>
