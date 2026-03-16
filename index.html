@@ -122,9 +122,77 @@
     color: var(--text-bright);
     text-decoration: none;
     letter-spacing: -0.02em;
+    flex-shrink: 0;
   }
   .logo .ext { color: var(--blue); }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-bright); }
   nav .btn { padding: 10px 22px; font-size: 0.875rem; }
+  .nav-cta-desktop { display: block; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-bright);
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* Mobile nav overlay */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 0;
+    z-index: 150;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    color: var(--text-bright);
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--blue); }
+  .mobile-nav .btn {
+    margin-top: 8px;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+  }
 
   /* --- Hero --- */
   .hero {
@@ -724,20 +792,65 @@
 
   /* --- Responsive --- */
   @media (max-width: 768px) {
-    section { padding: 72px 0; }
-    .hero { padding: 140px 0 80px; }
+    .container { padding: 0 20px; }
+    section { padding: 64px 0; }
+
+    /* Nav: hamburger on mobile */
+    .nav-links { display: none; }
+    .nav-cta-desktop { display: none; }
+    .hamburger { display: block; }
+
+    /* Hero: breathe, readable */
+    .hero {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background-position: center 30%;
+    }
+    .hero::after { display: none; }
+    .hero h1 { font-size: 2.2rem; line-height: 1.15; margin-bottom: 20px; }
+    .hero .subtext {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 0 auto 32px;
+    }
+    .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; }
+    .hero-cta .btn { width: 100%; text-align: center; padding: 16px 24px; font-size: 1.05rem; }
+
+    /* Grids: single column */
     .comparison-grid,
     .product-grid,
     .delta-grid,
     .steps { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; gap: 12px; }
     .proof-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Cards: tighter padding */
     .compare-card, .product-card, .step { padding: 24px; }
+
+    /* Typography adjustments */
+    h2 { font-size: 1.5rem; }
+    .section-label { font-size: 0.7rem; }
+
+    /* CTA section */
+    .cta-section h2 { font-size: 1.4rem; }
+    .cta-buttons { flex-direction: column; align-items: stretch; }
+    .cta-buttons .btn { width: 100%; text-align: center; }
   }
+
   @media (max-width: 480px) {
+    .container { padding: 0 16px; }
+    .hero h1 { font-size: 1.85rem; }
+    .hero .subtext { font-size: 0.88rem; padding: 14px 16px; }
     .proof-grid { grid-template-columns: 1fr; }
-    .hero-cta, .cta-buttons { flex-direction: column; align-items: center; }
-    .btn { width: 100%; text-align: center; }
+    .case-card { padding: 20px; }
+    .case-results { gap: 8px; }
+    .case-num { font-size: 1.3rem; }
+    .stat-box { padding: 20px 16px; }
+    .compare-card h3 { font-size: 1.25rem; }
   }
 </style>
 </head>
@@ -747,14 +860,25 @@
 <nav>
   <div class="container">
     <a href="#" class="logo"><img src="assets/graphify-logo.svg" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">Graphify<span class="ext">.md</span></a>
-    <div style="display:flex; gap:24px; align-items:center;">
-      <a href="#case-studies" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">Case Studies</a>
-      <a href="context-architecture.html" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">The Science</a>
-      <a href="graph-demo.html" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">Live Graph</a>
+    <div class="nav-links">
+      <a href="#case-studies">Case Studies</a>
+      <a href="context-architecture.html">The Science</a>
+      <a href="graph-demo.html">Live Graph</a>
     </div>
-    <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary">Book a Free Demo</a>
+    <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary nav-cta-desktop">Book a Free Demo</a>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#case-studies" onclick="closeMobileNav()">Case Studies</a>
+  <a href="context-architecture.html">The Science</a>
+  <a href="graph-demo.html">Live Graph</a>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary glow">Book a Free Demo</a>
+</div>
 
 <!-- Hero -->
 <section class="hero">
@@ -1274,5 +1398,17 @@
   </div>
 </footer>
 
+<script>
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.querySelector('.hamburger').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.querySelector('.hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 </body>
 </html>
