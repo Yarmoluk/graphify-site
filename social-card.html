@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Social Card — Graphify.md</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    background: #0a0a0a;
+    border-radius: 0;
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%);
+  }
+
+  .top { position: relative; z-index: 1; }
+  .brand { font-size: 22px; font-weight: 900; color: #fafafa; margin-bottom: 24px; letter-spacing: 0.5px; }
+  .brand span { color: #3b82f6; }
+
+  .headline {
+    font-size: 52px;
+    font-weight: 900;
+    color: #fafafa;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .headline em { color: #3b82f6; font-style: normal; }
+
+  .sub {
+    font-size: 22px;
+    color: #a1a1aa;
+    line-height: 1.5;
+    max-width: 800px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 48px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat .num {
+    font-size: 40px;
+    font-weight: 900;
+    color: #3b82f6;
+    letter-spacing: -1px;
+  }
+  .stat .num.green { color: #22c55e; }
+  .stat .label {
+    font-size: 14px;
+    color: #71717a;
+    margin-top: -2px;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+  .tech {
+    font-size: 13px;
+    color: #52525b;
+    letter-spacing: 1px;
+  }
+  .url {
+    font-size: 16px;
+    color: #3b82f6;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <div class="brand">Graphify<span>.md</span></div>
+    <div class="headline"><em>3.1 million</em> lines of code.<br>One solo founder. 50 days.</div>
+    <div class="sub">Domain knowledge graphs that make any AI tool smarter.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num">9</div>
+      <div class="label">Industry Verticals</div>
+    </div>
+    <div class="stat">
+      <div class="num">37</div>
+      <div class="label">AI Skills Built</div>
+    </div>
+    <div class="stat">
+      <div class="num">17K</div>
+      <div class="label">Reasoning Paths</div>
+    </div>
+    <div class="stat">
+      <div class="num green">170x</div>
+      <div class="label">More Than Vector RAG</div>
+    </div>
+    <div class="stat">
+      <div class="num green">400M+</div>
+      <div class="label">Tokens Processed</div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="tech">Knowledge Graphs &middot; MCP &middot; Claude &middot; Neo4j &middot; LLM Orchestration</div>
+    <div class="url">yarmoluk.github.io/graphify-site</div>
+  </div>
+</div>
+</body>
+</html>
