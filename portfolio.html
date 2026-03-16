@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphify.md — Full Portfolio | Daniel Yarmoluk</title>
+<meta property="og:title" content="Graphify.md — Full Portfolio">
+<meta property="og:description" content="50 repos. 104 deliverables. 7 verticals. Knowledge graphs that make AI reason, not guess.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0f; color: #e0e0e0; font-family: 'Inter', -apple-system, sans-serif; }
+.stars {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(59,130,246,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.06) 0%, transparent 50%);
+  z-index: 0;
+}
+.content { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* Header */
+.header { text-align: center; margin-bottom: 48px; }
+.header img { width: 64px; height: 64px; border-radius: 16px; margin-bottom: 16px; }
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #7db4f5 50%, #a78bfa 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header .role { font-size: 1.1rem; color: #999; margin-bottom: 24px; }
+.header .stats-row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.header .stat { text-align: center; }
+.header .stat .num { font-size: 2rem; font-weight: 800; color: #3b82f6; }
+.header .stat .label { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Nav */
+.nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; position: sticky; top: 0; background: rgba(10,10,15,0.95); padding: 14px 0; z-index: 100; backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.nav a { padding: 7px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #aaa; text-decoration: none; font-size: 0.82rem; transition: all 0.2s; }
+.nav a:hover, .nav a.active { border-color: rgba(59,130,246,0.4); color: #7db4f5; background: rgba(59,130,246,0.08); }
+
+/* Section */
+.section { margin-bottom: 48px; }
+.section h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.section .section-sub { font-size: 0.85rem; color: #666; margin-bottom: 20px; }
+
+/* Project cards */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.project-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 22px; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.project-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-2px); }
+.project-card .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.project-card h3 { font-size: 1rem; font-weight: 700; color: #fff; }
+.project-card .vertical {
+  font-size: 0.68rem; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.v-healthcare { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+.v-defense { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+.v-finance { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+.v-legal { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
+.v-education { background: rgba(59,130,246,0.12); color: #7db4f5; border: 1px solid rgba(59,130,246,0.2); }
+.v-sales { background: rgba(236,72,153,0.12); color: #f472b6; border: 1px solid rgba(236,72,153,0.2); }
+.v-product { background: rgba(118,185,0,0.12); color: #a3e635; border: 1px solid rgba(118,185,0,0.2); }
+.v-iot { background: rgba(6,182,212,0.12); color: #67e8f9; border: 1px solid rgba(6,182,212,0.2); }
+.v-sports { background: rgba(251,146,60,0.12); color: #fb923c; border: 1px solid rgba(251,146,60,0.2); }
+.v-realestate { background: rgba(168,85,247,0.12); color: #c084fc; border: 1px solid rgba(168,85,247,0.2); }
+.v-creative { background: rgba(244,114,182,0.12); color: #f9a8d4; border: 1px solid rgba(244,114,182,0.2); }
+.v-consumer { background: rgba(251,191,36,0.12); color: #fde68a; border: 1px solid rgba(251,191,36,0.2); }
+.v-construction { background: rgba(156,163,175,0.12); color: #d1d5db; border: 1px solid rgba(156,163,175,0.2); }
+.v-infra { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+.v-government { background: rgba(220,38,38,0.12); color: #fca5a5; border: 1px solid rgba(220,38,38,0.2); }
+
+.project-card p { font-size: 0.85rem; color: #888; line-height: 1.5; margin-bottom: 12px; }
+.project-card .links { display: flex; gap: 8px; flex-wrap: wrap; }
+.project-card .links a {
+  font-size: 0.78rem; padding: 5px 12px; border-radius: 6px;
+  background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+  color: #7db4f5; text-decoration: none; transition: all 0.2s;
+}
+.project-card .links a:hover { background: rgba(59,130,246,0.2); }
+.project-card .links a.private { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: #666; }
+
+/* Thesis */
+.thesis {
+  text-align: center; padding: 40px 32px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.05));
+  border: 1px solid rgba(59,130,246,0.12); border-radius: 16px; margin-bottom: 48px;
+}
+.thesis blockquote { font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; color: #fff; line-height: 1.4; max-width: 700px; margin: 0 auto 16px; }
+.thesis p { color: #888; font-size: 0.9rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+/* CTA */
+.cta { text-align: center; padding: 32px; border: 1px solid rgba(59,130,246,0.15); border-radius: 14px; margin-bottom: 40px; }
+.cta a { display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+.cta p { color: #888; font-size: 0.85rem; margin-top: 12px; }
+
+.footer { text-align: center; padding: 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.78rem; color: #555; }
+.footer a { color: #7db4f5; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="content">
+
+  <div class="header">
+    <h1>Graphify.md</h1>
+    <div class="role">Context Architecture by Daniel Yarmoluk<br>Knowledge graphs compressed to .md — 170x reasoning density, 93% token compression</div>
+    <div class="stats-row">
+      <div class="stat"><div class="num">50</div><div class="label">Repos</div></div>
+      <div class="stat"><div class="num">104</div><div class="label">Deliverables</div></div>
+      <div class="stat"><div class="num">7+</div><div class="label">Verticals</div></div>
+      <div class="stat"><div class="num">19</div><div class="label">Agent Skills</div></div>
+      <div class="stat"><div class="num">37</div><div class="label">Orchestrated Skills</div></div>
+      <div class="stat"><div class="num">50</div><div class="label">Days</div></div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="#product" class="active">Product</a>
+    <a href="#enterprise">Enterprise</a>
+    <a href="#healthcare">Healthcare</a>
+    <a href="#defense">Defense</a>
+    <a href="#finance">Finance</a>
+    <a href="#education">Education</a>
+    <a href="#sales">Sales Intel</a>
+    <a href="#creative">Creative</a>
+    <a href="#infra">AI Infrastructure</a>
+    <a href="#thought">Thought Leadership</a>
+  </nav>
+
+  <!-- PRODUCT -->
+  <div class="section" id="product">
+    <h2>Product — Graphify.md</h2>
+    <div class="section-sub">The platform. Knowledge graphs compressed to portable .md for any AI model.</div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Graphify.md — Landing Page</h3><span class="vertical v-product">Product</span></div>
+        <p>Full marketing site with interactive constellation hero, context architecture thesis, and live demo booking. The public face of Graphify.md.</p>
+        <div class="links"><a href="https://graphifymd.com" target="_blank">graphifymd.com</a><a href="https://github.com/Yarmoluk/graphify-site" target="_blank">GitHub</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>AI Context Wars — Interactive KG</h3><span class="vertical v-product">Product</span></div>
+        <p>16-node force-directed knowledge graph showing why the AI race is shifting from model intelligence to context architecture. UST experiment evidence.</p>
+        <div class="links"><a href="https://graphifymd.com/ai-context-wars.html" target="_blank">Live Demo</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>GTC 2026 — The Missing Layer</h3><span class="vertical v-product">Product</span></div>
+        <p>Maps NVIDIA's full stack (Vera Rubin → CUDA-X → NemoClaw → ??? → Knowledge Graphs). Built the day of Jensen's keynote.</p>
+        <div class="links"><a href="https://graphifymd.com/gtc-2026-context-layer.html" target="_blank">Live Demo</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Context Architecture Science</h3><span class="vertical v-product">Product</span></div>
+        <p>Full scientific breakdown: information theory, cognitive load transfer, radical compression, declared relationships. Research-backed thesis with interactive visuals.</p>
+        <div class="links"><a href="https://graphifymd.com/context-architecture.html" target="_blank">Live Page</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Graphify.md Demos</h3><span class="vertical v-product">Product</span></div>
+        <p>Client opportunity analyses and knowledge graph demonstrations across multiple verticals.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/graphify-demos/" target="_blank">Live Demos</a><a href="https://github.com/Yarmoluk/graphify-demos" target="_blank">GitHub</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Graphify Services</h3><span class="vertical v-sales">Services</span></div>
+        <p>AI intelligence briefings that close deals. Service delivery framework for knowledge graph engagements.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/graphify-services/" target="_blank">Live Site</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Agent Skills (19 Skills)</h3><span class="vertical v-infra">Infrastructure</span></div>
+        <p>19 business operations skills — strategy, sales, finance, HR, customer success, operations. Open standard at agentskills.io.</p>
+        <div class="links"><a href="https://agentskills.io" target="_blank">agentskills.io</a><a href="https://github.com/Yarmoluk/cognify-skills" target="_blank">GitHub</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTERPRISE -->
+  <div class="section" id="enterprise">
+    <h2>Enterprise Intelligence</h2>
+    <div class="section-sub">Strategic briefs, competitive intelligence, and account penetration for Fortune 500.</div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Cargill Strategic Brief</h3><span class="vertical v-finance">Enterprise</span></div>
+        <p>Full company analysis, tech stack, competitive landscape, $1M→$10M growth playbook. Knowledge-graphed the entire enterprise relationship map.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Slalom business@ AI Analysis</h3><span class="vertical v-infra">Enterprise</span></div>
+        <p>Knowledge graph, gap scorecard, and ANTMAN antiframework for Slalom's AI platform strategy.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/slalom-business-at-analysis/" target="_blank">Live Analysis</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>RBD × Tennant Company</h3><span class="vertical v-sales">Enterprise</span></div>
+        <p>Enterprise AI advisory pitch deck for industrial manufacturer. Knowledge graph of competitive landscape and AI integration roadmap.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Hilti Territory Intelligence</h3><span class="vertical v-sales">Sales Intel</span></div>
+        <p>Case study: AI-powered territory intelligence for electrical & instrumentation sales in Southern California.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/hilti-territory-intelligence/" target="_blank">Case Study</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Convergence Response — Amy Webb FTSG</h3><span class="vertical v-product">Research</span></div>
+        <p>Knowledge-graphed 18 years of Amy Webb's trend data. The case for convergence graphs over static annual reports.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/convergence-response/" target="_blank">Live Response</a><a href="https://yarmoluk.github.io/graphify-convergence/" target="_blank">Convergence Graph</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Mortenson AI Research</h3><span class="vertical v-construction">Construction</span></div>
+        <p>Construction AI research — agentic workflows, knowledge graphs, and applied AI for the built environment.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEALTHCARE -->
+  <div class="section" id="healthcare">
+    <h2>Healthcare</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>VNS Health — Healthcare AI Intelligence</h3><span class="vertical v-healthcare">Healthcare</span></div>
+        <p>Knowledge graph synthesis of 10+ consulting reports for healthcare AI connected intelligence. Delivered to VP of Innovation.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/shajey-healthcare-graphifymd/" target="_blank">Live Site</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>RBD × Megan Starkey</h3><span class="vertical v-healthcare">Advisory</span></div>
+        <p>Enterprise AI advisory deliverables for healthcare strategy leader. Context architecture playbook.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/rbd-megan-starkey/" target="_blank">Live Site</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFENSE -->
+  <div class="section" id="defense">
+    <h2>Defense & Tactical</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>D3 Defense — Neuro-Tactical Training</h3><span class="vertical v-defense">Defense</span></div>
+        <p>Cognitive performance engineering for firearms operators. Full instructor manual, student portal scope, 50/50 partnership with Mike Duffy. Revenue model: $5K-$75K/engagement + SaaS.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/sgi-neuro-tactical/" target="_blank">Live Program</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>NeuroShooter Textbook</h3><span class="vertical v-defense">Training</span></div>
+        <p>Intelligent textbook: rapid skill acquisition for precision shooters. AI companion, knowledge graph, interactive drills.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/neuroshooter-textbook/" target="_blank">Live Textbook</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCE -->
+  <div class="section" id="finance">
+    <h2>Finance & Investment</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Sioux Center Data Center</h3><span class="vertical v-finance">Investment</span></div>
+        <p>Investor playbook and knowledge graph for data center development. Full market analysis, infrastructure costing, and return modeling.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Capital Markets as a Service</h3><span class="vertical v-finance">FinTech</span></div>
+        <p>CMaaS platform architecture for financial services.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>IP Docketing Automation Intel</h3><span class="vertical v-legal">Legal Tech</span></div>
+        <p>IP docketing automation market intelligence, competitive analysis, and go-to-market strategy for patent law firms.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/docketing-automation-intel/" target="_blank">Live Analysis</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section" id="education">
+    <h2>Education</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>SEIS 666 — Digital Transformation with AI</h3><span class="vertical v-education">University</span></div>
+        <p>200-concept knowledge system at University of St. Thomas. Spring 2026. Anthropic-funded ($1,750 stipend). 33+ interactive MicroSims. Built the entire course with Claude Code.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/Digital-Transformation-with-AI-Spring-2026/" target="_blank">Course Site</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Precision Turf Analytics</h3><span class="vertical v-education">Textbook</span></div>
+        <p>Intelligent textbook: drone-based NDVI analysis and AI-powered turf health for golf courses. Multispectral imaging, knowledge graph, interactive simulations.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/precision-turf-analytics/" target="_blank">Live Textbook</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>PACE Women's Sports Academy</h3><span class="vertical v-sports">Sports</span></div>
+        <p>Investor deck and enrollment agent for women's sports academy. AI-powered student matching and retention.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>AI PM Coach — Securian</h3><span class="vertical v-education">Coaching</span></div>
+        <p>Graph-powered SDLC/PDLC intelligence coach for product managers. AI-assisted sprint planning and backlog optimization.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SALES INTEL -->
+  <div class="section" id="sales">
+    <h2>Sales Intelligence</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Proto Hologram — All Airports Campaign</h3><span class="vertical v-sales">Campaign</span></div>
+        <p>87 airports, 5 tiers, full pipeline targeting. Complete go-to-market for U.S. airport holographic deployment. 16 chapters competitive intelligence.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/proto-hologram-textbook/PROTO-ALL-AIRPORTS-CAMPAIGN-LAUNCH.html" target="_blank">Campaign Launch</a><a href="https://yarmoluk.github.io/proto-hologram-textbook/" target="_blank">Full Textbook</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>RE/MAX Command Center</h3><span class="vertical v-realestate">Real Estate</span></div>
+        <p>West Metro MN market intelligence dashboard for RE/MAX agent. AI-powered listing analysis and territory mapping.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Concrete Pump Sales Guide</h3><span class="vertical v-sales">Equipment</span></div>
+        <p>Equipment finance sales intelligence — Concord & Schwing concrete pumps on Kenworth T880. Deal structuring and competitive positioning.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATIVE -->
+  <div class="section" id="creative">
+    <h2>Creative & Consumer</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Dan Katz — Artistic Intelligence</h3><span class="vertical v-creative">Creative</span></div>
+        <p>Knowledge graph, portfolio analysis, and AI collaboration framework for illustrator with 30+ years experience.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/dan-katz-ai/" target="_blank">Live Portfolio</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Jaime Paxton — Job Campaign</h3><span class="vertical v-creative">Career</span></div>
+        <p>Full job search campaign for Creative Director / EP with 20 years across Netflix, HGTV, OWN, A&E, ESPN. Knowledge-graphed her career trajectory.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/jaime-paxton-career/" target="_blank">Live Campaign</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Joy Skin — Brand Strategy</h3><span class="vertical v-consumer">Consumer</span></div>
+        <p>Global fusion aesthetics brand strategy. Korean skincare + European botanicals + natural remedies. Full knowledge base and launch playbook.</p>
+        <div class="links"><a href="#" class="private">Confidential</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Ink Sanctum — Shop Estimator</h3><span class="vertical v-consumer">Consumer</span></div>
+        <p>Tattoo pricing estimator widget. Interactive calculator for walk-in clients.</p>
+        <div class="links"><a href="https://yarmoluk.github.io/shop-estimator/" target="_blank">Live Widget</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI INFRASTRUCTURE -->
+  <div class="section" id="infra">
+    <h2>AI Infrastructure</h2>
+    <div class="section-sub">The engine underneath everything.</div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Cognify Core — 19 Skills</h3><span class="vertical v-infra">Private</span></div>
+        <p>Private skill definitions and reference files. 46 files: 19 SKILL.md + 24 references + orchestration script. The proprietary engine.</p>
+        <div class="links"><a href="#" class="private">Private IP</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Cognify MCP — 11 Tools</h3><span class="vertical v-infra">Private</span></div>
+        <p>AI-powered B2B growth engine with 11 MCP tools: live PageSpeed, SSL, DNS, SEO recon. Real-time site intelligence.</p>
+        <div class="links"><a href="#" class="private">Private IP</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>37 Orchestrated Claude Skills</h3><span class="vertical v-infra">Private</span></div>
+        <p>Full skill ecosystem: context extraction, knowledge graph generation, session management, email, PDF, presentation, class prep, background intel, and more.</p>
+        <div class="links"><a href="#" class="private">Private IP</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>GlowUp Amplifier</h3><span class="vertical v-infra">Tool</span></div>
+        <p>Talk a meme into existence. Voice/text → meme → posted to X. Automated content pipeline.</p>
+        <div class="links"><a href="#" class="private">Private</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THOUGHT LEADERSHIP -->
+  <div class="section" id="thought">
+    <h2>Thought Leadership</h2>
+    <div class="section-sub">Shayla Holmes AI talent playbook, Context Wars thesis, GTC analysis, and 30+ LinkedIn thought pieces across 500K+ subscriber communities.</div>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="card-top"><h3>Shayla Holmes — AI Talent Playbook</h3><span class="vertical v-sales">Playbook</span></div>
+        <p>Knowledge graph and guiding practice for AI/ML talent strategy. 6 buyer personas, 4 conversation scripts, interactive graph.</p>
+        <div class="links"><a href="https://graphifymd.com/shayla-context-playbook.html" target="_blank">Live Playbook</a></div>
+      </div>
+      <div class="project-card">
+        <div class="card-top"><h3>Congress Knowledge Graph Dashboard</h3><span class="vertical v-government">Government</span></div>
+        <p>Interactive knowledge graph dashboard of Congressional relationships and legislative intelligence.</p>
+        <div class="links"><a href="#" class="private">Demo Available</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THESIS -->
+  <div class="thesis">
+    <blockquote>Every project above started the same way: build the knowledge graph, compress to .md, then build. Same architecture. Every domain. Every time.</blockquote>
+    <p>The model is infrastructure. The context is the moat. Graphify.md is the layer that makes every AI architecture — RAG, long context, agents — dramatically more effective.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <a href="https://calendly.com/daniel-yarmoluk/30min">Book a 30-Min Live Demo</a>
+    <p>I build part of your domain graph live. No slides. No deck. Just the delta.</p>
+  </div>
+
+  <div class="footer">
+    Built by <a href="https://graphifymd.com">Graphify.md</a> · Daniel Yarmoluk · University of St. Thomas · Made with <a href="https://claude.ai/code">Claude Code</a>
+  </div>
+
+</div>
+</body>
+</html>
