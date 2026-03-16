@@ -330,10 +330,16 @@ const allEdges = [
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let W, H, mx = 0, my = 0, currentDepth = -1, isAnimating = false;
+const DPR = window.devicePixelRatio || 1;
 
 function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 }
 resize();
 window.addEventListener('resize', resize);
@@ -436,11 +442,13 @@ function unfoldToDepth(depth) {
       n.visible = true;
       n.targetOpacity = 1;
       if (n.depth === depth) {
-        // New nodes burst from parent position
+        // New nodes emerge gently from parent position
         const parent = findParent(n);
-        if (parent && n.opacity === 0) {
-          n.x = parent.x;
-          n.y = parent.y;
+        if (parent && n.opacity < 0.05) {
+          n.x = parent.x + (Math.random() - 0.5) * 20;
+          n.y = parent.y + (Math.random() - 0.5) * 20;
+          n.vx = 0;
+          n.vy = 0;
         }
       }
     } else {
@@ -485,7 +493,7 @@ async function autoUnfold() {
 
   for (let d = 0; d <= 4; d++) {
     unfoldToDepth(d);
-    await sleep(2200);
+    await sleep(3500);
   }
   isAnimating = false;
 }
@@ -525,27 +533,27 @@ function animateCounter(id, target) {
 // ═══════════════════════════════════════
 
 function physics() {
-  const damping = 0.88;
-  const spring = 0.04;
+  const damping = 0.94;
+  const spring = 0.008;
 
   nodes.forEach(n => {
     if (!n.visible) return;
 
-    // Spring to target position
+    // Gentle spring to target position
     const dx = n.tx - n.x;
     const dy = n.ty - n.y;
     n.vx += dx * spring;
     n.vy += dy * spring;
 
-    // Repulsion from other visible nodes
+    // Soft repulsion from other visible nodes
     nodes.forEach(m => {
       if (m === n || !m.visible || m.opacity < 0.1) return;
       const ddx = n.x - m.x;
       const ddy = n.y - m.y;
       const dist = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
-      const minDist = (n.size + m.size) * 2.5;
+      const minDist = (n.size + m.size) * 3;
       if (dist < minDist) {
-        const force = (minDist - dist) / dist * 0.8;
+        const force = (minDist - dist) / dist * 0.15;
         n.vx += ddx * force;
         n.vy += ddy * force;
       }
@@ -556,18 +564,18 @@ function physics() {
     n.x += n.vx;
     n.y += n.vy;
 
-    // Opacity animation
-    n.opacity += (n.targetOpacity - n.opacity) * 0.06;
-    if (n.opacity < 0.01 && n.targetOpacity === 0) {
+    // Slow, organic opacity fade-in
+    n.opacity += (n.targetOpacity - n.opacity) * 0.02;
+    if (n.opacity < 0.005 && n.targetOpacity === 0) {
       n.visible = false;
       n.opacity = 0;
     }
   });
 
-  // Edge opacity
+  // Edge opacity — even slower for trailing effect
   edges.forEach(e => {
-    e.opacity += (e.targetOpacity - e.opacity) * 0.04;
-    if (e.opacity < 0.01 && e.targetOpacity === 0) {
+    e.opacity += (e.targetOpacity - e.opacity) * 0.015;
+    if (e.opacity < 0.005 && e.targetOpacity === 0) {
       e.visible = false;
       e.opacity = 0;
     }
@@ -721,19 +729,32 @@ function render() {
       ctx.stroke();
     }
 
-    // Label
+    // Label — crisp, no blur
     if (n.opacity > 0.3) {
-      const fontSize = n.cat === 'core' ? 13 : (isHighlighted ? 11 : 9);
-      ctx.font = `600 ${fontSize}px -apple-system, Helvetica Neue, Arial, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillStyle = `rgba(255,255,255,${n.opacity * (isHighlighted ? 0.95 : 0.7)})`;
-
-      if (isHighlighted) {
-        ctx.shadowColor = `rgba(${gr},${gg},${gb},0.5)`;
-        ctx.shadowBlur = 10;
-      }
-      ctx.fillText(n.name, n.x, n.y + size + 16);
+      const fontSize = n.cat === 'core' ? 14 : (isHighlighted ? 12 : 10);
+      ctx.save();
       ctx.shadowBlur = 0;
+      ctx.shadowColor = 'transparent';
+      ctx.font = `600 ${fontSize}px -apple-system, "Helvetica Neue", Arial, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+
+      // Dark background pill for readability
+      const textWidth = ctx.measureText(n.name).width;
+      const pillPad = 4;
+      const pillX = n.x - textWidth / 2 - pillPad;
+      const pillY = n.y + size + 8;
+      const pillW = textWidth + pillPad * 2;
+      const pillH = fontSize + pillPad * 2;
+      ctx.fillStyle = `rgba(0,0,0,${n.opacity * 0.6})`;
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 4);
+      ctx.fill();
+
+      // Text
+      ctx.fillStyle = `rgba(255,255,255,${n.opacity * (isHighlighted ? 1 : 0.85)})`;
+      ctx.fillText(n.name, n.x, pillY + pillPad);
+      ctx.restore();
     }
   });
 
