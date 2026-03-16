@@ -200,13 +200,14 @@
 
   /* --- Hero --- */
   .hero {
-    padding: 80px 0 200px;
+    padding: 100px 0 180px;
     text-align: center;
     position: relative;
     background: url('assets/hero-constellation.png') center bottom / cover no-repeat;
     min-height: 85vh;
     display: flex;
     align-items: flex-start;
+    padding-top: clamp(100px, 12vh, 160px);
     justify-content: center;
   }
   .hero::before {
@@ -256,39 +257,22 @@
     text-shadow: 0 1px 8px rgba(0,0,0,0.5);
   }
   .hero .subtext strong { color: #fff; font-weight: 700; }
+  .hero-sub {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: #ddd;
+    max-width: 700px;
+    margin: 0 auto 10px;
+    font-weight: 500;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5);
+  }
+  .hero-metrics {
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 28px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    letter-spacing: 0.02em;
+  }
   .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-  /* Bridge card below hero */
-  .hero-bridge {
-    position: relative;
-    z-index: 10;
-    margin-top: -60px;
-    padding: 0 20px 40px;
-    text-align: center;
-  }
-  .bridge-card {
-    max-width: 720px;
-    margin: 0 auto;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    padding: 32px 40px;
-    box-shadow: 0 -10px 40px rgba(0,0,0,0.4), 0 20px 60px rgba(0,0,0,0.6);
-  }
-  .bridge-card p {
-    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-    color: #ccc;
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-  .bridge-card p strong { color: #fff; font-weight: 700; }
-  .bridge-metrics {
-    font-size: 0.85em;
-    color: var(--text-dim);
-    margin-bottom: 4px;
-  }
 
   /* --- Divider --- */
   .divider {
@@ -984,20 +968,14 @@
   <canvas class="hero-network" id="heroNet"></canvas>
   <div class="container">
     <h1 class="fade-up d05">Too much data.<br>Too little <span class="accent">structure.</span></h1>
-  </div>
-</section>
-
-<!-- Bridge — floats below the hero, overlapping the bottom edge -->
-<div class="hero-bridge fade-up d1">
-  <div class="bridge-card">
-    <p><strong>Context architecture.</strong> Domain knowledge graphs compressed to .md &mdash; giving every AI tool one-shot accuracy, full fidelity, and structure across siloed systems.</p>
-    <div class="bridge-metrics">3.1M lines of code &middot; One Mac Mini &middot; 170x context density &middot; 93% token compression</div>
-    <div class="hero-cta" style="margin-top:20px;">
+    <p class="hero-sub fade-up d1">Context architecture. Knowledge graphs compressed to .md.</p>
+    <div class="hero-metrics fade-up d1">170x context density &middot; 93% token compression &middot; One Mac Mini</div>
+    <div class="hero-cta fade-up d2">
       <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary glow">Book a Free Demo</a>
       <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
     </div>
   </div>
-</div>
+</section>
 
 <div class="divider"></div>
 
