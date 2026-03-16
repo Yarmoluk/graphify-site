@@ -9,9 +9,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/graphify-icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/graphify-icon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-<meta property="og:image" content="assets/graphify-icon-512.png">
+<meta property="og:image" content="assets/hero-constellation.png">
 <meta property="og:title" content="Graphify.md — Knowledge Graph Intelligence">
 <meta property="og:description" content="Structured intelligence that makes every AI tool smarter. Domain graphs delivered via MCP.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@graphifymd">
+<meta name="twitter:image" content="assets/hero-constellation.png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -128,17 +131,29 @@
     padding: 180px 0 120px;
     text-align: center;
     position: relative;
+    background: url('assets/hero-constellation.png') center center / cover no-repeat;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.55) 0%,
+      rgba(10, 10, 10, 0.3) 40%,
+      rgba(10, 10, 10, 0.45) 70%,
+      rgba(10, 10, 10, 0.95) 100%
+    );
     pointer-events: none;
+    z-index: 1;
+  }
+  .hero .container {
+    position: relative;
+    z-index: 2;
   }
   .hero h1 {
     max-width: 820px;
@@ -612,6 +627,11 @@
   .tag-gtm { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
   .tag-ops { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
   .tag-research { background: rgba(6, 182, 212, 0.12); color: #06b6d4; }
+  .tag-healthcare { background: rgba(236, 72, 153, 0.12); color: #ec4899; }
+  .tag-defense { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+  .tag-education { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+  .tag-legal { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
+  .tag-finance { background: rgba(16, 185, 129, 0.12); color: #10b981; }
 
   .case-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
   .case-client {
@@ -726,7 +746,7 @@
 <!-- Nav -->
 <nav>
   <div class="container">
-    <a href="#" class="logo">Graphify<span class="ext">.md</span></a>
+    <a href="#" class="logo"><img src="assets/graphify-logo.svg" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">Graphify<span class="ext">.md</span></a>
     <div style="display:flex; gap:24px; align-items:center;">
       <a href="#case-studies" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">Case Studies</a>
       <a href="context-architecture.html" style="color:var(--text-dim); text-decoration:none; font-size:0.85rem; font-weight:500;">The Science</a>
@@ -1081,14 +1101,14 @@
   <div class="container">
     <span class="section-label">Case Studies</span>
     <h2>Real graphs. Real results. Real businesses.</h2>
-    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">Every case study below was built with knowledge graph methodology — structured domain intelligence delivered through context architecture.</p>
+    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">3.1 million lines of code across 9 industry verticals — every case study below was built with knowledge graph methodology and context architecture.</p>
 
     <div class="case-grid">
 
       <div class="case-card">
         <div class="case-tag tag-sales">Sales Intelligence</div>
         <h3>Territory Intelligence Hub</h3>
-        <p class="case-client">Enterprise Construction Tools — Field Sales</p>
+        <p class="case-client">Enterprise Industrial Tools — Field Sales</p>
         <p class="case-desc">Transformed a 200+ account territory from a flat CRM export into a tiered intelligence system with competitive positioning, buying signal mapping, and next-best-action recommendations per account.</p>
         <div class="case-results">
           <div class="case-stat"><span class="case-num">200+</span><span class="case-label">Accounts Mapped</span></div>
@@ -1099,22 +1119,22 @@
       </div>
 
       <div class="case-card">
-        <div class="case-tag tag-strategy">Strategic Analysis</div>
-        <h3>AI Industry Power Graph</h3>
-        <p class="case-client">Competitive Intelligence — Market Landscape</p>
-        <p class="case-desc">Real-time strategic intelligence briefing mapping the $1.1T AI industry. 4 parallel web searches, entity extraction, relationship mapping, and embedded SVG visualizations — built in a single terminal session.</p>
+        <div class="case-tag tag-healthcare">Healthcare</div>
+        <h3>Clinical Operations Graph</h3>
+        <p class="case-client">Home Health &amp; Community Care Provider</p>
+        <p class="case-desc">Built a knowledge graph mapping organizational structure, service lines, regulatory relationships, and patient care pathways for a 40,000+ employee healthcare network. Surfaced operational bottlenecks invisible in flat reporting.</p>
         <div class="case-results">
-          <div class="case-stat"><span class="case-num">14</span><span class="case-label">Entities</span></div>
-          <div class="case-stat"><span class="case-num">16</span><span class="case-label">Relationships</span></div>
-          <div class="case-stat"><span class="case-num">93%</span><span class="case-label">Token Compression</span></div>
+          <div class="case-stat"><span class="case-num">40K+</span><span class="case-label">Employees Mapped</span></div>
+          <div class="case-stat"><span class="case-num">12</span><span class="case-label">Service Lines</span></div>
+          <div class="case-stat"><span class="case-num">Live</span><span class="case-label">Interactive Demo</span></div>
         </div>
-        <div class="case-method">Graph: capital flows → strategic positioning → market share → structural gap analysis</div>
+        <div class="case-method">Graph: org structure → service lines → regulatory bodies → care pathways → operational dependencies</div>
       </div>
 
       <div class="case-card">
         <div class="case-tag tag-gtm">Go-to-Market</div>
         <h3>Multi-Vertical Account Strategy</h3>
-        <p class="case-client">Emerging Hardware Technology — Airport & Hospitality</p>
+        <p class="case-client">Emerging Hardware Technology — 2 Verticals</p>
         <p class="case-desc">Built a complete go-to-market intelligence system across 50+ target accounts in 2 verticals. Per-account strategy briefs, contact mapping, event-driven timing windows, and email templates — all from a knowledge graph of the market.</p>
         <div class="case-results">
           <div class="case-stat"><span class="case-num">50+</span><span class="case-label">Accounts Profiled</span></div>
@@ -1125,9 +1145,9 @@
       </div>
 
       <div class="case-card">
-        <div class="case-tag tag-ops">Operations</div>
+        <div class="case-tag tag-finance">Capital &amp; Finance</div>
         <h3>Investor Intelligence Model</h3>
-        <p class="case-client">Sports Academy — $92.8M Capital Raise</p>
+        <p class="case-client">Youth Athletics Organization — Capital Raise</p>
         <p class="case-desc">Structured a 24-slide investor deck from raw operational data — enrollment models, P&L projections, PropCo/OpCo separation, unit economics, and team profiles. Knowledge graph mapped every financial dependency and risk pathway.</p>
         <div class="case-results">
           <div class="case-stat"><span class="case-num">$92.8M</span><span class="case-label">Capital Modeled</span></div>
@@ -1138,10 +1158,49 @@
       </div>
 
       <div class="case-card">
+        <div class="case-tag tag-education">Education</div>
+        <h3>Intelligent Textbook Engine</h3>
+        <p class="case-client">University Courseware — AI &amp; Knowledge Systems</p>
+        <p class="case-desc">12-step pipeline that generates full interactive textbooks from a single course description. Learning graph of 200+ concepts drives chapter sequencing, microsimulations, glossaries, quizzes, and prerequisite mapping.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">200+</span><span class="case-label">Concepts per Graph</span></div>
+          <div class="case-stat"><span class="case-num">12</span><span class="case-label">Pipeline Steps</span></div>
+          <div class="case-stat"><span class="case-num">3,500+</span><span class="case-label">Words per Chapter</span></div>
+        </div>
+        <div class="case-method">Graph: learning objectives → concept DAG → prerequisite chains → chapter flow → assessment mapping</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-strategy">Strategic Analysis</div>
+        <h3>Competitive Power Graph</h3>
+        <p class="case-client">Market Intelligence — Industry Landscape</p>
+        <p class="case-desc">Real-time strategic intelligence briefing mapping a trillion-dollar industry. Parallel web research, entity extraction, relationship mapping, and embedded SVG visualizations — built in a single terminal session.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">14</span><span class="case-label">Entities</span></div>
+          <div class="case-stat"><span class="case-num">16</span><span class="case-label">Relationships</span></div>
+          <div class="case-stat"><span class="case-num">93%</span><span class="case-label">Token Compression</span></div>
+        </div>
+        <div class="case-method">Graph: capital flows → strategic positioning → market share → structural gap analysis</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-legal">Legal &amp; IP</div>
+        <h3>Patent Docketing Graph</h3>
+        <p class="case-client">IP Law — Portfolio Management</p>
+        <p class="case-desc">Knowledge graph of patent families, prosecution timelines, claim dependencies, and deadline chains. Replaces manual docket tracking with a traversable graph that surfaces upcoming deadlines and related prior art automatically.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">Graph</span><span class="case-label">Claim Mapping</span></div>
+          <div class="case-stat"><span class="case-num">Auto</span><span class="case-label">Deadline Alerts</span></div>
+          <div class="case-stat"><span class="case-num">Multi</span><span class="case-label">Portfolio Support</span></div>
+        </div>
+        <div class="case-method">Graph: patent families → claim trees → prosecution history → deadline chains → prior art links</div>
+      </div>
+
+      <div class="case-card">
         <div class="case-tag tag-research">Rapid Intelligence</div>
-        <h3>Entity Knowledge Graph in 20 Minutes</h3>
-        <p class="case-client">Executive Research — From LinkedIn to Full Graph</p>
-        <p class="case-desc">Starting from a single LinkedIn URL, built a complete knowledge graph of an executive's domain: 16 entities, 27 relationships, 6 domains researched, 12 published sources — all in ~20 minutes.</p>
+        <h3>Entity Graph in 20 Minutes</h3>
+        <p class="case-client">Executive Research — Profile to Full Graph</p>
+        <p class="case-desc">Starting from a single LinkedIn profile, built a complete knowledge graph of an executive's domain: 16 entities, 27 relationships, 6 domains researched, 12 published sources — all in under 20 minutes.</p>
         <div class="case-results">
           <div class="case-stat"><span class="case-num">16</span><span class="case-label">Entities Extracted</span></div>
           <div class="case-stat"><span class="case-num">27</span><span class="case-label">Relationships</span></div>
@@ -1153,7 +1212,7 @@
       <div class="case-card">
         <div class="case-tag tag-ops">Operations</div>
         <h3>AI Product Coaching System</h3>
-        <p class="case-client">Enterprise PM Enablement — SDLC/PDLC Intelligence</p>
+        <p class="case-client">Enterprise Enablement — SDLC/PDLC</p>
         <p class="case-desc">Graph-powered coaching platform mapping the full product development lifecycle — methodology frameworks, decision gates, artifact templates, and competency models. AI coach reasons through the graph to give context-specific guidance.</p>
         <div class="case-results">
           <div class="case-stat"><span class="case-num">Full</span><span class="case-label">SDLC Coverage</span></div>
@@ -1161,6 +1220,32 @@
           <div class="case-stat"><span class="case-num">Role</span><span class="case-label">Specific Guidance</span></div>
         </div>
         <div class="case-method">Graph: methodology → phases → artifacts → competencies → decision points → coaching triggers</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-ops">IoT &amp; Industrial</div>
+        <h3>Sensor Network Intelligence</h3>
+        <p class="case-client">Industrial Monitoring — Tank &amp; Asset Management</p>
+        <p class="case-desc">Knowledge graph connecting IoT sensor networks, asset hierarchies, maintenance schedules, and alert thresholds. Enables multi-hop reasoning from a single sensor reading to upstream supply chain impact.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">1000+</span><span class="case-label">Sensors Mapped</span></div>
+          <div class="case-stat"><span class="case-num">Multi</span><span class="case-label">Hop Reasoning</span></div>
+          <div class="case-stat"><span class="case-num">Real</span><span class="case-label">Time Alerts</span></div>
+        </div>
+        <div class="case-method">Graph: sensor nodes → asset hierarchy → maintenance rules → alert chains → supply chain impact</div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag tag-education">Education</div>
+        <h3>Enrollment Intelligence Agent</h3>
+        <p class="case-client">Private Academy — Admissions Pipeline</p>
+        <p class="case-desc">AI enrollment agent backed by a knowledge graph of programs, pricing tiers, scholarship criteria, and family profiles. Answers prospective parent questions with graph-grounded responses and routes qualified leads automatically.</p>
+        <div class="case-results">
+          <div class="case-stat"><span class="case-num">24/7</span><span class="case-label">Agent Availability</span></div>
+          <div class="case-stat"><span class="case-num">Graph</span><span class="case-label">Grounded Answers</span></div>
+          <div class="case-stat"><span class="case-num">Auto</span><span class="case-label">Lead Routing</span></div>
+        </div>
+        <div class="case-method">Graph: programs → pricing → scholarships → family profiles → qualification rules → enrollment funnel</div>
       </div>
 
     </div>

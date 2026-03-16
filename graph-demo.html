@@ -533,8 +533,8 @@ function animateCounter(id, target) {
 // ═══════════════════════════════════════
 
 function physics() {
-  const damping = 0.94;
-  const spring = 0.008;
+  const damping = 0.97;
+  const spring = 0.003;
 
   nodes.forEach(n => {
     if (!n.visible) return;
@@ -553,7 +553,7 @@ function physics() {
       const dist = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
       const minDist = (n.size + m.size) * 3;
       if (dist < minDist) {
-        const force = (minDist - dist) / dist * 0.15;
+        const force = (minDist - dist) / dist * 0.05;
         n.vx += ddx * force;
         n.vy += ddy * force;
       }
@@ -561,6 +561,10 @@ function physics() {
 
     n.vx *= damping;
     n.vy *= damping;
+    // Cap velocity — no bouncing, just slow drift
+    const maxV = 1.2;
+    n.vx = Math.max(-maxV, Math.min(maxV, n.vx));
+    n.vy = Math.max(-maxV, Math.min(maxV, n.vy));
     n.x += n.vx;
     n.y += n.vy;
 
