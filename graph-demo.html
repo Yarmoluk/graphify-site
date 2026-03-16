@@ -81,24 +81,6 @@
   .node-info .conns { margin-top: 10px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
   .node-info .conns span { color: #4f8fff; font-weight: 600; }
 
-  .back-link {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    z-index: 10;
-    color: #4f8fff;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border: 1px solid rgba(79,143,255,0.25);
-    border-radius: 8px;
-    transition: all 0.3s;
-  }
-  .back-link:hover {
-    background: rgba(79,143,255,0.1);
-    box-shadow: 0 0 30px rgba(79,143,255,0.15);
-  }
 
   .stage-label {
     position: absolute;
@@ -159,8 +141,11 @@
 <body>
 
 <div class="overlay">
-  <h1>Graphify<span class="ext">.md</span></h1>
-  <p>Watch the knowledge graph unfold. Click nodes to explore. Use controls to expand layers.</p>
+  <a href="index.html" style="text-decoration:none;pointer-events:auto;display:flex;align-items:center;gap:8px;">
+    <img src="assets/graphify-logo.svg" alt="" style="width:24px;height:24px;">
+    <h1>Graphify<span class="ext">.md</span></h1>
+  </a>
+  <p>Click nodes to explore. Use controls to expand layers.</p>
 </div>
 
 <div class="stats-bar">
@@ -191,7 +176,6 @@
   <div class="conns">Connected to <span id="nodeConns">0</span> other concepts</div>
 </div>
 
-<a href="index.html" class="back-link">Back to Graphify.md</a>
 
 <canvas id="canvas"></canvas>
 
