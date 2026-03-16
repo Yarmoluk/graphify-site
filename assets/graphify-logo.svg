@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Core glow gradient -->
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="30%" stop-color="#c8dfff" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#4f8fff" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1a3a6e" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Spoke gradient — white center to blue tip -->
+    <linearGradient id="spokeBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#7ab4ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- Spoke gradient — white center to white tip (thinner spokes) -->
+    <linearGradient id="spokeWhite" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#d0e4ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#a0c4ff" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- Sparkle gradient -->
+    <radialGradient id="sparkle" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Background gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#060c18"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+
+    <!-- Outer halo -->
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4f8fff" stop-opacity="0"/>
+      <stop offset="60%" stop-color="#4f8fff" stop-opacity="0"/>
+      <stop offset="80%" stop-color="#4f8fff" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#4f8fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="url(#bgGrad)"/>
+
+  <!-- Outer halo ring -->
+  <circle cx="256" cy="256" r="240" fill="url(#halo)"/>
+
+  <g transform="translate(256,256)">
+
+    <!-- === MAJOR BLUE SPOKES (8) — thick, prominent === -->
+    <!-- 0deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(0)"/>
+    <!-- 45deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(45)"/>
+    <!-- 90deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(90)"/>
+    <!-- 135deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(135)"/>
+    <!-- 180deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(180)"/>
+    <!-- 225deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(225)"/>
+    <!-- 270deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(270)"/>
+    <!-- 315deg -->
+    <polygon points="0,-8 195,-2 200,0 195,2 0,8" fill="url(#spokeBlue)" transform="rotate(315)"/>
+
+    <!-- === SECONDARY SPOKES (8) — thinner, longer, white === -->
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(22.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(67.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(112.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(157.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(202.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(247.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(292.5)"/>
+    <polygon points="0,-3 165,-0.8 170,0 165,0.8 0,3" fill="url(#spokeWhite)" transform="rotate(337.5)"/>
+
+    <!-- === TERTIARY FINE SPOKES (16) — hairline, ethereal === -->
+    <line x1="0" y1="0" x2="140" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(11.25)"/>
+    <line x1="0" y1="0" x2="130" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.3" transform="rotate(33.75)"/>
+    <line x1="0" y1="0" x2="145" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(56.25)"/>
+    <line x1="0" y1="0" x2="125" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.25" transform="rotate(78.75)"/>
+    <line x1="0" y1="0" x2="140" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(101.25)"/>
+    <line x1="0" y1="0" x2="135" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.3" transform="rotate(123.75)"/>
+    <line x1="0" y1="0" x2="145" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(146.25)"/>
+    <line x1="0" y1="0" x2="130" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.25" transform="rotate(168.75)"/>
+    <line x1="0" y1="0" x2="140" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(191.25)"/>
+    <line x1="0" y1="0" x2="125" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.3" transform="rotate(213.75)"/>
+    <line x1="0" y1="0" x2="145" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(236.25)"/>
+    <line x1="0" y1="0" x2="135" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.25" transform="rotate(258.75)"/>
+    <line x1="0" y1="0" x2="140" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(281.25)"/>
+    <line x1="0" y1="0" x2="130" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.3" transform="rotate(303.75)"/>
+    <line x1="0" y1="0" x2="145" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.35" transform="rotate(326.25)"/>
+    <line x1="0" y1="0" x2="125" y2="0" stroke="#a0c4ff" stroke-width="0.6" opacity="0.25" transform="rotate(348.75)"/>
+
+    <!-- === SPARKLES — diamond shapes scattered around === -->
+    <!-- Near sparkles -->
+    <g transform="translate(85,-65) rotate(45)">
+      <rect x="-3" y="-3" width="6" height="6" fill="#ffffff" opacity="0.8"/>
+    </g>
+    <g transform="translate(-70,90) rotate(45)">
+      <rect x="-2.5" y="-2.5" width="5" height="5" fill="#ffffff" opacity="0.7"/>
+    </g>
+    <g transform="translate(110,40) rotate(45)">
+      <rect x="-2" y="-2" width="4" height="4" fill="#ffffff" opacity="0.6"/>
+    </g>
+    <g transform="translate(-95,-50) rotate(45)">
+      <rect x="-2" y="-2" width="4" height="4" fill="#ffffff" opacity="0.65"/>
+    </g>
+    <g transform="translate(45,105) rotate(45)">
+      <rect x="-2.5" y="-2.5" width="5" height="5" fill="#ffffff" opacity="0.7"/>
+    </g>
+    <g transform="translate(-55,-100) rotate(45)">
+      <rect x="-2" y="-2" width="4" height="4" fill="#d0e4ff" opacity="0.55"/>
+    </g>
+    <g transform="translate(130,-25) rotate(45)">
+      <rect x="-1.5" y="-1.5" width="3" height="3" fill="#ffffff" opacity="0.5"/>
+    </g>
+    <g transform="translate(-120,30) rotate(45)">
+      <rect x="-1.5" y="-1.5" width="3" height="3" fill="#d0e4ff" opacity="0.5"/>
+    </g>
+
+    <!-- Cross sparkles (4-point star shapes) -->
+    <g transform="translate(75,85)" opacity="0.6">
+      <line x1="-5" y1="0" x2="5" y2="0" stroke="#ffffff" stroke-width="1"/>
+      <line x1="0" y1="-5" x2="0" y2="5" stroke="#ffffff" stroke-width="1"/>
+    </g>
+    <g transform="translate(-100,-85)" opacity="0.5">
+      <line x1="-4" y1="0" x2="4" y2="0" stroke="#ffffff" stroke-width="0.8"/>
+      <line x1="0" y1="-4" x2="0" y2="4" stroke="#ffffff" stroke-width="0.8"/>
+    </g>
+    <g transform="translate(-40,130)" opacity="0.45">
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" stroke="#d0e4ff" stroke-width="0.8"/>
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" stroke="#d0e4ff" stroke-width="0.8"/>
+    </g>
+    <g transform="translate(145,70)" opacity="0.4">
+      <line x1="-3" y1="0" x2="3" y2="0" stroke="#ffffff" stroke-width="0.7"/>
+      <line x1="0" y1="-3" x2="0" y2="3" stroke="#ffffff" stroke-width="0.7"/>
+    </g>
+
+    <!-- === CORE CENTER — bright white with blue glow === -->
+    <circle cx="0" cy="0" r="45" fill="url(#coreGlow)"/>
+    <circle cx="0" cy="0" r="22" fill="#ffffff" opacity="0.95"/>
+    <circle cx="0" cy="0" r="14" fill="#ffffff"/>
+
+  </g>
+</svg>
