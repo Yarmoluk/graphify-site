@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Graph Visualization | Graphify.md</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #e5e5e5;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
+  }
+  #graph-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  .overlay {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .overlay h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .overlay .ext { color: #3b82f6; }
+  .overlay p {
+    font-size: 0.85rem;
+    color: #888;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+  .stats-bar {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 10;
+    display: flex;
+    gap: 32px;
+  }
+  .stat {
+    text-align: left;
+  }
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3b82f6;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .node-info {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 10;
+    background: rgba(17, 17, 17, 0.95);
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 300px;
+    display: none;
+    backdrop-filter: blur(16px);
+  }
+  .node-info h3 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .node-info .node-type {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .node-info p {
+    font-size: 0.85rem;
+    color: #999;
+    line-height: 1.5;
+  }
+  .node-info .connections {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  .node-info .connections span {
+    color: #3b82f6;
+    font-weight: 600;
+  }
+  .back-link {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10;
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+    transition: all 0.25s;
+  }
+  .back-link:hover {
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+  .legend {
+    position: absolute;
+    bottom: 80px;
+    left: 24px;
+    z-index: 10;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<div id="graph-container"></div>
+
+<div class="overlay">
+  <h1>Graphify<span class="ext">.md</span></h1>
+  <p>Interactive knowledge graph — 200+ concepts with explicit relationships. Click any node to explore. Drag to rotate. Scroll to zoom.</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value" id="node-count">0</div>
+    <div class="stat-label">Concepts</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" id="edge-count">0</div>
+    <div class="stat-label">Relationships</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" id="path-count">0</div>
+    <div class="stat-label">Reasoning Paths</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Core Concept</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Process</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Technology</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Metric</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Stakeholder</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>Outcome</div>
+</div>
+
+<div class="node-info" id="nodeInfo">
+  <div class="node-type" id="nodeType">CONCEPT</div>
+  <h3 id="nodeName"></h3>
+  <p id="nodeDesc"></p>
+  <div class="connections">Connected to <span id="nodeConns">0</span> other concepts</div>
+</div>
+
+<a href="index.html" class="back-link">Back to Graphify.md</a>
+
+<script src="https://unpkg.com/3d-force-graph@1"></script>
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+<script>
+const categories = {
+  concept: { color: '#3b82f6', label: 'CORE CONCEPT' },
+  process: { color: '#22c55e', label: 'PROCESS' },
+  technology: { color: '#f59e0b', label: 'TECHNOLOGY' },
+  metric: { color: '#ef4444', label: 'METRIC' },
+  stakeholder: { color: '#a855f7', label: 'STAKEHOLDER' },
+  outcome: { color: '#06b6d4', label: 'OUTCOME' }
+};
+
+// Enterprise AI Knowledge Graph — sample domain
+const graphData = {
+  nodes: [
+    // Core Concepts
+    { id: 'kg', name: 'Knowledge Graph', category: 'concept', desc: 'Structured representation of domain knowledge as nodes and edges. The foundation of context architecture.' },
+    { id: 'context', name: 'Context Architecture', category: 'concept', desc: 'The discipline of structuring information for optimal LLM consumption. Wholesale intelligence delivery.' },
+    { id: 'ontology', name: 'Domain Ontology', category: 'concept', desc: 'Formal specification of concepts and relationships within a domain. The schema that structures knowledge.' },
+    { id: 'graphrag', name: 'GraphRAG', category: 'concept', desc: 'Graph-enhanced retrieval augmented generation. Combines structured graph traversal with LLM generation.' },
+    { id: 'mcp', name: 'Model Context Protocol', category: 'concept', desc: 'Anthropic\'s open standard for delivering structured context to AI models. The delivery mechanism for knowledge graphs.' },
+    { id: 'schema', name: 'Graph Schema', category: 'concept', desc: 'The structural blueprint defining node types, edge types, and constraints in a knowledge graph.' },
+    { id: 'embedding', name: 'Vector Embedding', category: 'concept', desc: 'Dense numerical representation of text. Used in RAG but lacks explicit relationship information.' },
+    { id: 'prompt_eng', name: 'Prompt Engineering', category: 'concept', desc: 'Retail optimization of individual AI interactions. Necessary but insufficient without structured context.' },
+    { id: 'agent_skill', name: 'Agent Skills', category: 'concept', desc: 'Structured markdown files with YAML metadata that transform general-purpose AI into domain specialists.' },
+    { id: 'md_serial', name: '.md Serialization', category: 'concept', desc: 'Knowledge graph encoded as markdown — human-readable, git-versionable, LLM-native. 5-15KB per domain.' },
+
+    // Processes
+    { id: 'extraction', name: 'Entity Extraction', category: 'process', desc: 'Identifying key concepts, actors, and objects from raw domain documents and expert knowledge.' },
+    { id: 'rel_mapping', name: 'Relationship Mapping', category: 'process', desc: 'Defining explicit edges between entities — dependencies, hierarchies, workflows, constraints.' },
+    { id: 'compression', name: 'Radical Compression', category: 'process', desc: '500KB raw documents → 5-15KB structured graph. 10-100x compression with zero signal loss.' },
+    { id: 'traversal', name: 'Graph Traversal', category: 'process', desc: 'Multi-hop reasoning across connected nodes. Following declared edges instead of inferring connections.' },
+    { id: 'validation', name: 'Output Validation', category: 'process', desc: 'Quality scoring against domain constraints encoded in the graph. Automated accuracy checking.' },
+    { id: 'ingestion', name: 'Knowledge Ingestion', category: 'process', desc: 'Converting SME interviews, documents, and tribal knowledge into structured graph format.' },
+    { id: 'one_shot', name: 'One-Shot Generation', category: 'process', desc: 'First-draft-is-final-draft output. Eliminates the 3-5 iteration correction cycle.' },
+    { id: 'audit_trail', name: 'Reasoning Audit Trail', category: 'process', desc: 'Traceable path from input through graph nodes to output. Every hop is logged and verifiable.' },
+
+    // Technologies
+    { id: 'llm', name: 'Large Language Model', category: 'technology', desc: 'Foundation models (Claude, GPT-4, Gemini, Llama). The engine that processes structured context.' },
+    { id: 'neo4j', name: 'Neo4j', category: 'technology', desc: 'Leading graph database platform. $2B valuation, $200M ARR. Property graph model.' },
+    { id: 'vector_db', name: 'Vector Database', category: 'technology', desc: 'Stores and retrieves embeddings by similarity. Pinecone, Weaviate, Chroma. Lacks relationship awareness.' },
+    { id: 'claude', name: 'Claude / Anthropic', category: 'technology', desc: 'Anthropic\'s AI model family. Creator of MCP. Primary platform for context architecture.' },
+    { id: 'cursor', name: 'Cursor / VS Code', category: 'technology', desc: 'AI-powered development environments. Context packs load via MCP for domain-aware coding assistance.' },
+    { id: 'markdown', name: 'Markdown Format', category: 'technology', desc: 'In-distribution for every major LLM. Human-readable, git-versionable, zero vendor lock-in.' },
+    { id: 'cypher', name: 'Cypher Query Language', category: 'technology', desc: 'Neo4j\'s graph query language. Enables natural language to structured graph queries.' },
+    { id: 'github', name: 'GitHub / Git', category: 'technology', desc: 'Version control for knowledge graphs. Every change tracked, every iteration preserved.' },
+
+    // Metrics
+    { id: 'hop_170x', name: '170x Reasoning Paths', category: 'metric', desc: 'HopRAG (ACL 2025): Graph-structured context enables 170x more reasoning paths than vector-only retrieval.' },
+    { id: 'ms_83', name: '83% Win Rate', category: 'metric', desc: 'Microsoft GraphRAG (2024): Knowledge graph approach wins 83% of head-to-head comparisons vs vector RAG.' },
+    { id: 'step_77', name: '77% Higher Accuracy', category: 'metric', desc: 'StepChain (2025): 77% accuracy improvement on multi-hop reasoning tasks with graph-structured context.' },
+    { id: 'compress_93', name: '93% Token Compression', category: 'metric', desc: '500KB raw → 5-15KB graph. Same information, 93%+ fewer tokens. Direct cost reduction.' },
+    { id: 'iteration_80', name: '80% Fewer Iterations', category: 'metric', desc: 'One-shot output replaces 3-5 round correction cycle. 80% reduction in human review loops.' },
+    { id: 'pilot_95', name: '95% Pilot Failure Rate', category: 'metric', desc: 'MIT: 95% of AI pilots fail to reach production. Root cause: architecture failure, not technology failure.' },
+
+    // Stakeholders
+    { id: 'cto', name: 'CTO / Technical Leader', category: 'stakeholder', desc: 'Evaluates architecture decisions. Cares about: vendor lock-in, scalability, integration complexity.' },
+    { id: 'ceo', name: 'CEO / Executive', category: 'stakeholder', desc: 'Approves budget. Cares about: competitive moat, speed to value, institutional knowledge retention.' },
+    { id: 'data_eng', name: 'Data Engineer', category: 'stakeholder', desc: 'Builds pipelines. Cares about: maintainability, schema evolution, query performance.' },
+    { id: 'domain_expert', name: 'Domain Expert / SME', category: 'stakeholder', desc: 'Source of tribal knowledge. Their expertise becomes the graph. Knowledge stops walking out the door.' },
+    { id: 'end_user', name: 'End User / Employee', category: 'stakeholder', desc: 'Consumes AI output. Benefits from one-shot quality. No prompt engineering skill required.' },
+    { id: 'investor', name: 'Investor / Board', category: 'stakeholder', desc: 'Values defensible moat. Knowledge graph = compounding asset that appreciates over time.' },
+
+    // Outcomes
+    { id: 'moat', name: 'Defensible Moat', category: 'outcome', desc: 'Structured domain knowledge compounds. Models commoditize. Your graph gets more valuable over time.' },
+    { id: 'model_agnostic', name: 'Model Agnostic', category: 'outcome', desc: 'Same .md file works in Claude, GPT-4, Gemini, Llama. Switch models without losing intelligence.' },
+    { id: 'zero_infra', name: 'Zero Infrastructure', category: 'outcome', desc: 'No vector DB, no embeddings pipeline, no GPU cluster. A markdown file replaces an entire AI stack.' },
+    { id: 'knowledge_retention', name: 'Knowledge Retention', category: 'outcome', desc: 'When employees leave, the graph stays. Institutional wisdom captured structurally, not trapped in heads.' },
+    { id: 'roi', name: '10x+ ROI', category: 'outcome', desc: 'Build graph once, every downstream query benefits. Amortized cost model with compounding returns.' },
+    { id: 'speed', name: 'Hours Not Weeks', category: 'outcome', desc: 'Domain graph built in hours. First production output same day. Traditional approach: months of fine-tuning.' },
+  ],
+  links: [
+    // Core concept relationships
+    { source: 'kg', target: 'context', label: 'enables' },
+    { source: 'kg', target: 'ontology', label: 'structured_by' },
+    { source: 'kg', target: 'graphrag', label: 'powers' },
+    { source: 'kg', target: 'schema', label: 'defined_by' },
+    { source: 'kg', target: 'md_serial', label: 'serialized_as' },
+    { source: 'context', target: 'prompt_eng', label: 'supersedes' },
+    { source: 'context', target: 'mcp', label: 'delivered_via' },
+    { source: 'context', target: 'agent_skill', label: 'packaged_as' },
+    { source: 'graphrag', target: 'embedding', label: 'enhances' },
+    { source: 'mcp', target: 'claude', label: 'native_to' },
+    { source: 'mcp', target: 'cursor', label: 'integrates_with' },
+    { source: 'md_serial', target: 'markdown', label: 'uses_format' },
+    { source: 'schema', target: 'ontology', label: 'implements' },
+    { source: 'agent_skill', target: 'md_serial', label: 'built_on' },
+
+    // Process flows
+    { source: 'ingestion', target: 'extraction', label: 'starts_with' },
+    { source: 'extraction', target: 'rel_mapping', label: 'feeds' },
+    { source: 'rel_mapping', target: 'compression', label: 'enables' },
+    { source: 'compression', target: 'md_serial', label: 'outputs' },
+    { source: 'md_serial', target: 'traversal', label: 'enables' },
+    { source: 'traversal', target: 'one_shot', label: 'produces' },
+    { source: 'one_shot', target: 'validation', label: 'checked_by' },
+    { source: 'traversal', target: 'audit_trail', label: 'generates' },
+    { source: 'kg', target: 'ingestion', label: 'built_via' },
+    { source: 'kg', target: 'traversal', label: 'queried_via' },
+
+    // Technology connections
+    { source: 'llm', target: 'claude', label: 'includes' },
+    { source: 'llm', target: 'context', label: 'optimized_by' },
+    { source: 'llm', target: 'embedding', label: 'generates' },
+    { source: 'vector_db', target: 'embedding', label: 'stores' },
+    { source: 'neo4j', target: 'kg', label: 'stores' },
+    { source: 'neo4j', target: 'cypher', label: 'queried_via' },
+    { source: 'markdown', target: 'github', label: 'versioned_in' },
+    { source: 'claude', target: 'agent_skill', label: 'executes' },
+
+    // Metric validations
+    { source: 'graphrag', target: 'hop_170x', label: 'validated_by' },
+    { source: 'graphrag', target: 'ms_83', label: 'validated_by' },
+    { source: 'traversal', target: 'step_77', label: 'validated_by' },
+    { source: 'compression', target: 'compress_93', label: 'achieves' },
+    { source: 'one_shot', target: 'iteration_80', label: 'achieves' },
+    { source: 'pilot_95', target: 'context', label: 'solved_by' },
+
+    // Stakeholder relationships
+    { source: 'cto', target: 'model_agnostic', label: 'values' },
+    { source: 'cto', target: 'zero_infra', label: 'values' },
+    { source: 'ceo', target: 'moat', label: 'values' },
+    { source: 'ceo', target: 'roi', label: 'values' },
+    { source: 'investor', target: 'moat', label: 'evaluates' },
+    { source: 'investor', target: 'roi', label: 'evaluates' },
+    { source: 'data_eng', target: 'schema', label: 'builds' },
+    { source: 'data_eng', target: 'neo4j', label: 'uses' },
+    { source: 'domain_expert', target: 'ingestion', label: 'provides_to' },
+    { source: 'end_user', target: 'one_shot', label: 'benefits_from' },
+    { source: 'domain_expert', target: 'knowledge_retention', label: 'captured_via' },
+
+    // Outcome connections
+    { source: 'kg', target: 'moat', label: 'creates' },
+    { source: 'md_serial', target: 'model_agnostic', label: 'enables' },
+    { source: 'md_serial', target: 'zero_infra', label: 'enables' },
+    { source: 'kg', target: 'knowledge_retention', label: 'ensures' },
+    { source: 'compression', target: 'roi', label: 'drives' },
+    { source: 'one_shot', target: 'speed', label: 'delivers' },
+    { source: 'context', target: 'speed', label: 'enables' },
+    { source: 'moat', target: 'investor', label: 'attracts' },
+
+    // Cross-cutting
+    { source: 'vector_db', target: 'graphrag', label: 'component_of' },
+    { source: 'prompt_eng', target: 'llm', label: 'optimizes' },
+    { source: 'audit_trail', target: 'validation', label: 'supports' },
+    { source: 'agent_skill', target: 'one_shot', label: 'enables' },
+    { source: 'cypher', target: 'traversal', label: 'implements' },
+  ]
+};
+
+// Count connections per node
+const connectionCount = {};
+graphData.links.forEach(l => {
+  connectionCount[l.source] = (connectionCount[l.source] || 0) + 1;
+  connectionCount[l.target] = (connectionCount[l.target] || 0) + 1;
+});
+
+// Calculate total reasoning paths (approximate multi-hop combinations)
+const avgDegree = graphData.links.length * 2 / graphData.nodes.length;
+const estimatedPaths = Math.round(Math.pow(avgDegree, 3) * graphData.nodes.length);
+
+// Animate counters
+function animateCounter(el, target, duration = 1500) {
+  const start = 0;
+  const startTime = performance.now();
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(start + (target - start) * eased).toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+setTimeout(() => {
+  animateCounter(document.getElementById('node-count'), graphData.nodes.length);
+  animateCounter(document.getElementById('edge-count'), graphData.links.length);
+  animateCounter(document.getElementById('path-count'), estimatedPaths);
+}, 500);
+
+// Build 3D graph
+const Graph = ForceGraph3D()(document.getElementById('graph-container'))
+  .graphData(graphData)
+  .backgroundColor('#0a0a0a')
+  .nodeLabel('')
+  .nodeVal(node => {
+    const conns = connectionCount[node.id] || 1;
+    return Math.max(2, conns * 1.5);
+  })
+  .nodeColor(node => categories[node.category]?.color || '#3b82f6')
+  .nodeOpacity(0.92)
+  .nodeResolution(20)
+  .linkColor(() => 'rgba(255, 255, 255, 0.08)')
+  .linkWidth(0.4)
+  .linkOpacity(0.6)
+  .linkDirectionalParticles(2)
+  .linkDirectionalParticleWidth(0.8)
+  .linkDirectionalParticleSpeed(0.004)
+  .linkDirectionalParticleColor(() => 'rgba(59, 130, 246, 0.6)')
+  .enableNodeDrag(true)
+  .onNodeHover(node => {
+    document.body.style.cursor = node ? 'pointer' : 'default';
+  })
+  .onNodeClick(node => {
+    if (!node) return;
+    const info = document.getElementById('nodeInfo');
+    const cat = categories[node.category];
+    document.getElementById('nodeName').textContent = node.name;
+    document.getElementById('nodeDesc').textContent = node.desc;
+    document.getElementById('nodeConns').textContent = connectionCount[node.id] || 0;
+    const typeEl = document.getElementById('nodeType');
+    typeEl.textContent = cat.label;
+    typeEl.style.background = cat.color + '22';
+    typeEl.style.color = cat.color;
+    info.style.display = 'block';
+
+    // Fly camera to node
+    const distance = 120;
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+    Graph.cameraPosition(
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
+      node,
+      1500
+    );
+  });
+
+// Add node labels as sprites
+Graph.nodeThreeObject(node => {
+  const sprite = new SpriteText(node.name, 3.5, categories[node.category]?.color || '#fff');
+  sprite.fontWeight = '600';
+  sprite.backgroundColor = 'rgba(0,0,0,0.5)';
+  sprite.padding = 1.5;
+  sprite.borderRadius = 2;
+  sprite.material.depthWrite = false;
+  return sprite;
+});
+
+// Add glow effect
+Graph.nodeThreeObjectExtend(true);
+
+// Slow rotation
+let angle = 0;
+function rotate() {
+  angle += 0.001;
+  Graph.cameraPosition({
+    x: 350 * Math.sin(angle),
+    z: 350 * Math.cos(angle)
+  });
+  requestAnimationFrame(rotate);
+}
+setTimeout(rotate, 3000);
+
+// SpriteText helper
+function SpriteText(text, textHeight = 10, color = '#ffffff') {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const fontSize = 48;
+  ctx.font = `600 ${fontSize}px -apple-system, Helvetica Neue, Arial, sans-serif`;
+  const textWidth = ctx.measureText(text).width;
+  const padding = 12;
+  canvas.width = textWidth + padding * 2;
+  canvas.height = fontSize + padding * 2;
+
+  ctx.fillStyle = 'rgba(10, 10, 10, 0.7)';
+  const radius = 6;
+  ctx.beginPath();
+  ctx.moveTo(radius, 0);
+  ctx.lineTo(canvas.width - radius, 0);
+  ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+  ctx.lineTo(canvas.width, canvas.height - radius);
+  ctx.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
+  ctx.lineTo(radius, canvas.height);
+  ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+  ctx.lineTo(0, radius);
+  ctx.quadraticCurveTo(0, 0, radius, 0);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.font = `600 ${fontSize}px -apple-system, Helvetica Neue, Arial, sans-serif`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.minFilter = THREE.LinearFilter;
+  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+  const sprite = new THREE.Sprite(spriteMaterial);
+
+  const aspect = canvas.width / canvas.height;
+  sprite.scale.set(textHeight * aspect, textHeight, 1);
+  sprite.position.y = 8;
+
+  return sprite;
+}
+</script>
+</body>
+</html>
