@@ -782,12 +782,26 @@
     50%  { opacity: 0.8; transform: translateY(-2px); filter: blur(0px); }
     100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
   }
+  @keyframes logoSettle {
+    0%   { opacity: 0; transform: scale(0.3) rotate(-30deg); filter: blur(6px); }
+    50%  { opacity: 0.9; transform: scale(1.08) rotate(5deg); filter: blur(0px); }
+    75%  { opacity: 1; transform: scale(0.98) rotate(-1deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .hero-logo {
+    margin-bottom: 20px;
+  }
+  .hero-logo.fade-up {
+    animation: logoSettle 1.8s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+    opacity: 0;
+  }
   .fade-up {
     animation: settle 1.4s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
     opacity: 0;
   }
-  .fade-up.d1 { animation: settleLeft 1.6s cubic-bezier(0.22, 0.9, 0.36, 1) 0.3s forwards; opacity: 0; }
-  .fade-up.d2 { animation: settlePills 1.2s cubic-bezier(0.22, 0.9, 0.36, 1) 0.7s forwards; opacity: 0; }
+  .fade-up.d05 { animation: settle 1.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.15s forwards; opacity: 0; }
+  .fade-up.d1 { animation: settleLeft 1.6s cubic-bezier(0.22, 0.9, 0.36, 1) 0.4s forwards; opacity: 0; }
+  .fade-up.d2 { animation: settlePills 1.2s cubic-bezier(0.22, 0.9, 0.36, 1) 0.8s forwards; opacity: 0; }
   .fade-up.d3 { animation: settle 1.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.5s forwards; opacity: 0; }
   .fade-up.d4 { animation: settle 1.4s cubic-bezier(0.22, 0.9, 0.36, 1) 0.7s forwards; opacity: 0; }
 
@@ -929,7 +943,8 @@
 <section class="hero">
   <canvas class="hero-network" id="heroNet"></canvas>
   <div class="container">
-    <h1 class="fade-up">Too much data.<br>Too little <span class="accent">structure.</span></h1>
+    <div class="hero-logo fade-up"><img src="assets/graphify-logo.svg" alt="Graphify.md" style="width:64px;height:64px;"></div>
+    <h1 class="fade-up d05">Too much data.<br>Too little <span class="accent">structure.</span></h1>
     <p class="subtext fade-up d1"><strong>Context architecture.</strong> Domain knowledge graphs compressed to .md &mdash; giving every AI tool one-shot accuracy, full fidelity, and structure across siloed systems.<br><span style="color:var(--text-dim);font-size:0.85em;">3.1M lines of code &middot; One Mac Mini &middot; 170x context density &middot; 93% token compression</span></p>
     <div class="hero-cta fade-up d2">
       <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary glow">Book a Free Demo</a>
