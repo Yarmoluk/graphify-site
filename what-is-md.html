@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is .md? — The File Format That's Becoming AI's Native Language</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, rgba(59,130,246,0.08) 0%, transparent 60%);
+}
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+.hero h1 .ext { color: #3b82f6; }
+.hero .sub { font-size: clamp(1rem, 2.5vw, 1.3rem); color: #888; max-width: 640px; margin: 0 auto 32px; }
+.hero .scroll-hint { font-size: 12px; color: #444; letter-spacing: 2px; text-transform: uppercase; margin-top: 40px; animation: bob 2s infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* Container */
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+section { padding: 100px 0; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, #1e1e1e 30%, #1e1e1e 70%, transparent); margin: 0 auto; max-width: 900px; }
+
+/* Section labels */
+.section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3b82f6; margin-bottom: 12px; display: block; }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; color: #fff; margin-bottom: 20px; letter-spacing: -0.02em; line-height: 1.2; }
+
+/* Timeline */
+.timeline { position: relative; margin: 40px 0; padding-left: 40px; }
+.timeline::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #3b82f6 0%, #8b5cf6 33%, #06b6d4 66%, #22c55e 100%); border-radius: 2px; }
+.timeline-item { position: relative; margin-bottom: 48px; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: #0a0a0a;
+}
+.timeline-item:nth-child(1)::before { border-color: #3b82f6; box-shadow: 0 0 12px rgba(59,130,246,0.4); }
+.timeline-item:nth-child(2)::before { border-color: #8b5cf6; box-shadow: 0 0 12px rgba(139,92,246,0.4); }
+.timeline-item:nth-child(3)::before { border-color: #06b6d4; box-shadow: 0 0 12px rgba(6,182,212,0.4); }
+.timeline-item:nth-child(4)::before { border-color: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.4); }
+.timeline-item:nth-child(5)::before { border-color: #22c55e; box-shadow: 0 0 12px rgba(34,197,94,0.4); }
+.timeline-item:nth-child(6)::before { border-color: #ec4899; box-shadow: 0 0 12px rgba(236,72,153,0.4); }
+.timeline-year { font-size: 13px; font-weight: 700; color: #3b82f6; letter-spacing: 1px; margin-bottom: 4px; }
+.timeline-item:nth-child(2) .timeline-year { color: #8b5cf6; }
+.timeline-item:nth-child(3) .timeline-year { color: #06b6d4; }
+.timeline-item:nth-child(4) .timeline-year { color: #f59e0b; }
+.timeline-item:nth-child(5) .timeline-year { color: #22c55e; }
+.timeline-item:nth-child(6) .timeline-year { color: #ec4899; }
+.timeline-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.timeline-desc { font-size: 0.95rem; color: #888; line-height: 1.7; }
+
+/* Code block */
+.code-block {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 24px 0;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #a0a0a0;
+  overflow-x: auto;
+}
+.code-block .comment { color: #444; }
+.code-block .key { color: #3b82f6; }
+.code-block .val { color: #22c55e; }
+.code-block .heading { color: #f59e0b; font-weight: 700; }
+.code-block .entity { color: #8b5cf6; }
+.code-block .rel { color: #06b6d4; }
+
+/* Cards */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 32px 0; }
+.card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 28px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.card:hover { border-color: #2a2a2a; transform: translateY(-2px); }
+.card h3 { font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
+.card p { font-size: 0.9rem; color: #888; }
+.card .icon { font-size: 28px; margin-bottom: 12px; display: block; }
+
+/* Comparison */
+.compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0; }
+@media (max-width: 640px) { .compare-row { grid-template-columns: 1fr; } }
+.compare-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 28px; }
+.compare-card.old { border-top: 3px solid #444; }
+.compare-card.new { border-top: 3px solid #3b82f6; }
+.compare-card h3 { font-size: 1rem; margin-bottom: 12px; }
+.compare-card .tag { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+.compare-card.old .tag { background: #1e1e1e; color: #666; }
+.compare-card.new .tag { background: rgba(59,130,246,0.15); color: #3b82f6; }
+.compare-card ul { list-style: none; }
+.compare-card ul li { padding: 6px 0; font-size: 0.9rem; color: #888; border-bottom: 1px solid #1a1a1a; }
+.compare-card ul li:last-child { border-bottom: none; }
+.compare-card ul li::before { content: '→ '; color: #444; }
+.compare-card.new ul li::before { color: #3b82f6; }
+
+/* Stats row */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 40px 0; }
+.stat-box { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 24px; text-align: center; }
+.stat-box .number { font-size: 2rem; font-weight: 800; color: #3b82f6; display: block; }
+.stat-box .label { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+/* Quote */
+.quote-section { text-align: center; padding: 80px 24px; }
+.quote { font-size: clamp(1.2rem, 3vw, 1.8rem); font-style: italic; color: #ccc; max-width: 700px; margin: 0 auto 16px; line-height: 1.6; }
+.quote span { color: #3b82f6; font-weight: 600; }
+.quote-author { font-size: 0.85rem; color: #444; }
+
+/* CTA */
+.cta-section { text-align: center; padding: 80px 24px; }
+.cta-section h2 { margin-bottom: 16px; }
+.cta-section p { color: #888; margin-bottom: 28px; font-size: 1.05rem; }
+.btn { display: inline-block; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.25s; }
+.btn-primary { background: #3b82f6; color: #fff; }
+.btn-primary:hover { background: #2563eb; box-shadow: 0 0 30px rgba(59,130,246,0.35); transform: translateY(-1px); }
+
+/* Footer */
+.footer { text-align: center; padding: 40px; font-size: 11px; color: #333; border-top: 1px solid #1a1a1a; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Flow diagram */
+.flow { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 32px 0; flex-wrap: wrap; }
+.flow-box { background: #111; border: 1px solid #1e1e1e; border-radius: 8px; padding: 12px 20px; font-size: 13px; font-weight: 600; color: #ccc; text-align: center; }
+.flow-box.active { border-color: #3b82f6; color: #3b82f6; background: rgba(59,130,246,0.08); }
+.flow-arrow { color: #333; font-size: 18px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div>
+    <h1>What is <span class="ext">.md</span> ?</h1>
+    <p class="sub">The simplest file format on Earth became AI's most powerful input. Here's how a text file created for documentation became the native language of machine intelligence.</p>
+    <div class="scroll-hint">scroll to explore</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Origin Story -->
+<section>
+  <div class="container">
+    <span class="section-label">Origin Story</span>
+    <h2>A file format born from frustration</h2>
+    <p style="color:#888;max-width:700px;margin-bottom:40px;">In 2004, John Gruber had a problem. Writing for the web meant drowning in HTML tags. He wanted to write naturally — with plain text — and have it convert to clean HTML automatically. So he created Markdown.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2004</div>
+        <div class="timeline-title">John Gruber creates Markdown</div>
+        <div class="timeline-desc">A plain-text formatting syntax designed to be readable as-is. No tags. No brackets. Just text with simple conventions: # for headings, * for emphasis, - for lists. The file extension: <strong>.md</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2008-2012</div>
+        <div class="timeline-title">GitHub adopts Markdown</div>
+        <div class="timeline-desc">README.md becomes the standard. Every open-source project on Earth writes its documentation in Markdown. Developers start thinking in .md by default.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2014</div>
+        <div class="timeline-title">CommonMark standardizes the spec</div>
+        <div class="timeline-desc">The community formalizes Markdown into a consistent specification. Tools like Obsidian, Notion, and static site generators build entire ecosystems around .md files.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022-2023</div>
+        <div class="timeline-title">LLMs are trained on Markdown</div>
+        <div class="timeline-desc">GPT, Claude, Gemini — every major language model was trained on billions of .md files from GitHub, documentation, and the open web. Markdown becomes the format AI understands best. Not by design. By accident.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2024-2025</div>
+        <div class="timeline-title">Context engineering discovers .md</div>
+        <div class="timeline-desc">Researchers find that structured Markdown — with frontmatter, headings, relationships, and constraints — produces dramatically better AI output than raw text or vector retrieval. The .md file becomes a context delivery mechanism.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2026</div>
+        <div class="timeline-title">Graphify.md — .md as knowledge architecture</div>
+        <div class="timeline-desc">We compress entire domains — entities, relationships, decision logic, constraints — into structured .md files that any AI model can reason through in a single pass. 170x more reasoning paths vs. vector RAG. The file format that was built for documentation becomes the delivery format for intelligence.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- What .md looks like -->
+<section>
+  <div class="container">
+    <span class="section-label">Anatomy of a .md File</span>
+    <h2>Simple enough for a human. Structured enough for AI.</h2>
+
+    <div class="compare-row">
+      <div class="compare-card old">
+        <span class="tag">Traditional .md</span>
+        <h3 style="color:#888;">Documentation</h3>
+        <div class="code-block">
+<span class="heading"># Project README</span>
+
+<span class="comment">This project does X.</span>
+
+<span class="heading">## Installation</span>
+<span class="comment">Run `npm install`</span>
+
+<span class="heading">## Usage</span>
+<span class="comment">Import the module and...</span>
+        </div>
+        <p style="font-size:0.85rem;color:#666;margin-top:12px;">Flat. Linear. Descriptive. Written for humans to read top-to-bottom.</p>
+      </div>
+
+      <div class="compare-card new">
+        <span class="tag">Graphify .md</span>
+        <h3 style="color:#fff;">Knowledge Graph</h3>
+        <div class="code-block">
+<span class="comment">---</span>
+<span class="key">domain:</span> <span class="val">Medical Device Quality</span>
+<span class="key">entities:</span> <span class="val">47</span>
+<span class="key">relationships:</span> <span class="val">142</span>
+<span class="comment">---</span>
+
+<span class="heading"># Complaint Signal Detection</span>
+
+<span class="heading">## Entity: Failure Mode</span>
+<span class="entity">- Battery Swelling</span>
+  <span class="rel">→ caused_by: Thermal Runaway</span>
+  <span class="rel">→ triggers: MDR Report (21 CFR 803)</span>
+  <span class="rel">→ affects: Device Family [Cardiac]</span>
+  <span class="rel">→ CAPA: CAP-2026-0041</span>
+
+<span class="heading">## Decision Rule</span>
+<span class="comment">IF complaint_count > 3 IN 30_days</span>
+<span class="comment">  FOR same failure_mode</span>
+<span class="comment">  AND device_family = [Cardiac]</span>
+<span class="comment">THEN → escalate_to: Signal Review Board</span>
+        </div>
+        <p style="font-size:0.85rem;color:#3b82f6;margin-top:12px;">Structured. Relational. Executable. Written for AI to reason through.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Why .md for AI -->
+<section>
+  <div class="container">
+    <span class="section-label">Why .md Wins</span>
+    <h2>Five reasons .md is AI's native language</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="icon" style="color:#3b82f6;">01</span>
+        <h3>Trained on it</h3>
+        <p>Every frontier model — GPT, Claude, Gemini, Llama — was trained on billions of .md files. It's the format they parse most naturally. Not JSON. Not XML. Markdown.</p>
+      </div>
+      <div class="card">
+        <span class="icon" style="color:#8b5cf6;">02</span>
+        <h3>Human-readable AND machine-readable</h3>
+        <p>A developer can read it. A PM can read it. And an AI model can parse the structure, headings, relationships, and frontmatter without any preprocessing.</p>
+      </div>
+      <div class="card">
+        <span class="icon" style="color:#06b6d4;">03</span>
+        <h3>Zero infrastructure</h3>
+        <p>No database. No API. No server. A .md file is a text file. It lives in a folder. It syncs with Git. It costs nothing to store, version, or distribute.</p>
+      </div>
+      <div class="card">
+        <span class="icon" style="color:#f59e0b;">04</span>
+        <h3>Model-agnostic</h3>
+        <p>The same .md file works in Claude, ChatGPT, Gemini, Copilot, Cursor, OpenClaw agents, local Llama — any model, any platform. Build once, deploy everywhere.</p>
+      </div>
+      <div class="card">
+        <span class="icon" style="color:#22c55e;">05</span>
+        <h3>Compresses knowledge</h3>
+        <p>A 10KB .md knowledge graph replaces 500 pages of documentation. 93% token compression. The model gets the full picture in a single context window load.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- The Evolution -->
+<section>
+  <div class="container">
+    <span class="section-label">The Evolution</span>
+    <h2>From README to reasoning engine</h2>
+    <p style="color:#888;max-width:700px;margin-bottom:32px;">The same file format, four eras of use. Each one unlocked by a shift in who (or what) was reading it.</p>
+
+    <div class="flow">
+      <div class="flow-box">README.md<br><span style="font-size:11px;color:#666;">Documentation</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">CLAUDE.md<br><span style="font-size:11px;color:#666;">AI Instructions</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">SKILL.md<br><span style="font-size:11px;color:#666;">Agent Capabilities</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box active">KNOWLEDGE.md<br><span style="font-size:11px;color:#3b82f6;">Domain Intelligence</span></div>
+    </div>
+
+    <div class="card-grid" style="margin-top:40px;">
+      <div class="card">
+        <h3>README.md</h3>
+        <p>Tells a human what a project does. Flat text. Linear. Read once, maybe.</p>
+      </div>
+      <div class="card">
+        <h3>CLAUDE.md / .cursorrules</h3>
+        <p>Tells an AI how to behave in a project. Preferences, rules, style. Persistent memory.</p>
+      </div>
+      <div class="card">
+        <h3>SKILL.md</h3>
+        <p>Gives an AI agent a new capability. Tools, triggers, instructions. The emerging open standard.</p>
+      </div>
+      <div class="card" style="border-color:#3b82f6;">
+        <h3 style="color:#3b82f6;">KNOWLEDGE.md (Graphify)</h3>
+        <p>Gives an AI model structured domain expertise. Entities, relationships, decision logic, constraints. The model doesn't just follow instructions — it <em>reasons through your domain</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- What Graphify Does -->
+<section>
+  <div class="container">
+    <span class="section-label">What Graphify.md Does</span>
+    <h2>We turn domains into structured .md knowledge graphs</h2>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="number">170x</span>
+        <span class="label">more reasoning paths<br>vs. vector RAG</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">93%</span>
+        <span class="label">token compression</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">41</span>
+        <span class="label">knowledge systems shipped</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">27</span>
+        <span class="label">verticals</span>
+      </div>
+    </div>
+
+    <p style="color:#888;max-width:700px;margin:32px auto;text-align:center;font-size:1.05rem;">Every domain has expertise trapped in documents, tribal knowledge, and institutional judgment. We extract it, structure it as a knowledge graph, and compress it into portable .md files that make any AI model an instant domain expert.</p>
+
+    <div class="flow" style="margin-top:40px;">
+      <div class="flow-box">Your Domain<br><span style="font-size:11px;color:#666;">Docs, experts, data</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box active">Graphify Engine<br><span style="font-size:11px;color:#3b82f6;">Extract + Structure</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">.md Knowledge Graph<br><span style="font-size:11px;color:#666;">Entities + Relationships</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">Any AI Model<br><span style="font-size:11px;color:#666;">Reasons, not guesses</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Quote -->
+<div class="quote-section">
+  <div class="quote">"The quality of AI output is bounded by the quality of input context. <span>The .md file is the delivery format for that context.</span>"</div>
+  <div class="quote-author">— Dan Yarmoluk, Graphify.md</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>See it live in 30 minutes</h2>
+  <p>We'll build part of your domain graph live. No slides. Just the delta.</p>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary">Book a Free Demo</a>
+  <p style="margin-top:20px;"><a href="https://www.graphifymd.com" style="color:#3b82f6;text-decoration:none;">graphifymd.com</a> &middot; <a href="https://www.graphifymd.com/context-architecture.html" style="color:#3b82f6;text-decoration:none;">The Science</a></p>
+</div>
+
+<div class="footer">
+  Graphify.md — Context Architecture for AI<br>
+  <a href="https://www.graphifymd.com">graphifymd.com</a>
+</div>
+
+</body>
+</html>
