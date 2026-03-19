@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Industry Intelligence — Graphify.md</title>
+<meta name="description" content="Open-source syndicated intelligence on the world's most influential companies. Knowledge graphs for humanity, by humanity.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/graphify-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/graphify-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<meta property="og:image" content="assets/graphify-icon-512.png">
+<meta property="og:title" content="Open Industry Intelligence — Graphify.md">
+<meta property="og:description" content="Open-source syndicated intelligence on the world's most influential companies.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #111111;
+    --bg-card-hover: #161616;
+    --border: #1e1e1e;
+    --text: #e5e5e5;
+    --text-dim: #888888;
+    --text-bright: #ffffff;
+    --blue: #3b82f6;
+    --blue-dim: rgba(59, 130, 246, 0.15);
+    --green: #22c55e;
+    --green-dim: rgba(34, 197, 94, 0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.12);
+    --orange: #f59e0b;
+    --orange-dim: rgba(245, 158, 11, 0.12);
+    --purple: #a855f7;
+    --purple-dim: rgba(168, 85, 247, 0.12);
+    --cyan: #06b6d4;
+    --cyan-dim: rgba(6, 182, 212, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 100px 0; }
+
+  h1, h2, h3, h4 { color: var(--text-bright); font-weight: 700; line-height: 1.15; }
+  h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); letter-spacing: -0.03em; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); letter-spacing: -0.02em; margin-bottom: 16px; }
+  h3 { font-size: 1.15rem; margin-bottom: 8px; }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover {
+    background: #2563eb;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+  }
+  .btn-outline:hover {
+    background: var(--blue-dim);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+  .btn-green {
+    background: var(--green);
+    color: #fff;
+  }
+  .btn-green:hover {
+    background: #16a34a;
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.35);
+    transform: translateY(-1px);
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: var(--text-bright); text-decoration: none; letter-spacing: -0.02em; }
+  .logo .ext { color: var(--blue); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text-bright); }
+  .nav-links a.active { color: var(--blue); }
+  nav .btn { padding: 10px 22px; font-size: 0.875rem; }
+
+  /* Hero */
+  .hero {
+    padding: 180px 0 100px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 { max-width: 900px; margin: 0 auto 24px; }
+  .hero h1 .accent { color: var(--green); }
+  .hero .subtext {
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    color: var(--text-dim);
+    max-width: 780px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+  .hero .subtext strong { color: var(--text-bright); font-weight: 700; }
+  .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Mission */
+  .mission-text {
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .mission-text strong { color: var(--text-bright); }
+
+  /* Industry Grid */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .industry-card {
+    padding: 32px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .industry-card:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  .industry-card .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .industry-card h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .industry-card .sector { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: block; }
+  .industry-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; margin-bottom: 16px; }
+
+  .data-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .data-points li {
+    font-size: 0.82rem;
+    color: var(--text);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+  .data-points li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    opacity: 0.6;
+  }
+
+  .card-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  .badge-open { background: var(--green-dim); color: var(--green); }
+  .badge-coming { background: var(--orange-dim); color: var(--orange); }
+
+  /* Color variants for card icons */
+  .icon-blue { background: var(--blue-dim); color: var(--blue); }
+  .icon-green { background: var(--green-dim); color: var(--green); }
+  .icon-red { background: var(--red-dim); color: var(--red); }
+  .icon-orange { background: var(--orange-dim); color: var(--orange); }
+  .icon-purple { background: var(--purple-dim); color: var(--purple); }
+  .icon-cyan { background: var(--cyan-dim); color: var(--cyan); }
+
+  /* Why Open Source */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .principle-card {
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .principle-card .icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .principle-card h3 { font-size: 1rem; margin-bottom: 8px; }
+  .principle-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.55; }
+
+  /* How to Contribute */
+  .contribute-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .contribute-step {
+    padding: 32px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .contribute-step .step-number {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .contribute-step h3 { font-size: 1.05rem; margin-bottom: 10px; }
+  .contribute-step p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .stat-box {
+    text-align: center;
+    padding: 28px 20px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .stat-box .number {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: var(--green);
+    display: block;
+    letter-spacing: -0.02em;
+  }
+  .stat-box .label {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 100px 0 60px;
+  }
+  .cta-section h2 { max-width: 700px; margin: 0 auto 12px; }
+  .cta-section .subtext { color: var(--text-dim); margin-bottom: 36px; font-size: 1.05rem; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .fade-up.d1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-up.d2 { animation-delay: 0.2s; opacity: 0; }
+  .fade-up.d3 { animation-delay: 0.3s; opacity: 0; }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.15); }
+    50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.3); }
+  }
+  .glow-green { animation: pulse-glow 3s ease-in-out infinite; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    section { padding: 72px 0; }
+    .hero { padding: 140px 0 80px; }
+    .industry-grid,
+    .principles-grid,
+    .contribute-steps { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 0.8rem; }
+  }
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .hero-cta, .cta-buttons { flex-direction: column; align-items: center; }
+    .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <a href="index.html" class="logo">Graphify<span class="ext">.md</span></a>
+    <div class="nav-links">
+      <a href="context-architecture.html">The Science</a>
+      <a href="open-industry.html" class="active">Open Intelligence</a>
+    </div>
+    <a href="https://github.com/Yarmoluk/graphify-site" class="btn btn-green">Contribute on GitHub</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1 class="fade-up">Syndicated Industry Intelligence.<br><span class="accent">Open Source.</span></h1>
+    <p class="subtext fade-up d1"><strong>Structured knowledge graphs on the companies shaping our world.</strong><br>Google. Amazon. NVIDIA. Apple. Microsoft. Meta.<br>Built by the community. Free for humanity. Powered by Graphify.md.</p>
+    <div class="hero-cta fade-up d2">
+      <a href="https://github.com/Yarmoluk/graphify-site" class="btn btn-green glow-green">Contribute Data</a>
+      <a href="#industries" class="btn btn-outline">Browse Industries</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Mission -->
+<section>
+  <div class="container">
+    <span class="section-label">The Mission</span>
+    <h2 style="text-align: center;">Industry intelligence should not live behind paywalls.</h2>
+    <p class="mission-text" style="margin-top: 24px;">
+      Wall Street hoards data. Consulting firms gate insights. Research gets buried in PDFs nobody reads.
+      <strong>We're changing that.</strong> Open Industry Intelligence takes publicly available information about
+      the world's most influential companies and structures it into knowledge graphs that anyone can query,
+      extend, and build on. Not raw data dumps &mdash; <strong>structured reasoning paths</strong> that make
+      AI tools smarter for everyone.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="number">6</span>
+        <span class="label">Companies Tracked</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">9</span>
+        <span class="label">Industry Sectors</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">1,200+</span>
+        <span class="label">Structured Relationships</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">CC-BY-4.0</span>
+        <span class="label">Open License</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Industry Graphs -->
+<section id="industries">
+  <div class="container">
+    <span class="section-label">Syndicated Intelligence</span>
+    <h2>Open knowledge graphs on the companies that matter most.</h2>
+    <p style="color: var(--text-dim); max-width: 700px; font-size: 0.95rem; margin-top: 8px;">Each graph maps products, revenue streams, competitive dynamics, supply chains, AI strategies, and market positions &mdash; structured for machine reasoning.</p>
+
+    <div class="industry-grid">
+
+      <div class="industry-card fade-up d1">
+        <div class="card-icon icon-blue">G</div>
+        <span class="sector" style="color: var(--blue);">Search &middot; Cloud &middot; AI</span>
+        <h3>Google / Alphabet</h3>
+        <p>Search dominance, Gemini AI stack, GCP infrastructure, Waymo autonomy, and the advertising machine that funds it all.</p>
+        <ul class="data-points">
+          <li>Gemini model family &amp; DeepMind research pipeline</li>
+          <li>Cloud revenue trajectory vs AWS/Azure</li>
+          <li>Antitrust exposure &amp; regulatory graph</li>
+          <li>YouTube &amp; advertising revenue dependencies</li>
+        </ul>
+        <span class="card-badge badge-open">Open &middot; Available Now</span>
+      </div>
+
+      <div class="industry-card fade-up d2">
+        <div class="card-icon icon-orange">A</div>
+        <span class="sector" style="color: var(--orange);">Commerce &middot; Cloud &middot; Logistics</span>
+        <h3>Amazon</h3>
+        <p>AWS market share, retail logistics network, Alexa ecosystem, and the most complex supply chain on Earth.</p>
+        <ul class="data-points">
+          <li>AWS service graph &amp; market position</li>
+          <li>Fulfillment network topology</li>
+          <li>Advertising growth as profit center</li>
+          <li>AI/ML services &amp; Bedrock positioning</li>
+        </ul>
+        <span class="card-badge badge-open">Open &middot; Available Now</span>
+      </div>
+
+      <div class="industry-card fade-up d3">
+        <div class="card-icon icon-green">N</div>
+        <span class="sector" style="color: var(--green);">Semiconductors &middot; AI &middot; Data Centers</span>
+        <h3>NVIDIA</h3>
+        <p>GPU monopoly, CUDA moat, data center dominance, and the hardware layer powering the entire AI revolution.</p>
+        <ul class="data-points">
+          <li>GPU architecture roadmap (Blackwell &rarr; Rubin)</li>
+          <li>CUDA ecosystem lock-in analysis</li>
+          <li>Data center revenue &amp; hyperscaler dependencies</li>
+          <li>Competitive threats: AMD, custom ASICs, Intel</li>
+        </ul>
+        <span class="card-badge badge-open">Open &middot; Available Now</span>
+      </div>
+
+      <div class="industry-card">
+        <div class="card-icon icon-purple">A</div>
+        <span class="sector" style="color: var(--purple);">Hardware &middot; Services &middot; Ecosystem</span>
+        <h3>Apple</h3>
+        <p>Hardware-services flywheel, Apple Intelligence rollout, supply chain mastery, and the walled garden that prints money.</p>
+        <ul class="data-points">
+          <li>Services revenue growth &amp; margin expansion</li>
+          <li>Apple Intelligence &amp; on-device AI strategy</li>
+          <li>Supply chain concentration risks</li>
+          <li>App Store economics &amp; regulatory pressure</li>
+        </ul>
+        <span class="card-badge badge-coming">Coming Soon</span>
+      </div>
+
+      <div class="industry-card">
+        <div class="card-icon icon-cyan">M</div>
+        <span class="sector" style="color: var(--cyan);">Cloud &middot; Enterprise &middot; AI</span>
+        <h3>Microsoft</h3>
+        <p>Azure + OpenAI partnership, Copilot everywhere strategy, enterprise dominance, and the most successful AI pivot in tech history.</p>
+        <ul class="data-points">
+          <li>OpenAI investment &amp; integration depth</li>
+          <li>Azure growth vs AWS/GCP</li>
+          <li>Copilot adoption &amp; revenue per user</li>
+          <li>Enterprise stack lock-in (365, Teams, GitHub)</li>
+        </ul>
+        <span class="card-badge badge-coming">Coming Soon</span>
+      </div>
+
+      <div class="industry-card">
+        <div class="card-icon icon-red">M</div>
+        <span class="sector" style="color: var(--red);">Social &middot; AI &middot; Metaverse</span>
+        <h3>Meta</h3>
+        <p>Social graph monetization, Llama open-source AI strategy, Reality Labs investment, and the ad platform that rivals Google.</p>
+        <ul class="data-points">
+          <li>Llama model family &amp; open-source strategy</li>
+          <li>Reality Labs burn rate &amp; metaverse thesis</li>
+          <li>Ad targeting &amp; privacy headwinds</li>
+          <li>Instagram &amp; WhatsApp monetization paths</li>
+        </ul>
+        <span class="card-badge badge-coming">Coming Soon</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- What's In Each Graph -->
+<section>
+  <div class="container">
+    <span class="section-label">Graph Anatomy</span>
+    <h2>What's inside each industry knowledge graph.</h2>
+    <p style="color: var(--text-dim); max-width: 700px; font-size: 0.95rem; margin-top: 8px;">Every graph follows a consistent schema so they're interoperable, comparable, and machine-readable.</p>
+
+    <div class="principles-grid" style="margin-top: 40px;">
+      <div class="principle-card">
+        <span class="icon" style="color: var(--blue);">&#x25C8;</span>
+        <h3>Revenue Streams</h3>
+        <p>Segment-level revenue breakdown, growth rates, margin profiles, and cross-segment dependencies.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--green);">&#x2B21;</span>
+        <h3>Product Topology</h3>
+        <p>Products, services, and platforms mapped as interconnected nodes with dependency and substitution edges.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--orange);">&#x29BF;</span>
+        <h3>Competitive Dynamics</h3>
+        <p>Head-to-head positioning, market share overlaps, moat analysis, and threat vectors between companies.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--purple);">&#x2B50;</span>
+        <h3>AI Strategy</h3>
+        <p>Model investments, compute infrastructure, AI product roadmaps, and partnership/acquisition graphs.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--cyan);">&#x25CE;</span>
+        <h3>Supply Chain</h3>
+        <p>Key suppliers, manufacturing dependencies, geographic concentration risks, and logistics networks.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--red);">&#x2736;</span>
+        <h3>Regulatory Landscape</h3>
+        <p>Antitrust actions, privacy regulations, market-specific compliance requirements, and political exposure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Why Open Source -->
+<section>
+  <div class="container">
+    <span class="section-label">Why Open Source</span>
+    <h2>Intelligence compounds when it's shared.</h2>
+
+    <div class="principles-grid" style="margin-top: 40px;">
+      <div class="principle-card">
+        <span class="icon" style="color: var(--green);">&#x1F310;</span>
+        <h3>Democratize Access</h3>
+        <p>Hedge funds pay millions for industry intelligence. Students, researchers, and small teams deserve the same structured insights &mdash; for free.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--blue);">&#x1F517;</span>
+        <h3>Network Effects</h3>
+        <p>Every contributor adds nodes and edges. The graph gets smarter. Cross-company relationships emerge that no single analyst could map alone.</p>
+      </div>
+      <div class="principle-card">
+        <span class="icon" style="color: var(--purple);">&#x1F52C;</span>
+        <h3>Verifiable Reasoning</h3>
+        <p>Every claim traces to a source. Every relationship is explicit. No black-box rankings. No hidden methodology. Full transparency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- How to Contribute -->
+<section id="contribute">
+  <div class="container">
+    <span class="section-label">Contribute</span>
+    <h2>Help build the world's open industry intelligence layer.</h2>
+
+    <div class="contribute-steps">
+      <div class="contribute-step">
+        <div class="step-number">1</div>
+        <h3>Fork the Repository</h3>
+        <p>Clone the repo, pick a company or sector, and start adding structured nodes and relationships in markdown format.</p>
+      </div>
+      <div class="contribute-step">
+        <div class="step-number">2</div>
+        <h3>Add Structured Data</h3>
+        <p>Follow the graph schema: entities, relationships, sources. Every data point needs a citation. Every relationship needs a direction.</p>
+      </div>
+      <div class="contribute-step">
+        <div class="step-number">3</div>
+        <h3>Submit a Pull Request</h3>
+        <p>Community review ensures accuracy. Accepted contributions get attributed. The graph grows. Everyone benefits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="section-label">Join the Movement</span>
+    <h2>Industry intelligence belongs to everyone.</h2>
+    <p class="subtext">Start contributing today. Or use the graphs to make your AI tools smarter &mdash; right now.</p>
+    <div class="cta-buttons">
+      <a href="https://github.com/Yarmoluk/graphify-site" class="btn btn-green glow-green">Contribute on GitHub</a>
+      <a href="index.html" class="btn btn-outline">Back to Graphify.md</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    Graphify<span style="color: var(--blue);">.md</span> by VeritAI, LLC &middot; Open Industry Intelligence is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" style="color: var(--blue); text-decoration: none;">CC-BY-4.0</a>
+  </div>
+</footer>
+
+</body>
+</html>
