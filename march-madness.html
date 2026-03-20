@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>March Madness 2026 — Knowledge Graph | Graphify.md</title>
+<title>March Madness 2026 — Live Knowledge Graph | Graphify.md</title>
 <meta name="description" content="68 teams. 350+ relationships. Zero spreadsheets. An interactive knowledge graph of March Madness 2026, built live by graduate software engineers.">
 <meta property="og:title" content="March Madness as a Knowledge Graph">
 <meta property="og:description" content="68 teams. 350+ relationships. Zero spreadsheets. Built live in class — the idea took 5 minutes, the build took 20.">
@@ -188,7 +188,7 @@ const conferences = {
   'Michigan':'Big Ten','Iowa State':'Big 12','Virginia':'ACC','Alabama':'SEC',
   'Texas Tech':'Big 12','Tennessee':'SEC','Kentucky':'SEC','Georgia':'SEC',
   'UMBC':'America East','Howard':'MEAC','Tennessee State':'OVC','Wright State':'Horizon',
-  'Hofstra':'CAA','Akron':'MAC','Miami OH':'MAC','SMU':'ACC',
+  'Hofstra':'CAA','Akron':'MAC','Miami OH':'MAC','SMU':'ACC','Prairie View A&M':'SWAC',
   'Santa Clara':'WCC','Saint Louis':'A-10'
 };
 
@@ -211,10 +211,10 @@ const teamsData = [
   {name:'UCLA',seed:7,region:'East'},{name:'UCF',seed:10,region:'East'},
   {name:'Ohio State',seed:8,region:'East'},{name:'TCU',seed:9,region:'East'},
   // SOUTH
-  {name:'Florida',seed:1,region:'South'},{name:'Troy',seed:16,region:'South'},
+  {name:'Florida',seed:1,region:'South'},{name:'Prairie View A&M',seed:16,region:'South'},
   {name:'Houston',seed:2,region:'South'},{name:'Idaho',seed:15,region:'South'},
   {name:'Illinois',seed:3,region:'South'},{name:'Penn',seed:14,region:'South'},
-  {name:'Nebraska',seed:4,region:'South'},{name:'McNeese',seed:13,region:'South'},// using Troy as 16 placeholder
+  {name:'Nebraska',seed:4,region:'South'},{name:'Troy',seed:13,region:'South'},
   {name:'Vanderbilt',seed:5,region:'South'},{name:'McNeese',seed:12,region:'South'},
   {name:'North Carolina',seed:6,region:'South'},{name:'VCU',seed:11,region:'South'},
   {name:'Saint Mary\'s',seed:7,region:'South'},{name:'Texas A&M',seed:10,region:'South'},
@@ -229,12 +229,12 @@ const teamsData = [
   {name:'Miami',seed:7,region:'West'},{name:'Missouri',seed:10,region:'West'},
   {name:'Villanova',seed:8,region:'West'},{name:'Utah State',seed:9,region:'West'},
   // MIDWEST
-  {name:'Michigan',seed:1,region:'Midwest'},{name:'UMBC',seed:16,region:'Midwest'},
+  {name:'Michigan',seed:1,region:'Midwest'},{name:'Howard',seed:16,region:'Midwest'},
   {name:'Iowa State',seed:2,region:'Midwest'},{name:'Tennessee State',seed:15,region:'Midwest'},
   {name:'Virginia',seed:3,region:'Midwest'},{name:'Wright State',seed:14,region:'Midwest'},
   {name:'Alabama',seed:4,region:'Midwest'},{name:'Hofstra',seed:13,region:'Midwest'},
   {name:'Texas Tech',seed:5,region:'Midwest'},{name:'Akron',seed:12,region:'Midwest'},
-  {name:'Tennessee',seed:6,region:'Midwest'},{name:'SMU',seed:11,region:'Midwest'},
+  {name:'Tennessee',seed:6,region:'Midwest'},{name:'Miami OH',seed:11,region:'Midwest'},
   {name:'Kentucky',seed:7,region:'Midwest'},{name:'Santa Clara',seed:10,region:'Midwest'},
   {name:'Georgia',seed:8,region:'Midwest'},{name:'Saint Louis',seed:9,region:'Midwest'}
 ];
@@ -269,62 +269,40 @@ const regionTeams = {};
 });
 
 // ============================================================
-// SIMULATED TOURNAMENT RESULTS (for temporal progression)
+// REAL 2026 TOURNAMENT RESULTS (updated live as games finish)
+// Last updated: March 19, 2026 ~10 PM CT
 // Upsets marked with upset: true
 // ============================================================
 const results = {
-  1: [ // Round 1 results - winners
-    // East
-    {winner:'Duke',loser:'Siena'},{winner:'UConn',loser:'Furman'},
-    {winner:'Michigan State',loser:'North Dakota State'},{winner:'Kansas',loser:'Cal Baptist'},
-    {winner:'St. John\'s',loser:'Northern Iowa'},{winner:'Louisville',loser:'South Florida'},
-    {winner:'UCLA',loser:'UCF'},{winner:'Ohio State',loser:'TCU'},
-    // South
-    {winner:'Florida',loser:'Troy'},{winner:'Houston',loser:'Idaho'},
-    {winner:'Illinois',loser:'Penn'},{winner:'Nebraska',loser:'McNeese'},
-    {winner:'Vanderbilt',loser:'McNeese'},{winner:'VCU',loser:'North Carolina',upset:true},
-    {winner:'Saint Mary\'s',loser:'Texas A&M'},{winner:'Iowa',loser:'Clemson',upset:true},
-    // West - High Point upset!
-    {winner:'Arizona',loser:'Long Island'},{winner:'Purdue',loser:'Queens'},
-    {winner:'Gonzaga',loser:'Kennesaw State'},{winner:'Arkansas',loser:'Hawaii'},
-    {winner:'High Point',loser:'Wisconsin',upset:true},{winner:'BYU',loser:'Texas'},
-    {winner:'Miami',loser:'Missouri'},{winner:'Villanova',loser:'Utah State'},
-    // Midwest
-    {winner:'Michigan',loser:'UMBC'},{winner:'Iowa State',loser:'Tennessee State'},
-    {winner:'Virginia',loser:'Wright State'},{winner:'Alabama',loser:'Hofstra'},
-    {winner:'Texas Tech',loser:'Akron'},{winner:'Tennessee',loser:'SMU'},
-    {winner:'Kentucky',loser:'Santa Clara'},{winner:'Georgia',loser:'Saint Louis'}
-  ],
-  2: [ // Round 2
-    // East
-    {winner:'Duke',loser:'Ohio State'},{winner:'UConn',loser:'UCLA'},
-    {winner:'Michigan State',loser:'Louisville'},{winner:'St. John\'s',loser:'Kansas',upset:true},
-    // South
-    {winner:'Florida',loser:'Iowa'},{winner:'Houston',loser:'Saint Mary\'s'},
-    {winner:'Illinois',loser:'Nebraska'},{winner:'VCU',loser:'Vanderbilt',upset:true},
-    // West
-    {winner:'Arizona',loser:'Villanova'},{winner:'Purdue',loser:'Miami'},
-    {winner:'Gonzaga',loser:'BYU'},{winner:'High Point',loser:'Arkansas',upset:true},
-    // Midwest
-    {winner:'Michigan',loser:'Georgia'},{winner:'Iowa State',loser:'Kentucky'},
-    {winner:'Virginia',loser:'Tennessee'},{winner:'Alabama',loser:'Texas Tech'}
-  ],
-  3: [ // Sweet 16
-    {winner:'Duke',loser:'St. John\'s'},{winner:'UConn',loser:'Michigan State'},
-    {winner:'Florida',loser:'VCU'},{winner:'Houston',loser:'Illinois'},
-    {winner:'Arizona',loser:'High Point'},{winner:'Purdue',loser:'Gonzaga'},
-    {winner:'Michigan',loser:'Alabama'},{winner:'Iowa State',loser:'Virginia'}
-  ],
-  4: [ // Elite 8
-    {winner:'Duke',loser:'UConn'},{winner:'Florida',loser:'Houston'},
-    {winner:'Arizona',loser:'Purdue'},{winner:'Michigan',loser:'Iowa State'}
-  ],
-  5: [ // Final Four
-    {winner:'Duke',loser:'Florida'},{winner:'Arizona',loser:'Michigan'}
-  ],
-  6: [ // Championship
-    {winner:'Duke',loser:'Arizona'}
+  1: [ // Round 1 — REAL RESULTS (completed games only)
+    // East (March 19 — 4 of 8 played)
+    {winner:'Duke',loser:'Siena',score:'71-65'},
+    {winner:'TCU',loser:'Ohio State',score:'66-64',upset:true},
+    {winner:'Louisville',loser:'South Florida',score:'83-79'},
+    {winner:'Michigan State',loser:'North Dakota State',score:'92-67'},
+    // East March 20 — NOT YET PLAYED: St. John's/Northern Iowa, Kansas/Cal Baptist, UCLA/UCF, UConn/Furman
+
+    // South (March 19 — 4 of 8 played, 2 in progress)
+    {winner:'Vanderbilt',loser:'McNeese',score:'78-68'},
+    {winner:'Nebraska',loser:'Troy',score:'76-47'},
+    {winner:'VCU',loser:'North Carolina',score:'82-78 OT',upset:true},
+    {winner:'Texas A&M',loser:'Saint Mary\'s',score:'63-50',upset:true},
+    // South in progress: Illinois/Penn, Houston/Idaho
+    // South March 20 — NOT YET PLAYED: Florida/Prairie View A&M, Clemson/Iowa
+
+    // West (March 19 — 3 of 8 played, 1 in progress)
+    {winner:'High Point',loser:'Wisconsin',score:'83-82',upset:true},
+    {winner:'Arkansas',loser:'Hawaii',score:'97-78'},
+    {winner:'Texas',loser:'BYU',score:'79-71',upset:true},
+    // West in progress: Gonzaga/Kennesaw State
+    // West March 20 — NOT YET PLAYED: Arizona/Long Island, Purdue/Queens, Villanova/Utah State, Miami/Missouri
+
+    // Midwest (March 19 — 1 of 8 played, 1 in progress)
+    {winner:'Michigan',loser:'Howard',score:'101-80'},
+    // Midwest in progress: Georgia/Saint Louis
+    // Midwest March 20 — NOT YET PLAYED: Texas Tech/Akron, Alabama/Hofstra, Tennessee/Miami OH, Virginia/Wright State, Kentucky/Santa Clara, Iowa State/Tennessee State
   ]
+  // Round 2, Sweet 16, Elite 8, Final Four, Championship — TBD as tournament progresses
 };
 
 // ============================================================
@@ -481,8 +459,9 @@ nodeElements
           Region: <strong>${d.region}</strong><br>
           Conference: <strong>${d.conference}</strong><br>
           Status: <strong>${d.eliminated ? '❌ Eliminated' : '✅ Active'}</strong>
+          ${d.winScore ? '<br>Won: <strong>' + d.winScore + '</strong>' : ''}
           ${d.upsetWinner ? '<br>🔥 <strong>UPSET WINNER</strong>' : ''}
-          ${d.eliminatedBy ? '<br>Lost to: ' + d.eliminatedBy : ''}
+          ${d.eliminatedBy ? '<br>Lost to: <strong>' + d.eliminatedBy + '</strong>' + (d.score ? ' (' + d.score + ')' : '') : ''}
         </div>
       `);
   })
@@ -522,7 +501,7 @@ const roundNames = ['Selection','Round of 64','Round of 32','Sweet 16','Elite 8'
 
 function advanceToRound(targetRound) {
   // Reset all
-  nodes.forEach(n => { n.eliminated = false; n.upsetWinner = false; n.eliminatedBy = null; });
+  nodes.forEach(n => { n.eliminated = false; n.upsetWinner = false; n.eliminatedBy = null; n.score = null; n.winScore = null; });
 
   let totalUpsets = 0;
   let newMatchupLinks = [...matchups.map(m => ({source:m.source, target:m.target, round:1, type:'matchup'}))];
@@ -535,10 +514,12 @@ function advanceToRound(targetRound) {
       if (loserNode) {
         loserNode.eliminated = true;
         loserNode.eliminatedBy = res.winner;
+        if (res.score) loserNode.score = res.score;
       }
-      if (res.upset) {
-        const winnerNode = nodeMap[res.winner];
-        if (winnerNode) winnerNode.upsetWinner = true;
+      const winnerNode = nodeMap[res.winner];
+      if (winnerNode && res.score) winnerNode.winScore = res.score;
+      if (res.upset && winnerNode) {
+        winnerNode.upsetWinner = true;
         totalUpsets++;
       }
     });
