@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industry Verticals — Where Knowledge Graphs Make Money | Graphify.md</title>
+<meta name="description" content="$2.52 trillion in AI spending. Most of it wasted on unstructured data. These are the industries where knowledge graphs turn AI investment into actual returns.">
+<meta property="og:title" content="Where Knowledge Graphs Make Money — 12 Industry Verticals">
+<meta property="og:description" content="$2.52T in AI spending. 85% of pilots fail. These industries need structure, not more models. Knowledge graphs are the missing layer.">
+<meta property="og:image" content="https://graphifymd.com/assets/healthcare-og.png">
+<meta property="og:url" content="https://graphifymd.com/verticals.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Where Knowledge Graphs Make Money — 12 Industry Verticals">
+<meta name="twitter:image" content="https://graphifymd.com/assets/healthcare-og.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0a; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  a { color: #3b82f6; text-decoration: none; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  nav .logo { font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; }
+  nav .logo span { color: #3b82f6; }
+  nav .sep { color: #333; }
+  nav .page-title { font-size: 13px; color: #888; }
+  nav .cta {
+    margin-left: auto; background: #3b82f6; color: #fff; padding: 8px 20px;
+    border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none;
+  }
+
+  .hero { padding: 120px 0 40px; text-align: center; }
+  .hero .label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: #3b82f6; font-weight: 700; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 800; color: #fff;
+    line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: #3b82f6; }
+  .hero p { font-size: 1rem; color: #666; max-width: 650px; margin: 0 auto; line-height: 1.7; }
+
+  .macro-stats {
+    display: flex; justify-content: center; gap: 40px; padding: 40px 0 60px;
+    flex-wrap: wrap;
+  }
+  .ms { text-align: center; }
+  .ms .num { font-size: 2rem; font-weight: 800; color: #3b82f6; letter-spacing: -1px; }
+  .ms .lbl { font-size: 0.65rem; color: #444; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  .thesis {
+    background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+    padding: 32px; margin-bottom: 60px; text-align: center;
+  }
+  .thesis p { font-size: 1.05rem; color: #999; line-height: 1.7; max-width: 700px; margin: 0 auto; }
+  .thesis strong { color: #fff; }
+
+  .tier-label {
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 8px; display: block;
+  }
+  .tier-title { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 24px; }
+
+  .verticals { margin-bottom: 60px; }
+
+  .v-card {
+    background: #111; border: 1px solid #1a1a1a; border-radius: 12px;
+    padding: 28px 32px; margin-bottom: 16px;
+    transition: border-color 0.3s;
+  }
+  .v-card:hover { border-color: #333; }
+  .v-card .v-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
+  .v-card h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+  .v-card .v-market { font-size: 0.8rem; color: #3b82f6; font-weight: 600; }
+  .v-card .v-growth { font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: 600; }
+  .v-card .v-growth.hot { background: rgba(239,68,68,0.12); color: #ef4444; }
+  .v-card .v-growth.warm { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .v-card .v-growth.emerging { background: rgba(34,197,94,0.12); color: #22c55e; }
+
+  .v-card .v-problem { font-size: 0.9rem; color: #888; line-height: 1.6; margin-bottom: 12px; }
+  .v-card .v-problem strong { color: #ccc; }
+
+  .v-card .v-kg { font-size: 0.85rem; color: #555; line-height: 1.5; }
+  .v-card .v-kg strong { color: #3b82f6; }
+
+  .v-card .v-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .v-card .v-tag {
+    font-size: 0.65rem; color: #555; border: 1px solid #1e1e1e; padding: 2px 10px;
+    border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .cta-box {
+    background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+    padding: 48px; text-align: center; margin: 60px 0;
+  }
+  .cta-box h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .cta-box p { color: #666; margin-bottom: 24px; }
+  .cta-box .btn {
+    display: inline-block; background: #3b82f6; color: #fff; padding: 14px 32px;
+    border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none;
+  }
+
+  .reading-note {
+    background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.1);
+    border-radius: 10px; padding: 24px 28px; margin-bottom: 40px;
+  }
+  .reading-note h4 { font-size: 0.85rem; color: #3b82f6; font-weight: 700; margin-bottom: 8px; }
+  .reading-note p { font-size: 0.85rem; color: #777; line-height: 1.6; }
+
+  footer { text-align: center; padding: 40px 0; color: #333; font-size: 0.75rem; }
+
+  @media (max-width: 600px) {
+    .macro-stats { gap: 20px; }
+    .v-card .v-header { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Graphify<span>.md</span></a>
+  <span class="sep">›</span>
+  <span class="page-title">Industry Verticals</span>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="cta">Book a Demo</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="label">Where Knowledge Graphs Make Money</div>
+  <h1>$2.52 trillion in AI spending.<br>Most of it is <span class="accent">guessing.</span></h1>
+  <p>Every industry is buying AI. Almost none of them have structured the domain knowledge that makes it work. These are the verticals where knowledge graphs turn AI investment into actual returns — ranked by money flow, complexity, and readiness.</p>
+</div>
+
+<div class="macro-stats">
+  <div class="ms"><div class="num">$2.52T</div><div class="lbl">Global AI Spend 2026</div></div>
+  <div class="ms"><div class="num">85%</div><div class="lbl">Pilots That Fail</div></div>
+  <div class="ms"><div class="num">44%</div><div class="lbl">YoY Growth</div></div>
+  <div class="ms"><div class="num">12</div><div class="lbl">Verticals Mapped</div></div>
+</div>
+
+<div class="reading-note">
+  <h4>How to Read This Page</h4>
+  <p>Verticals are organized in three tiers: <strong style="color:#ef4444;">Tier 1</strong> = massive spend, high complexity, knowledge graphs are table stakes. <strong style="color:#f59e0b;">Tier 2</strong> = fast-growing AI adoption, structural data chaos, ripe for disruption. <strong style="color:#22c55e;">Tier 3</strong> = emerging opportunity, less AI maturity, first-mover advantage. Market sizes reflect AI spend within each vertical. Each card shows the problem (why AI fails there), the knowledge graph play (what we build), and the tags that connect verticals to each other.</p>
+</div>
+
+<!-- ===== TIER 1 ===== -->
+<div class="verticals">
+  <span class="tier-label" style="color:#ef4444;">Tier 1 — Where the Money Is Now</span>
+  <div class="tier-title">Highest AI spend. Highest complexity. Knowledge graphs are table stakes.</div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Healthcare & Life Sciences</h3>
+      <span class="v-market">$61B AI market</span>
+      <span class="v-growth hot">20.8% CAGR</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> 30% of the world's data is healthcare. Trapped in clinical notes, PDFs, faxes, siloed EHRs. LLMs hallucinate drug interactions. RAG retrieves the wrong protocol. No relationship layer between diagnoses, treatments, and outcomes.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Clinical decision support graphs. Prior auth traversal. Formulary & drug interaction chains. Care pathway optimization. Regulatory compliance mapping. Physician network intelligence.</div>
+    <div class="v-tags">
+      <span class="v-tag">Epic / Cerner</span><span class="v-tag">FHIR</span><span class="v-tag">ICD-10</span><span class="v-tag">CPT</span><span class="v-tag">HIPAA</span><span class="v-tag">Value-Based Care</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Defense & Intelligence</h3>
+      <span class="v-market">$13.4B DoD AI budget</span>
+      <span class="v-growth hot">$1.01T total defense</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> The Pentagon's first-ever dedicated AI budget line — $13.4B for autonomy and AI systems. But defense data is siloed across classification levels, agencies, and legacy systems. Mission planning requires reasoning across terrain, threat, logistics, and personnel simultaneously.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Threat landscape graphs. Mission planning traversal. Logistics network optimization. Training & readiness knowledge bases. Cross-domain intelligence fusion. JADC2 context layers.</div>
+    <div class="v-tags">
+      <span class="v-tag">JADC2</span><span class="v-tag">CDAO</span><span class="v-tag">FedRAMP</span><span class="v-tag">Autonomous Systems</span><span class="v-tag">C4ISR</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Financial Services & Insurance</h3>
+      <span class="v-market">23.7% of enterprise AI market</span>
+      <span class="v-growth hot">Highest absolute spend</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Fraud detection runs on rules engines from 2008. Compliance teams manually cross-reference regulations across jurisdictions. Insurance underwriting relies on flat data that can't model relationship risk. KYC/AML screening is keyword matching, not graph traversal.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Fraud detection relationship graphs. Regulatory compliance networks (SEC, FINRA, state). Claims and underwriting knowledge bases. Portfolio risk traversal. KYC entity resolution. Anti-money laundering relationship mapping.</div>
+    <div class="v-tags">
+      <span class="v-tag">Reg BI</span><span class="v-tag">AML/KYC</span><span class="v-tag">Basel IV</span><span class="v-tag">FinCEN</span><span class="v-tag">Actuarial</span><span class="v-tag">Claims</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TIER 2 ===== -->
+<div class="verticals">
+  <span class="tier-label" style="color:#f59e0b;">Tier 2 — Fast Growth, Structural Chaos</span>
+  <div class="tier-title">AI adoption accelerating. Data is a mess. Ripe for knowledge graph disruption.</div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Oil, Gas & Energy</h3>
+      <span class="v-market">$4.3B → $7.9B by 2031</span>
+      <span class="v-growth warm">13% CAGR</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Upstream dominates 61% of AI spend — exploration and production are data-heavy but relationship-poor. Equipment sensors, geological surveys, regulatory filings, environmental compliance, and supply chain logistics exist in completely separate systems. AI coming to dominate O&G operations but can't reason across the operational graph.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Reservoir-to-refinery knowledge graphs. Predictive maintenance relationship chains (asset → sensor → failure mode → part → supplier). Environmental compliance traversal. Pipeline integrity networks. Energy trading relationship intelligence.</div>
+    <div class="v-tags">
+      <span class="v-tag">Upstream</span><span class="v-tag">Midstream</span><span class="v-tag">SCADA</span><span class="v-tag">ESG</span><span class="v-tag">Predictive Maintenance</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Construction & Infrastructure</h3>
+      <span class="v-market">$4.8B → $22.6B by 2032</span>
+      <span class="v-growth warm">$400B AI infrastructure boom</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Construction needs 500,000 new workers in 2026 while costs rise. AI infrastructure buildout alone is a $400B construction opportunity. But estimating, scheduling, permitting, and compliance are still manual processes. Drawing analysis is just starting. The industry that builds AI's physical infrastructure doesn't use AI itself.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Estimating knowledge graphs (materials → labor → codes → location factors). Permitting and inspection traversal. Subcontractor relationship networks. BIM-to-schedule graph mapping. Safety compliance chains. Change order impact analysis.</div>
+    <div class="v-tags">
+      <span class="v-tag">BIM</span><span class="v-tag">RSMeans</span><span class="v-tag">OSHA</span><span class="v-tag">Procore</span><span class="v-tag">Data Centers</span><span class="v-tag">Infrastructure</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Supply Chain & Logistics</h3>
+      <span class="v-market">$15B+ AI market</span>
+      <span class="v-growth warm">127% LinkedIn growth since 2020</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Supply chains are inherently graph problems — but they're managed with spreadsheets and ERP flat tables. One disruption cascades through suppliers, parts, logistics, contracts, and customers. COVID exposed this. Nobody fixed the structure.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Supplier-to-shelf knowledge graphs. Disruption cascade simulation (component → supplier → logistics → production → customer). Inventory optimization networks. Contract and SLA relationship mapping. Risk propagation analysis.</div>
+    <div class="v-tags">
+      <span class="v-tag">ERP</span><span class="v-tag">S&OP</span><span class="v-tag">Procurement</span><span class="v-tag">Last Mile</span><span class="v-tag">Cold Chain</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Legal & Compliance</h3>
+      <span class="v-market">$3.4B patent docketing alone</span>
+      <span class="v-growth warm">Regulatory complexity exploding</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Legal is drowning in cross-referenced documents — statutes, case law, regulations, contracts, filings. Every legal question is a multi-hop traversal problem. But legal AI tools do keyword search on flat PDFs. Patent prosecution alone is a $3.4B market running on manual docketing.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Patent landscape knowledge graphs. Regulatory cross-reference networks. Contract clause relationship mapping. Case law traversal (precedent → statute → jurisdiction → outcome). Compliance obligation chains across entities.</div>
+    <div class="v-tags">
+      <span class="v-tag">IP/Patents</span><span class="v-tag">Regulatory</span><span class="v-tag">Contract Mgmt</span><span class="v-tag">eDiscovery</span><span class="v-tag">GRC</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TIER 3 ===== -->
+<div class="verticals">
+  <span class="tier-label" style="color:#22c55e;">Tier 3 — First-Mover Territory</span>
+  <div class="tier-title">Less AI maturity. More structural opportunity. The companies that graph these domains first win.</div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>GovTech & Public Sector</h3>
+      <span class="v-market">$66B DoD IT + civilian agencies</span>
+      <span class="v-growth emerging">First-mover</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Government forms, regulations, and processes are the most relationship-dense domains on earth — and the least structured. Congressional forms alone span thousands of documents across hundreds of offices. Municipal zoning, court records, meeting minutes — all unstructured, all interconnected.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Congressional and regulatory form graphs. Municipal zoning knowledge bases. Court records traversal. Benefits eligibility networks. Interagency process mapping. Grant and procurement relationship intelligence.</div>
+    <div class="v-tags">
+      <span class="v-tag">FedRAMP</span><span class="v-tag">FOIA</span><span class="v-tag">Zoning</span><span class="v-tag">Procurement</span><span class="v-tag">Grants.gov</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Agriculture & Food</h3>
+      <span class="v-market">$4B+ AgTech AI</span>
+      <span class="v-growth emerging">First-mover</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Farm decisions depend on relationships between soil, weather, seed genetics, pest cycles, market prices, and regulation — across seasons and geographies. IoT sensors generate data but can't reason across the agricultural graph. Most farm AI is single-variable optimization.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Crop-to-market knowledge graphs. Soil → seed → climate → yield relationship chains. Pest and disease propagation networks. Regulatory compliance (EPA, USDA) traversal. Supply chain traceability from farm to shelf.</div>
+    <div class="v-tags">
+      <span class="v-tag">Precision Ag</span><span class="v-tag">IoT Sensors</span><span class="v-tag">USDA</span><span class="v-tag">Traceability</span><span class="v-tag">Sustainability</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Real Estate & Property</h3>
+      <span class="v-market">$250B+ commercial RE market</span>
+      <span class="v-growth emerging">First-mover</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Commercial real estate decisions require traversing zoning, ownership history, tenant relationships, market comps, environmental assessments, tax records, and financing structures. All separate databases. All flat. Coworking advisory alone is an underserved niche with high relationship density.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Property intelligence graphs (ownership → zoning → permits → tenants → comps). Investment analysis networks. Lease relationship mapping. Environmental and regulatory traversal. Market comp relationship chains across geographies.</div>
+    <div class="v-tags">
+      <span class="v-tag">CRE</span><span class="v-tag">Zoning</span><span class="v-tag">PropTech</span><span class="v-tag">Coworking</span><span class="v-tag">REIT</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Education & Workforce</h3>
+      <span class="v-market">$20B+ EdTech AI</span>
+      <span class="v-growth emerging">First-mover</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Learning paths are inherently graph problems — prerequisites, competencies, assessments, outcomes, career pathways. But LMS platforms are flat content delivery. Workforce development can't map skill gaps to training to certification to job requirements. The relationship between what people know and what they need to know is invisible.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Curriculum knowledge graphs. Competency-to-career pathway traversal. Student learning progression networks. Credential and certification relationship mapping. Workforce skill gap analysis across industries.</div>
+    <div class="v-tags">
+      <span class="v-tag">LMS</span><span class="v-tag">Competency</span><span class="v-tag">Credentialing</span><span class="v-tag">Workforce Dev</span><span class="v-tag">SEIS 666</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>Utilities & Water</h3>
+      <span class="v-market">$8B+ AI in utilities</span>
+      <span class="v-growth emerging">First-mover</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Utility infrastructure — pipes, grids, substations, meters, sensors — is a massive physical graph managed by flat databases. Outage prediction, maintenance scheduling, and ESG reporting all require traversing asset relationships that current systems can't model.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Asset-to-grid knowledge graphs. Predictive maintenance relationship chains. Outage cascade analysis. Regulatory and ESG reporting traversal. Energy distribution optimization. Customer-to-meter-to-infrastructure mapping.</div>
+    <div class="v-tags">
+      <span class="v-tag">SCADA</span><span class="v-tag">Smart Grid</span><span class="v-tag">ESG</span><span class="v-tag">AMI</span><span class="v-tag">NERC</span>
+    </div>
+  </div>
+
+  <div class="v-card">
+    <div class="v-header">
+      <h3>BioTech & Pharma</h3>
+      <span class="v-market">$20K → $300K/mo MRR trajectory</span>
+      <span class="v-growth emerging">Active pipeline</span>
+    </div>
+    <div class="v-problem"><strong>The problem:</strong> Drug discovery, clinical trials, and distribution are relationship-dense domains. Molecule → target → pathway → trial → outcome → regulation → market. Pharma companies spend billions on R&D but can't traverse their own research graphs. Distribution platforms manage thousands of SKUs across regulatory jurisdictions without structural intelligence.</div>
+    <div class="v-kg"><strong>The KG play:</strong> Drug discovery knowledge graphs. Clinical trial relationship networks. Distribution and fulfillment traversal. Regulatory pathway mapping (FDA, EMA). Pharmacovigilance signal detection. Competitive intelligence graphs.</div>
+    <div class="v-tags">
+      <span class="v-tag">FDA</span><span class="v-tag">Clinical Trials</span><span class="v-tag">Distribution</span><span class="v-tag">Peptides</span><span class="v-tag">GxP</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="thesis">
+  <p><strong>The pattern is the same everywhere.</strong> Every industry has data. Almost none of it is structured for AI reasoning. The companies that build knowledge graphs for their domains first — before their competitors — create compounding advantages that no amount of prompt engineering can replicate. The methodology is the IP. The graph is the moat.</p>
+</div>
+
+<div class="cta-box">
+  <h2>Which vertical is yours?</h2>
+  <p>30 minutes. Pick your domain. I'll show you what the graph reveals.</p>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn">Book a Demo</a>
+</div>
+
+</div>
+
+<footer>Graphify.md · VeritAI, LLC · Daniel Yarmoluk · March 2026<br>Data: Gartner, Mordor Intelligence, Precedence Research, DoD FY2026 Budget, NVIDIA State of AI 2026</footer>
+
+</body>
+</html>
