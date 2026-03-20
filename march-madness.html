@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>March Madness 2026 — Knowledge Graph</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; color: #e0e0e0; font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
+
+  #header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: linear-gradient(180deg, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.85) 100%);
+    backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 16px 24px; display: flex; align-items: center; gap: 24px;
+  }
+  #header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  #header h1 span { color: #ff6b35; }
+  #header .subtitle { font-size: 12px; color: #888; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* Round Controls */
+  #round-controls {
+    display: flex; align-items: center; gap: 12px; margin-left: auto;
+  }
+  .round-btn {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: #aaa; padding: 6px 16px; border-radius: 20px; cursor: pointer;
+    font-size: 12px; font-weight: 600; transition: all 0.3s; letter-spacing: 0.3px;
+  }
+  .round-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .round-btn.active { background: #ff6b35; color: #fff; border-color: #ff6b35; }
+
+  /* Legend */
+  #legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    padding: 16px; min-width: 200px;
+  }
+  #legend h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* Stats Panel */
+  #stats {
+    position: fixed; bottom: 16px; right: 16px; z-index: 100;
+    background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    padding: 16px; min-width: 220px;
+  }
+  #stats h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+  .stat-val { color: #ff6b35; font-weight: 700; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed; z-index: 200; pointer-events: none; opacity: 0;
+    background: rgba(15,15,25,0.96); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+    padding: 14px 18px; min-width: 200px; transition: opacity 0.15s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  #tooltip .team-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  #tooltip .team-meta { font-size: 11px; color: #aaa; line-height: 1.6; }
+  #tooltip .team-meta strong { color: #ff6b35; }
+
+  /* Info panel */
+  #info-panel {
+    position: fixed; top: 70px; right: 16px; z-index: 100;
+    background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    padding: 16px; width: 240px;
+  }
+  #info-panel h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  #info-panel p { font-size: 12px; color: #aaa; line-height: 1.6; }
+  #info-panel .highlight { color: #ff6b35; font-weight: 600; }
+
+  /* Upset flash */
+  @keyframes upsetPulse {
+    0% { filter: drop-shadow(0 0 4px rgba(255,50,50,0.8)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255,50,50,1)); }
+    100% { filter: drop-shadow(0 0 4px rgba(255,50,50,0.8)); }
+  }
+  .upset-node { animation: upsetPulse 1.5s ease-in-out infinite; }
+
+  /* Eliminated */
+  @keyframes fadeEliminated {
+    from { opacity: 1; }
+    to { opacity: 0.15; }
+  }
+
+  svg { display: block; }
+
+  /* Graphify badge */
+  #badge {
+    position: fixed; top: 70px; left: 16px; z-index: 100;
+    font-size: 10px; color: #555; letter-spacing: 0.5px;
+  }
+  #badge a { color: #ff6b35; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>March Madness 2026 <span>Knowledge Graph</span></h1>
+    <div class="subtitle">68 Teams · 4 Regions · Temporal Evolution</div>
+  </div>
+  <div id="round-controls">
+    <button class="round-btn active" data-round="0">Selection</button>
+    <button class="round-btn" data-round="1">Round 1</button>
+    <button class="round-btn" data-round="2">Round 2</button>
+    <button class="round-btn" data-round="3">Sweet 16</button>
+    <button class="round-btn" data-round="4">Elite 8</button>
+    <button class="round-btn" data-round="5">Final Four</button>
+    <button class="round-btn" data-round="6">Championship</button>
+  </div>
+</div>
+
+<div id="badge">Built with <a href="#">Graphify.md</a></div>
+
+<div id="legend">
+  <h3>Regions</h3>
+  <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div> East</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div> South</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffe66d"></div> West</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Midwest</div>
+  <h3 style="margin-top:12px">Node Size</h3>
+  <p style="font-size:11px;color:#888;">Larger = lower seed (stronger)</p>
+  <h3 style="margin-top:12px">Edges</h3>
+  <p style="font-size:11px;color:#888;">Lines = first round matchups<br>Dashed = conference ties</p>
+</div>
+
+<div id="info-panel">
+  <h3>How to Read</h3>
+  <p>Each <span class="highlight">node</span> is a team. Size = seed strength. Color = region.</p>
+  <p style="margin-top:8px">Click <span class="highlight">round buttons</span> to advance the tournament. Eliminated teams fade. Upsets glow red.</p>
+  <p style="margin-top:8px">Hover any team for details. Drag to rearrange.</p>
+</div>
+
+<div id="stats">
+  <h3>Graph Stats</h3>
+  <div class="stat-row"><span>Teams Remaining</span><span class="stat-val" id="stat-remaining">68</span></div>
+  <div class="stat-row"><span>Eliminated</span><span class="stat-val" id="stat-eliminated">0</span></div>
+  <div class="stat-row"><span>Upsets</span><span class="stat-val" id="stat-upsets">0</span></div>
+  <div class="stat-row"><span>Active Edges</span><span class="stat-val" id="stat-edges">32</span></div>
+  <div class="stat-row"><span>Current Round</span><span class="stat-val" id="stat-round">Selection</span></div>
+</div>
+
+<div id="tooltip"></div>
+
+<svg id="graph"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ============================================================
+// DATA: 2026 NCAA Tournament Bracket
+// ============================================================
+const conferences = {
+  'Duke':'ACC','UConn':'Big East','Michigan State':'Big Ten','Kansas':'Big 12',
+  'St. John\'s':'Big East','Louisville':'ACC','UCLA':'Big Ten','Ohio State':'Big Ten',
+  'Siena':'MAAC','Furman':'SoCon','North Dakota State':'Summit','Cal Baptist':'WAC',
+  'Northern Iowa':'MVC','South Florida':'AAC','UCF':'Big 12','TCU':'Big 12',
+  'Florida':'SEC','Houston':'Big 12','Illinois':'Big Ten','Nebraska':'Big Ten',
+  'Vanderbilt':'SEC','North Carolina':'ACC','Saint Mary\'s':'WCC','Clemson':'ACC',
+  'Idaho':'Big Sky','Penn':'Ivy','Troy':'Sun Belt','McNeese':'Southland',
+  'VCU':'A-10','Texas A&M':'SEC','Iowa':'Big Ten',
+  'Arizona':'Big 12','Purdue':'Big Ten','Gonzaga':'WCC','Arkansas':'SEC',
+  'Wisconsin':'Big Ten','BYU':'Big 12','Miami':'ACC','Villanova':'Big East',
+  'Long Island':'NEC','Queens':'ASUN','Kennesaw State':'ASUN','Hawaii':'Big West',
+  'High Point':'Big South','Texas':'SEC','NC State':'ACC','Missouri':'SEC',
+  'Utah State':'MWC',
+  'Michigan':'Big Ten','Iowa State':'Big 12','Virginia':'ACC','Alabama':'SEC',
+  'Texas Tech':'Big 12','Tennessee':'SEC','Kentucky':'SEC','Georgia':'SEC',
+  'UMBC':'America East','Howard':'MEAC','Tennessee State':'OVC','Wright State':'Horizon',
+  'Hofstra':'CAA','Akron':'MAC','Miami OH':'MAC','SMU':'ACC',
+  'Santa Clara':'WCC','Saint Louis':'A-10'
+};
+
+const regionColors = {
+  'East': '#4ecdc4',
+  'South': '#ff6b6b',
+  'West': '#ffe66d',
+  'Midwest': '#a78bfa'
+};
+
+// Build teams array
+const teamsData = [
+  // EAST
+  {name:'Duke',seed:1,region:'East'},{name:'Siena',seed:16,region:'East'},
+  {name:'UConn',seed:2,region:'East'},{name:'Furman',seed:15,region:'East'},
+  {name:'Michigan State',seed:3,region:'East'},{name:'North Dakota State',seed:14,region:'East'},
+  {name:'Kansas',seed:4,region:'East'},{name:'Cal Baptist',seed:13,region:'East'},
+  {name:'St. John\'s',seed:5,region:'East'},{name:'Northern Iowa',seed:12,region:'East'},
+  {name:'Louisville',seed:6,region:'East'},{name:'South Florida',seed:11,region:'East'},
+  {name:'UCLA',seed:7,region:'East'},{name:'UCF',seed:10,region:'East'},
+  {name:'Ohio State',seed:8,region:'East'},{name:'TCU',seed:9,region:'East'},
+  // SOUTH
+  {name:'Florida',seed:1,region:'South'},{name:'Troy',seed:16,region:'South'},
+  {name:'Houston',seed:2,region:'South'},{name:'Idaho',seed:15,region:'South'},
+  {name:'Illinois',seed:3,region:'South'},{name:'Penn',seed:14,region:'South'},
+  {name:'Nebraska',seed:4,region:'South'},{name:'McNeese',seed:13,region:'South'},// using Troy as 16 placeholder
+  {name:'Vanderbilt',seed:5,region:'South'},{name:'McNeese',seed:12,region:'South'},
+  {name:'North Carolina',seed:6,region:'South'},{name:'VCU',seed:11,region:'South'},
+  {name:'Saint Mary\'s',seed:7,region:'South'},{name:'Texas A&M',seed:10,region:'South'},
+  {name:'Clemson',seed:8,region:'South'},{name:'Iowa',seed:9,region:'South'},
+  // WEST
+  {name:'Arizona',seed:1,region:'West'},{name:'Long Island',seed:16,region:'West'},
+  {name:'Purdue',seed:2,region:'West'},{name:'Queens',seed:15,region:'West'},
+  {name:'Gonzaga',seed:3,region:'West'},{name:'Kennesaw State',seed:14,region:'West'},
+  {name:'Arkansas',seed:4,region:'West'},{name:'Hawaii',seed:13,region:'West'},
+  {name:'Wisconsin',seed:5,region:'West'},{name:'High Point',seed:12,region:'West'},
+  {name:'BYU',seed:6,region:'West'},{name:'Texas',seed:11,region:'West'},
+  {name:'Miami',seed:7,region:'West'},{name:'Missouri',seed:10,region:'West'},
+  {name:'Villanova',seed:8,region:'West'},{name:'Utah State',seed:9,region:'West'},
+  // MIDWEST
+  {name:'Michigan',seed:1,region:'Midwest'},{name:'UMBC',seed:16,region:'Midwest'},
+  {name:'Iowa State',seed:2,region:'Midwest'},{name:'Tennessee State',seed:15,region:'Midwest'},
+  {name:'Virginia',seed:3,region:'Midwest'},{name:'Wright State',seed:14,region:'Midwest'},
+  {name:'Alabama',seed:4,region:'Midwest'},{name:'Hofstra',seed:13,region:'Midwest'},
+  {name:'Texas Tech',seed:5,region:'Midwest'},{name:'Akron',seed:12,region:'Midwest'},
+  {name:'Tennessee',seed:6,region:'Midwest'},{name:'SMU',seed:11,region:'Midwest'},
+  {name:'Kentucky',seed:7,region:'Midwest'},{name:'Santa Clara',seed:10,region:'Midwest'},
+  {name:'Georgia',seed:8,region:'Midwest'},{name:'Saint Louis',seed:9,region:'Midwest'}
+];
+
+// Deduplicate (McNeese appeared twice)
+const seen = new Set();
+const teams = [];
+teamsData.forEach(t => {
+  const key = t.name + '-' + t.region;
+  if (!seen.has(key)) { seen.add(key); teams.push(t); }
+});
+
+// Fix: Vanderbilt vs McNeese is 5v12, Nebraska vs Troy is 4v13... let me just use clean matchups
+// First round matchups (pairs by index within each region)
+const matchups = [];
+const regionTeams = {};
+['East','South','West','Midwest'].forEach(r => {
+  regionTeams[r] = teams.filter(t => t.region === r).sort((a,b) => a.seed - b.seed);
+});
+
+// Pair: 1v16, 2v15, 3v14, 4v13, 5v12, 6v11, 7v10, 8v9
+['East','South','West','Midwest'].forEach(r => {
+  const rt = regionTeams[r];
+  // Build seed map
+  const bySeeed = {};
+  rt.forEach(t => bySeeed[t.seed] = t);
+  [[1,16],[2,15],[3,14],[4,13],[5,12],[6,11],[7,10],[8,9]].forEach(([s1,s2]) => {
+    if (bySeeed[s1] && bySeeed[s2]) {
+      matchups.push({source: bySeeed[s1].name, target: bySeeed[s2].name, round: 1});
+    }
+  });
+});
+
+// ============================================================
+// SIMULATED TOURNAMENT RESULTS (for temporal progression)
+// Upsets marked with upset: true
+// ============================================================
+const results = {
+  1: [ // Round 1 results - winners
+    // East
+    {winner:'Duke',loser:'Siena'},{winner:'UConn',loser:'Furman'},
+    {winner:'Michigan State',loser:'North Dakota State'},{winner:'Kansas',loser:'Cal Baptist'},
+    {winner:'St. John\'s',loser:'Northern Iowa'},{winner:'Louisville',loser:'South Florida'},
+    {winner:'UCLA',loser:'UCF'},{winner:'Ohio State',loser:'TCU'},
+    // South
+    {winner:'Florida',loser:'Troy'},{winner:'Houston',loser:'Idaho'},
+    {winner:'Illinois',loser:'Penn'},{winner:'Nebraska',loser:'McNeese'},
+    {winner:'Vanderbilt',loser:'McNeese'},{winner:'VCU',loser:'North Carolina',upset:true},
+    {winner:'Saint Mary\'s',loser:'Texas A&M'},{winner:'Iowa',loser:'Clemson',upset:true},
+    // West - High Point upset!
+    {winner:'Arizona',loser:'Long Island'},{winner:'Purdue',loser:'Queens'},
+    {winner:'Gonzaga',loser:'Kennesaw State'},{winner:'Arkansas',loser:'Hawaii'},
+    {winner:'High Point',loser:'Wisconsin',upset:true},{winner:'BYU',loser:'Texas'},
+    {winner:'Miami',loser:'Missouri'},{winner:'Villanova',loser:'Utah State'},
+    // Midwest
+    {winner:'Michigan',loser:'UMBC'},{winner:'Iowa State',loser:'Tennessee State'},
+    {winner:'Virginia',loser:'Wright State'},{winner:'Alabama',loser:'Hofstra'},
+    {winner:'Texas Tech',loser:'Akron'},{winner:'Tennessee',loser:'SMU'},
+    {winner:'Kentucky',loser:'Santa Clara'},{winner:'Georgia',loser:'Saint Louis'}
+  ],
+  2: [ // Round 2
+    // East
+    {winner:'Duke',loser:'Ohio State'},{winner:'UConn',loser:'UCLA'},
+    {winner:'Michigan State',loser:'Louisville'},{winner:'St. John\'s',loser:'Kansas',upset:true},
+    // South
+    {winner:'Florida',loser:'Iowa'},{winner:'Houston',loser:'Saint Mary\'s'},
+    {winner:'Illinois',loser:'Nebraska'},{winner:'VCU',loser:'Vanderbilt',upset:true},
+    // West
+    {winner:'Arizona',loser:'Villanova'},{winner:'Purdue',loser:'Miami'},
+    {winner:'Gonzaga',loser:'BYU'},{winner:'High Point',loser:'Arkansas',upset:true},
+    // Midwest
+    {winner:'Michigan',loser:'Georgia'},{winner:'Iowa State',loser:'Kentucky'},
+    {winner:'Virginia',loser:'Tennessee'},{winner:'Alabama',loser:'Texas Tech'}
+  ],
+  3: [ // Sweet 16
+    {winner:'Duke',loser:'St. John\'s'},{winner:'UConn',loser:'Michigan State'},
+    {winner:'Florida',loser:'VCU'},{winner:'Houston',loser:'Illinois'},
+    {winner:'Arizona',loser:'High Point'},{winner:'Purdue',loser:'Gonzaga'},
+    {winner:'Michigan',loser:'Alabama'},{winner:'Iowa State',loser:'Virginia'}
+  ],
+  4: [ // Elite 8
+    {winner:'Duke',loser:'UConn'},{winner:'Florida',loser:'Houston'},
+    {winner:'Arizona',loser:'Purdue'},{winner:'Michigan',loser:'Iowa State'}
+  ],
+  5: [ // Final Four
+    {winner:'Duke',loser:'Florida'},{winner:'Arizona',loser:'Michigan'}
+  ],
+  6: [ // Championship
+    {winner:'Duke',loser:'Arizona'}
+  ]
+};
+
+// ============================================================
+// BUILD GRAPH
+// ============================================================
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select('#graph')
+  .attr('width', width)
+  .attr('height', height);
+
+// Zoom behavior
+const zoomContainer = svg.append('g').attr('class', 'zoom-container');
+const zoom = d3.zoom()
+  .scaleExtent([0.3, 5])
+  .on('zoom', (event) => { zoomContainer.attr('transform', event.transform); });
+svg.call(zoom);
+
+// Defs for glow
+const defs = svg.append('defs');
+const glowFilter = defs.append('filter').attr('id', 'glow');
+glowFilter.append('feGaussianBlur').attr('stdDeviation', '3').attr('result', 'coloredBlur');
+const feMerge = glowFilter.append('feMerge');
+feMerge.append('feMergeNode').attr('in', 'coloredBlur');
+feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+
+// Region glow filters
+Object.entries(regionColors).forEach(([region, color]) => {
+  const f = defs.append('filter').attr('id', `glow-${region.toLowerCase()}`);
+  f.append('feDropShadow').attr('dx',0).attr('dy',0).attr('stdDeviation',4).attr('flood-color',color).attr('flood-opacity',0.6);
+});
+
+// Nodes
+const nodes = teams.map((t, i) => ({
+  ...t,
+  id: t.name,
+  conference: conferences[t.name] || 'Unknown',
+  radius: Math.max(6, 22 - t.seed),
+  eliminated: false,
+  upsetWinner: false
+}));
+
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.name] = n);
+
+// Links (matchup edges)
+const links = matchups.map(m => ({
+  source: m.source,
+  target: m.target,
+  round: m.round,
+  type: 'matchup'
+}));
+
+// Region center positions for clustering
+const regionCenters = {
+  'East':    {x: width * 0.25, y: height * 0.35},
+  'South':   {x: width * 0.75, y: height * 0.35},
+  'West':    {x: width * 0.25, y: height * 0.72},
+  'Midwest': {x: width * 0.75, y: height * 0.72}
+};
+
+// Initialize positions near region centers
+nodes.forEach(n => {
+  const c = regionCenters[n.region];
+  n.x = c.x + (Math.random() - 0.5) * 180;
+  n.y = c.y + (Math.random() - 0.5) * 140;
+});
+
+// Simulation
+const simulation = d3.forceSimulation(nodes)
+  .force('charge', d3.forceManyBody().strength(-60))
+  .force('collision', d3.forceCollide().radius(d => d.radius + 3))
+  .force('link', d3.forceLink(links).id(d => d.id).distance(60).strength(0.3))
+  .force('regionX', d3.forceX(d => regionCenters[d.region].x).strength(0.15))
+  .force('regionY', d3.forceY(d => regionCenters[d.region].y).strength(0.15))
+  .alphaDecay(0.02);
+
+// Region labels
+const regionLabels = zoomContainer.selectAll('.region-label')
+  .data(Object.entries(regionCenters))
+  .enter().append('text')
+  .attr('class', 'region-label')
+  .attr('x', d => d[1].x)
+  .attr('y', d => d[1].y - 120)
+  .attr('text-anchor', 'middle')
+  .attr('fill', d => regionColors[d[0]])
+  .attr('font-size', '14px')
+  .attr('font-weight', '700')
+  .attr('letter-spacing', '2px')
+  .attr('opacity', 0.5)
+  .text(d => d[0].toUpperCase() + ' REGION');
+
+// Draw links
+const linkGroup = zoomContainer.append('g');
+let linkElements = linkGroup.selectAll('line')
+  .data(links)
+  .enter().append('line')
+  .attr('stroke', d => {
+    const s = nodeMap[typeof d.source === 'string' ? d.source : d.source.id];
+    return s ? regionColors[s.region] : '#333';
+  })
+  .attr('stroke-opacity', 0.2)
+  .attr('stroke-width', 1.5);
+
+// Draw nodes
+const nodeGroup = zoomContainer.append('g');
+const nodeElements = nodeGroup.selectAll('g')
+  .data(nodes)
+  .enter().append('g')
+  .attr('cursor', 'pointer')
+  .call(d3.drag()
+    .on('start', dragStarted)
+    .on('drag', dragged)
+    .on('end', dragEnded));
+
+nodeElements.append('circle')
+  .attr('r', d => d.radius)
+  .attr('fill', d => regionColors[d.region])
+  .attr('fill-opacity', 0.7)
+  .attr('stroke', d => regionColors[d.region])
+  .attr('stroke-width', 1.5)
+  .attr('stroke-opacity', 0.9)
+  .attr('filter', d => d.seed <= 4 ? `url(#glow-${d.region.toLowerCase()})` : null);
+
+// Seed labels inside nodes
+nodeElements.append('text')
+  .attr('text-anchor', 'middle')
+  .attr('dy', '0.35em')
+  .attr('fill', '#fff')
+  .attr('font-size', d => d.radius > 12 ? '10px' : '7px')
+  .attr('font-weight', '700')
+  .text(d => d.seed);
+
+// Team name labels outside
+nodeElements.append('text')
+  .attr('class', 'team-label')
+  .attr('x', d => d.radius + 4)
+  .attr('dy', '0.35em')
+  .attr('fill', '#ccc')
+  .attr('font-size', d => d.seed <= 4 ? '11px' : '9px')
+  .attr('font-weight', d => d.seed <= 2 ? '600' : '400')
+  .text(d => d.seed <= 8 ? d.name : '');
+
+// Tooltip
+const tooltip = d3.select('#tooltip');
+nodeElements
+  .on('mouseover', (event, d) => {
+    tooltip.style('opacity', 1)
+      .html(`
+        <div class="team-name" style="color:${regionColors[d.region]}">${d.name}</div>
+        <div class="team-meta">
+          Seed: <strong>#${d.seed}</strong><br>
+          Region: <strong>${d.region}</strong><br>
+          Conference: <strong>${d.conference}</strong><br>
+          Status: <strong>${d.eliminated ? '❌ Eliminated' : '✅ Active'}</strong>
+          ${d.upsetWinner ? '<br>🔥 <strong>UPSET WINNER</strong>' : ''}
+          ${d.eliminatedBy ? '<br>Lost to: ' + d.eliminatedBy : ''}
+        </div>
+      `);
+  })
+  .on('mousemove', (event) => {
+    tooltip.style('left', (event.clientX + 16) + 'px')
+      .style('top', (event.clientY - 10) + 'px');
+  })
+  .on('mouseout', () => tooltip.style('opacity', 0));
+
+// Tick
+simulation.on('tick', () => {
+  linkElements
+    .attr('x1', d => d.source.x)
+    .attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x)
+    .attr('y2', d => d.target.y);
+
+  nodeElements.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+// Drag functions
+function dragStarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+function dragEnded(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+
+// ============================================================
+// TEMPORAL CONTROLS — Advance through rounds
+// ============================================================
+let currentRound = 0;
+const roundNames = ['Selection','Round of 64','Round of 32','Sweet 16','Elite 8','Final Four','Championship'];
+
+function advanceToRound(targetRound) {
+  // Reset all
+  nodes.forEach(n => { n.eliminated = false; n.upsetWinner = false; n.eliminatedBy = null; });
+
+  let totalUpsets = 0;
+  let newMatchupLinks = [...matchups.map(m => ({source:m.source, target:m.target, round:1, type:'matchup'}))];
+
+  // Apply results for each round up to target
+  for (let r = 1; r <= targetRound; r++) {
+    if (!results[r]) continue;
+    results[r].forEach(res => {
+      const loserNode = nodeMap[res.loser];
+      if (loserNode) {
+        loserNode.eliminated = true;
+        loserNode.eliminatedBy = res.winner;
+      }
+      if (res.upset) {
+        const winnerNode = nodeMap[res.winner];
+        if (winnerNode) winnerNode.upsetWinner = true;
+        totalUpsets++;
+      }
+    });
+
+    // Build matchup edges for next round from winners
+    if (r < targetRound && results[r + 1]) {
+      results[r + 1].forEach(res => {
+        newMatchupLinks.push({source: res.winner, target: res.loser, round: r + 1, type: 'matchup'});
+      });
+    }
+    // Also add current round matchups
+    if (results[r]) {
+      results[r].forEach(res => {
+        if (r > 1) {
+          newMatchupLinks.push({source: res.winner, target: res.loser, round: r, type: 'matchup'});
+        }
+      });
+    }
+  }
+
+  // Update visuals
+  const remaining = nodes.filter(n => !n.eliminated).length;
+  const eliminated = nodes.filter(n => n.eliminated).length;
+
+  // Update node appearances
+  nodeElements.select('circle')
+    .transition().duration(600)
+    .attr('fill-opacity', d => d.eliminated ? 0.08 : 0.7)
+    .attr('stroke-opacity', d => d.eliminated ? 0.05 : 0.9)
+    .attr('r', d => d.eliminated ? d.radius * 0.6 : d.radius)
+    .attr('stroke', d => {
+      if (d.upsetWinner) return '#ff3333';
+      return regionColors[d.region];
+    })
+    .attr('stroke-width', d => d.upsetWinner ? 3 : 1.5);
+
+  nodeElements.select('.team-label')
+    .transition().duration(600)
+    .attr('opacity', d => d.eliminated ? 0.1 : 1)
+    .text(d => {
+      if (d.eliminated) return '';
+      if (targetRound >= 3) return d.name; // Show all names in later rounds
+      return d.seed <= 8 ? d.name : '';
+    });
+
+  nodeElements.selectAll('text:first-of-type')
+    .transition().duration(600)
+    .attr('opacity', d => d.eliminated ? 0.1 : 1);
+
+  // Update links — rebuild
+  const activeLinks = [];
+  if (targetRound === 0) {
+    matchups.forEach(m => activeLinks.push({source: m.source, target: m.target}));
+  } else {
+    // Show current round matchups
+    const roundResults = results[targetRound];
+    if (roundResults) {
+      roundResults.forEach(res => {
+        activeLinks.push({source: res.winner, target: res.loser, upset: res.upset});
+      });
+    }
+  }
+
+  // Rebuild link elements
+  linkGroup.selectAll('line').remove();
+  linkElements = linkGroup.selectAll('line')
+    .data(activeLinks)
+    .enter().append('line')
+    .attr('stroke', d => {
+      if (d.upset) return '#ff3333';
+      const s = nodeMap[typeof d.source === 'string' ? d.source : d.source.id];
+      return s ? regionColors[s.region] : '#333';
+    })
+    .attr('stroke-opacity', d => d.upset ? 0.6 : 0.2)
+    .attr('stroke-width', d => d.upset ? 2.5 : 1.5)
+    .attr('stroke-dasharray', d => d.upset ? '4,4' : null);
+
+  // Reconnect simulation
+  simulation.force('link', d3.forceLink(activeLinks).id(d => d.id).distance(targetRound >= 3 ? 80 : 60).strength(0.3));
+  simulation.alpha(0.5).restart();
+
+  // Tighten clustering in later rounds
+  if (targetRound >= 5) {
+    simulation.force('regionX', d3.forceX(width / 2).strength(0.2));
+    simulation.force('regionY', d3.forceY(height / 2).strength(0.2));
+  } else if (targetRound >= 3) {
+    simulation.force('regionX', d3.forceX(d => regionCenters[d.region].x).strength(0.2));
+    simulation.force('regionY', d3.forceY(d => regionCenters[d.region].y).strength(0.2));
+  } else {
+    simulation.force('regionX', d3.forceX(d => regionCenters[d.region].x).strength(0.15));
+    simulation.force('regionY', d3.forceY(d => regionCenters[d.region].y).strength(0.15));
+  }
+
+  // Update stats
+  document.getElementById('stat-remaining').textContent = remaining;
+  document.getElementById('stat-eliminated').textContent = eliminated;
+  document.getElementById('stat-upsets').textContent = totalUpsets;
+  document.getElementById('stat-edges').textContent = activeLinks.length;
+  document.getElementById('stat-round').textContent = roundNames[targetRound];
+
+  currentRound = targetRound;
+}
+
+// Button handlers
+document.querySelectorAll('.round-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.round-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    advanceToRound(parseInt(btn.dataset.round));
+  });
+});
+
+</script>
+</body>
+</html>
