@@ -3,402 +3,634 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinkedIn Groups Knowledge Graph | Graphify.md</title>
-<meta property="og:title" content="LinkedIn Groups as a Knowledge Graph">
-<meta property="og:description" content="90+ LinkedIn groups. 8 categories. Thousands of cross-connections. See the hidden structure of professional communities.">
-<meta property="og:image" content="https://graphifymd.com/assets/march-madness-og.png">
-<meta property="og:url" content="https://graphifymd.com/linkedin-groups-kg.html">
-<meta property="og:type" content="website">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>LinkedIn Groups Knowledge Graph — Graphify.md</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0a0a0f; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; overflow: hidden; }
-
-  #header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: linear-gradient(180deg, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.85) 100%);
-    backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 14px 24px; display: flex; align-items: center; gap: 16px;
-  }
-  #header a.home { text-decoration: none; color: #fff; font-size: 14px; font-weight: 700; margin-right: 8px; }
-  #header a.home span { color: #3b82f6; }
-  #header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
-  #header h1 em { color: #3b82f6; font-style: normal; }
-  #header .subtitle { font-size: 11px; color: #666; letter-spacing: 0.5px; text-transform: uppercase; }
-
-  #controls {
-    display: flex; align-items: center; gap: 10px; margin-left: auto;
-  }
-  .filter-btn {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    color: #888; padding: 5px 14px; border-radius: 16px; cursor: pointer;
-    font-size: 11px; font-weight: 600; transition: all 0.3s; letter-spacing: 0.3px;
-  }
-  .filter-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
-  .filter-btn.active { color: #fff; border-color: rgba(255,255,255,0.3); }
-
-  #legend {
-    position: fixed; bottom: 20px; left: 20px; z-index: 100;
-    background: rgba(10,10,15,0.92); border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px; padding: 16px; backdrop-filter: blur(8px); min-width: 200px;
-  }
-  #legend h3 { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-  .legend-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 12px; color: #aaa; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-  #stats {
-    position: fixed; bottom: 20px; right: 20px; z-index: 100;
-    background: rgba(10,10,15,0.92); border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px; padding: 16px; backdrop-filter: blur(8px); min-width: 180px;
-  }
-  #stats h3 { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-  .stat-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 12px; color: #888; }
-  .stat-val { color: #3b82f6; font-weight: 700; }
-
-  #tooltip {
-    position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.2s;
-    background: rgba(10,10,15,0.95); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px; padding: 14px 18px; z-index: 200; max-width: 340px;
-    backdrop-filter: blur(12px);
-  }
-  #tooltip .group-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  #tooltip .group-meta { font-size: 11px; color: #aaa; line-height: 1.6; }
-  #tooltip .group-meta strong { color: #3b82f6; }
-
-  #search {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    color: #ccc; padding: 5px 14px; border-radius: 16px; font-size: 11px;
-    outline: none; width: 160px; transition: border-color 0.3s;
-  }
-  #search:focus { border-color: #3b82f6; }
-  #search::placeholder { color: #555; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;overflow:hidden;height:100vh;width:100vw}
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-size:18px;font-weight:700;color:#7dd3fc;text-decoration:none;letter-spacing:-.5px;white-space:nowrap}
+.brand:hover{color:#a5e4ff}
+.search-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 14px;color:#e0e0e0;font-size:13px;width:220px;outline:none;transition:border-color .2s}
+.search-box:focus{border-color:#7dd3fc}
+.filters{display:flex;gap:6px;flex-wrap:wrap;flex:1;justify-content:center}
+.filter-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:4px 10px;color:#aaa;font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.filter-btn.active{background:rgba(125,211,252,.15);border-color:#7dd3fc;color:#7dd3fc}
+#graph-container{width:100%;height:100%}
+svg{width:100%;height:100%}
+.tooltip{position:fixed;background:rgba(15,15,25,.96);border:1px solid rgba(125,211,252,.3);border-radius:10px;padding:14px 18px;pointer-events:none;opacity:0;transition:opacity .15s;max-width:320px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.tooltip h3{font-size:14px;font-weight:600;color:#7dd3fc;margin-bottom:6px}
+.tooltip .tt-cat{font-size:11px;color:#888;margin-bottom:4px}
+.tooltip .tt-members{font-size:13px;color:#e0e0e0;margin-bottom:6px}
+.tooltip .tt-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.tooltip .tt-tag{background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.2);border-radius:4px;padding:1px 6px;font-size:10px;color:#7dd3fc}
+.tooltip .tt-conn{font-size:11px;color:#666}
+.legend{position:fixed;bottom:16px;left:16px;background:rgba(15,15,25,.92);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;z-index:100;max-height:50vh;overflow-y:auto;font-size:11px;backdrop-filter:blur(8px)}
+.legend h4{font-size:12px;color:#7dd3fc;margin-bottom:8px;font-weight:600}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.stats{position:fixed;bottom:16px;right:16px;background:rgba(15,15,25,.92);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;z-index:100;font-size:11px;backdrop-filter:blur(8px);text-align:right}
+.stats h4{font-size:12px;color:#7dd3fc;margin-bottom:8px;font-weight:600}
+.stats .stat-row{display:flex;justify-content:space-between;gap:20px;margin-bottom:3px}
+.stats .stat-val{color:#7dd3fc;font-weight:600}
+.about-toggle{position:fixed;top:60px;right:16px;background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.25);border-radius:8px;padding:6px 12px;color:#7dd3fc;font-size:12px;cursor:pointer;z-index:150;transition:all .2s}
+.about-toggle:hover{background:rgba(125,211,252,.2)}
+.about-panel{position:fixed;top:90px;right:16px;width:380px;max-height:70vh;overflow-y:auto;background:rgba(12,12,20,.96);border:1px solid rgba(125,211,252,.2);border-radius:12px;padding:20px;z-index:150;display:none;backdrop-filter:blur(12px);font-size:12.5px;line-height:1.6}
+.about-panel.open{display:block}
+.about-panel h3{color:#7dd3fc;font-size:15px;margin-bottom:12px;font-weight:700}
+.about-panel h4{color:#a5e4ff;font-size:13px;margin-top:14px;margin-bottom:6px;font-weight:600}
+.about-panel p{color:#bbb;margin-bottom:8px}
+.about-panel strong{color:#e0e0e0}
+@media(max-width:768px){
+  header{padding:8px 12px}
+  .search-box{width:160px}
+  .filters{gap:4px}
+  .filter-btn{font-size:10px;padding:3px 7px}
+  .legend,.stats{font-size:10px;padding:10px 12px}
+  .about-panel{width:calc(100% - 32px);right:16px}
+}
 </style>
 </head>
 <body>
+<header>
+  <a href="/" class="brand">Graphify.md</a>
+  <input type="text" class="search-box" placeholder="Search groups..." id="search">
+  <div class="filters" id="filters"></div>
+</header>
 
-<div id="header">
-  <a href="/" class="home">Graphify<span>.md</span></a>
-  <div>
-    <h1>LinkedIn Groups <em>Knowledge Graph</em></h1>
-    <div class="subtitle">90+ groups · 8 categories · cross-community relationships</div>
-  </div>
-  <div id="controls">
-    <input type="text" id="search" placeholder="Search groups...">
-    <button class="filter-btn active" data-cat="all">All</button>
-    <button class="filter-btn" data-cat="Technology & AI">AI/Tech</button>
-    <button class="filter-btn" data-cat="Marketing, Media & Communications">Marketing</button>
-    <button class="filter-btn" data-cat="Business, Leadership & Entrepreneurship">Business</button>
-    <button class="filter-btn" data-cat="Data, Analytics & Business Intelligence">Data/BI</button>
-    <button class="filter-btn" data-cat="Careers, Jobs & Recruitment">Careers</button>
-  </div>
+<div id="graph-container">
+  <svg id="graph"></svg>
 </div>
 
-<div id="legend">
-  <h3>Categories</h3>
+<div class="tooltip" id="tooltip"></div>
+
+<button class="about-toggle" id="aboutToggle">About This Graph</button>
+<div class="about-panel" id="aboutPanel">
+  <h3>About This Graph</h3>
+  <h4>Universe</h4>
+  <p>LinkedIn hosts 2M+ groups. This graph maps the top ~200 by membership across 15 professional verticals.</p>
+  <h4>Cut</h4>
+  <p>Groups selected by membership size (floor ~30K members) with representation guaranteed across all major LinkedIn industry categories. Tech/AI overrepresented in raw data; normalized here to reflect LinkedIn's actual professional distribution.</p>
+  <h4>Why these groups</h4>
+  <p>LinkedIn groups above 30K members represent active professional communities with sustained engagement. Below this threshold, groups tend toward dormancy or spam.</p>
+  <h4>How to read</h4>
+  <p><strong>Node size</strong> = member count (log scale). <strong>Color</strong> = professional vertical. <strong>Edges</strong> = shared topic tags (2+ shared tags required). Hover for details. The clusters that form reveal which professional communities share common interests — and where cross-industry opportunities exist.</p>
+  <h4>What the graph reveals</h4>
+  <p>Technology and Data form a dense supercluster. Marketing bridges tech and business. Healthcare and Legal are isolated islands — underleveraged for AI. The gaps between clusters are where <strong>Graphify.md</strong> operates.</p>
+  <h4>Data sources</h4>
+  <p>DanD.ai LinkedIn Groups Directory, DataThick.com, industry-specific group directories, manual verification. Data current as of March 2026.</p>
 </div>
 
-<div id="stats">
-  <h3>Graph Stats</h3>
-  <div class="stat-row"><span>Groups</span><span class="stat-val" id="s-groups">0</span></div>
-  <div class="stat-row"><span>Categories</span><span class="stat-val" id="s-cats">0</span></div>
-  <div class="stat-row"><span>Connections</span><span class="stat-val" id="s-edges">0</span></div>
-  <div class="stat-row"><span>Total Members</span><span class="stat-val" id="s-members">0</span></div>
-</div>
+<div class="legend" id="legend"></div>
+<div class="stats" id="stats"></div>
 
-<div id="tooltip"></div>
-<svg id="graph" width="100%" height="100%"></svg>
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
-// ============================================================
-// DATA: LinkedIn Groups
-// ============================================================
-const groups = [
-  // MEGA GROUPS (1M+)
-  {name:"Harvard Business Review",members:3000000,cat:"Business, Leadership & Entrepreneurship",tags:["leadership","management","strategy"]},
-  {name:"AI, ML, Data Science & Robotics",members:2999992,cat:"Technology & AI",tags:["ai","ml","data-science","robotics"]},
-  {name:"Software/Technology: AI, Marketing, Startups",members:2998323,cat:"Technology & AI",tags:["ai","marketing","startups","blockchain"]},
-  {name:"Social Media Marketing (Josh Turner)",members:2965556,cat:"Marketing, Media & Communications",tags:["social-media","marketing","content"]},
-  {name:"Python Developers Community",members:2715325,cat:"Technology & AI",tags:["python","development","programming"]},
-  {name:"AI, Deep Learning, Machine Learning",members:2545936,cat:"Technology & AI",tags:["ai","deep-learning","ml","research"]},
-  {name:"Brain Expansion Group",members:2535214,cat:"Learning, Education & Professional Development",tags:["learning","innovation","growth"]},
-  {name:"Digital Marketing: Social, Search, Mobile",members:2388576,cat:"Marketing, Media & Communications",tags:["digital-marketing","seo","social-media"]},
-  {name:"Digital Marketing",members:2321686,cat:"Marketing, Media & Communications",tags:["digital-marketing","content","strategy"]},
-  {name:"Microsoft Excel Users",members:2165304,cat:"Data, Analytics & Business Intelligence",tags:["excel","data-analysis","reporting"]},
-  {name:"Leadership Think Tank",members:2160443,cat:"Business, Leadership & Entrepreneurship",tags:["leadership","strategy","management"]},
-  {name:"Power BI: BI Dashboards & Analysis",members:2041360,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","data-viz","analytics"]},
-  {name:"Machine Learning Community",members:2011047,cat:"Technology & AI",tags:["ml","ai","data-science"]},
-  {name:"Next Big Thing Club",members:1798606,cat:"Business, Leadership & Entrepreneurship",tags:["startups","investing","founders"]},
-  {name:"Linked:HR (#1 HR Group)",members:1672203,cat:"HR, Talent & Workplace",tags:["hr","talent","workplace"]},
-  {name:"Internship Group",members:1666088,cat:"Careers, Jobs & Recruitment",tags:["internships","early-career","jobs"]},
-  {name:"MS Excel and VBA Macros",members:1599828,cat:"Data, Analytics & Business Intelligence",tags:["excel","vba","automation"]},
-  {name:"Idea Citizen Mastermind",members:1538036,cat:"Business, Leadership & Entrepreneurship",tags:["innovation","entrepreneurship","ideas"]},
-  {name:"Marketing Communication",members:1497743,cat:"Marketing, Media & Communications",tags:["marketing","branding","pr"]},
-  {name:"Dubai Recruitment",members:1402270,cat:"Careers, Jobs & Recruitment",tags:["recruitment","dubai","jobs"]},
-  {name:"Personal Development & Wellness",members:1398640,cat:"Learning, Education & Professional Development",tags:["self-improvement","mental-health","wellness"]},
-  {name:"Technology Investor Club",members:1365122,cat:"Finance, Investment & FinTech",tags:["investing","ai","fintech","iot"]},
-  {name:"Excel Learning Group",members:1348141,cat:"Learning, Education & Professional Development",tags:["excel","learning","tutorials"]},
-  {name:"Media & Marketing Professionals",members:1347582,cat:"Marketing, Media & Communications",tags:["marketing","media","networking"]},
-  {name:"Learning & Training Professionals",members:1347850,cat:"Learning, Education & Professional Development",tags:["training","education","l&d"]},
-  {name:"Tech Startup CEOs & Investors",members:1297127,cat:"Business, Leadership & Entrepreneurship",tags:["startups","ai","fintech","saas"]},
-  {name:"AI Mindshare",members:1233743,cat:"Technology & AI",tags:["ai","ml","data-science","gen-ai"]},
-  {name:"Cloud Computing & SaaS",members:1231262,cat:"Technology & AI",tags:["cloud","saas","infrastructure"]},
-  {name:"The Recruiter.com Network",members:1206691,cat:"Careers, Jobs & Recruitment",tags:["recruitment","hiring","employer-branding"]},
-  {name:"Startup Specialists Network",members:1189035,cat:"Business, Leadership & Entrepreneurship",tags:["startups","entrepreneurship","marketing"]},
-
-  // LARGE GROUPS (100K-999K)
-  {name:"AI, ML, Robotics & Data Analytics",members:500000,cat:"Technology & AI",tags:["ai","ml","robotics","analytics"]},
-  {name:"Python Developer",members:240000,cat:"Technology & AI",tags:["python","development"]},
-  {name:"ML, AI, Deep Learning & Computer Vision",members:200000,cat:"Technology & AI",tags:["ml","ai","computer-vision"]},
-  {name:"AI Engineer & Data Scientist",members:150000,cat:"Technology & AI",tags:["ai","data-science","python","rpa"]},
-  {name:"Data Scientist & Analyst",members:150000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","analytics"]},
-  {name:"Generative AI (Large)",members:110000,cat:"Technology & AI",tags:["gen-ai","llm","ai"]},
-  {name:"Robotics & AI Community",members:105000,cat:"Technology & AI",tags:["robotics","ai","computer-vision"]},
-  {name:"Data Analytics & BI Insights",members:95000,cat:"Data, Analytics & Business Intelligence",tags:["analytics","data-science","bi"]},
-  {name:"Microsoft Power BI Community",members:90000,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","data-viz"]},
-  {name:"Generative AI",members:80000,cat:"Technology & AI",tags:["gen-ai","llm"]},
-  {name:"Data Science & AI & Robotics",members:80000,cat:"Technology & AI",tags:["data-science","ai","robotics"]},
-  {name:"SQL Server BI",members:65000,cat:"Data, Analytics & Business Intelligence",tags:["sql","bi","data"]},
-  {name:"Data Scientist & Gen AI",members:65000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","gen-ai"]},
-  {name:"Agile Scrum Master",members:62000,cat:"Business, Leadership & Entrepreneurship",tags:["agile","scrum","project-management"]},
-  {name:"Power BI Developer",members:58000,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","development"]},
-  {name:"AI & Data Science (DataThick)",members:52000,cat:"Technology & AI",tags:["ai","ml","data-science","gen-ai"]},
-  {name:"Python & Data Scientist",members:51000,cat:"Technology & AI",tags:["python","data-science","ml"]},
-  {name:"JavaScript Developer",members:48000,cat:"Technology & AI",tags:["javascript","web-dev","programming"]},
-  {name:"Software Engineer & Data",members:40000,cat:"Technology & AI",tags:["software","data-science","rpa"]},
-  {name:"AI Research & Analytics",members:38000,cat:"Technology & AI",tags:["ai","ml","analytics","robotics"]},
-  {name:"BI & AI Analytics",members:35000,cat:"Data, Analytics & Business Intelligence",tags:["ai","bi","analytics"]},
-  {name:"Python & Full Stack Developer",members:35000,cat:"Technology & AI",tags:["python","full-stack","data"]},
-  {name:"SAP Community",members:30000,cat:"Technology & AI",tags:["sap","enterprise","erp"]},
-  {name:"Programming Languages",members:30000,cat:"Technology & AI",tags:["python","java","javascript","programming"]},
-  {name:"Software Developer & Architect",members:26000,cat:"Technology & AI",tags:["software","architecture","programming"]},
-  {name:"Full Stack Web Developer",members:25000,cat:"Technology & AI",tags:["full-stack","web-dev"]},
-  {name:"Data Analyst & Scientist (Python/SQL)",members:25000,cat:"Data, Analytics & Business Intelligence",tags:["data","python","sql","power-bi"]},
-  {name:"Python Programming & AI",members:24000,cat:"Technology & AI",tags:["python","ai","ml","robotics"]},
-  {name:"Data Scientist & Data Engineer",members:22000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","data-engineering"]},
-  {name:"Data Engineer & AI Developer",members:21000,cat:"Technology & AI",tags:["data-engineering","ai","python"]},
-  {name:"Python, Tableau, Power BI, SQL",members:21000,cat:"Data, Analytics & Business Intelligence",tags:["python","tableau","power-bi","sql"]},
-  {name:"Data Scientist & Business Analyst",members:17000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","business-analyst","gen-ai"]},
-  {name:"Full Stack Web Developer (large)",members:14000,cat:"Technology & AI",tags:["web-dev","full-stack"]},
-  {name:"Front End Developer (React/Angular/Vue)",members:11000,cat:"Technology & AI",tags:["react","angular","vue","frontend"]},
-  {name:"Digital Marketing (SEO/SEM/SMO)",members:10000,cat:"Marketing, Media & Communications",tags:["seo","sem","digital-marketing"]},
-  {name:"Full Stack Python Django",members:10000,cat:"Technology & AI",tags:["python","django","full-stack"]},
-  {name:"Data Scientist (R & Python)",members:10000,cat:"Data, Analytics & Business Intelligence",tags:["r","python","data-science"]},
-];
-
-const categoryColors = {
+const CATEGORIES = {
   "Technology & AI": "#3b82f6",
-  "Marketing, Media & Communications": "#f59e0b",
-  "Business, Leadership & Entrepreneurship": "#22c55e",
-  "Data, Analytics & Business Intelligence": "#8b5cf6",
-  "Learning, Education & Professional Development": "#ec4899",
-  "Careers, Jobs & Recruitment": "#14b8a6",
-  "HR, Talent & Workplace": "#f97316",
-  "Finance, Investment & FinTech": "#06b6d4"
+  "Data, Analytics & BI": "#8b5cf6",
+  "Marketing & Communications": "#f59e0b",
+  "Business & Leadership": "#ef4444",
+  "Learning & Education": "#10b981",
+  "Careers & Recruitment": "#ec4899",
+  "Finance & FinTech": "#06b6d4",
+  "HR & Talent": "#f97316",
+  "Healthcare & Life Sciences": "#22c55e",
+  "Cybersecurity & InfoSec": "#e11d48",
+  "Supply Chain & Manufacturing": "#a855f7",
+  "Real Estate & Construction": "#eab308",
+  "Legal & Compliance": "#64748b",
+  "Energy & Sustainability": "#14b8a6",
+  "Nonprofit & Government": "#6366f1"
 };
 
-// Build nodes
-const nodes = groups.map((g, i) => ({
-  id: i,
-  name: g.name,
-  members: g.members,
-  cat: g.cat,
-  tags: g.tags,
-  radius: Math.max(6, Math.min(30, Math.sqrt(g.members / 50000)))
-}));
+const groups = [
+  // Technology & AI (26 groups)
+  {name:"AI/ML/Data Science & Robotics",members:3000000,cat:"Technology & AI",tags:["ai","ml","data-science","robotics","deep-learning"]},
+  {name:"Software/Technology AI Marketing Startups",members:3000000,cat:"Technology & AI",tags:["software","ai","marketing","startups","technology"]},
+  {name:"Python Developers",members:2700000,cat:"Technology & AI",tags:["python","programming","software","development"]},
+  {name:"AI Deep Learning ML",members:2500000,cat:"Technology & AI",tags:["ai","deep-learning","ml","neural-networks"]},
+  {name:"Machine Learning Community",members:2000000,cat:"Technology & AI",tags:["ml","ai","data-science","algorithms"]},
+  {name:"Cloud Computing SaaS",members:1200000,cat:"Technology & AI",tags:["cloud","saas","infrastructure","devops"]},
+  {name:"AI Mindshare",members:1200000,cat:"Technology & AI",tags:["ai","thought-leadership","strategy","innovation"]},
+  {name:"AI ML Robotics Analytics",members:500000,cat:"Technology & AI",tags:["ai","ml","robotics","analytics"]},
+  {name:"Python Developer",members:240000,cat:"Technology & AI",tags:["python","development","programming","automation"]},
+  {name:"ML AI Deep Learning CV",members:200000,cat:"Technology & AI",tags:["ml","ai","deep-learning","computer-vision"]},
+  {name:"AI Engineer Data Scientist",members:150000,cat:"Technology & AI",tags:["ai","data-science","engineering","ml"]},
+  {name:"Generative AI",members:110000,cat:"Technology & AI",tags:["generative-ai","llm","ai","content-generation"]},
+  {name:"Robotics AI Community",members:105000,cat:"Technology & AI",tags:["robotics","ai","automation","engineering"]},
+  {name:"Generative AI Forum",members:80000,cat:"Technology & AI",tags:["generative-ai","llm","chatgpt","ai"]},
+  {name:"Data Science AI Robotics",members:80000,cat:"Technology & AI",tags:["data-science","ai","robotics","analytics"]},
+  {name:"JavaScript Developer",members:48000,cat:"Technology & AI",tags:["javascript","programming","web","frontend"]},
+  {name:"Software Engineer",members:40000,cat:"Technology & AI",tags:["software","engineering","development","architecture"]},
+  {name:"AI Research Analytics",members:38000,cat:"Technology & AI",tags:["ai","research","analytics","data-science"]},
+  {name:"SAP Community",members:30000,cat:"Technology & AI",tags:["sap","erp","enterprise","software"]},
+  {name:"Programming Languages",members:30000,cat:"Technology & AI",tags:["programming","software","development","languages"]},
+  {name:"Software Architect",members:26000,cat:"Technology & AI",tags:["architecture","software","design-patterns","engineering"]},
+  {name:"Full Stack Web Dev",members:25000,cat:"Technology & AI",tags:["fullstack","web","development","javascript"]},
+  {name:"Python AI",members:24000,cat:"Technology & AI",tags:["python","ai","ml","automation"]},
+  {name:"Data Engineer AI",members:21000,cat:"Technology & AI",tags:["data-engineering","ai","pipelines","cloud"]},
+  {name:"Front End React Angular",members:11000,cat:"Technology & AI",tags:["frontend","react","angular","javascript"]},
+  {name:"Django Full Stack",members:10000,cat:"Technology & AI",tags:["django","python","fullstack","web"]},
 
-// Build edges: groups sharing tags
-const links = [];
-for (let i = 0; i < nodes.length; i++) {
-  for (let j = i + 1; j < nodes.length; j++) {
+  // Data, Analytics & BI (20 groups)
+  {name:"Microsoft Excel Users",members:2200000,cat:"Data, Analytics & BI",tags:["excel","spreadsheets","data","productivity"]},
+  {name:"Power BI Dashboards",members:2000000,cat:"Data, Analytics & BI",tags:["power-bi","dashboards","visualization","analytics"]},
+  {name:"MS Excel VBA",members:1600000,cat:"Data, Analytics & BI",tags:["excel","vba","automation","macros"]},
+  {name:"Data Scientist Analyst",members:150000,cat:"Data, Analytics & BI",tags:["data-science","analytics","ml","statistics"]},
+  {name:"Data Analytics BI Insights",members:95000,cat:"Data, Analytics & BI",tags:["analytics","bi","insights","data"]},
+  {name:"Power BI Community",members:90000,cat:"Data, Analytics & BI",tags:["power-bi","community","dashboards","microsoft"]},
+  {name:"SQL Server BI",members:65000,cat:"Data, Analytics & BI",tags:["sql","bi","databases","microsoft"]},
+  {name:"Data Scientist Gen AI",members:65000,cat:"Data, Analytics & BI",tags:["data-science","generative-ai","ml","ai"]},
+  {name:"Power BI Developer",members:58000,cat:"Data, Analytics & BI",tags:["power-bi","development","dax","visualization"]},
+  {name:"Data Analytics BI",members:50000,cat:"Data, Analytics & BI",tags:["analytics","bi","data","reporting"]},
+  {name:"Power BI Dev Forum",members:45000,cat:"Data, Analytics & BI",tags:["power-bi","development","dashboards","analytics"]},
+  {name:"BI AI Analytics",members:35000,cat:"Data, Analytics & BI",tags:["bi","ai","analytics","automation"]},
+  {name:"Data Analyst Python SQL",members:25000,cat:"Data, Analytics & BI",tags:["data","python","sql","analytics"]},
+  {name:"Data Scientist Data Engineer",members:22000,cat:"Data, Analytics & BI",tags:["data-science","data-engineering","ml","pipelines"]},
+  {name:"Python Tableau Power BI",members:21000,cat:"Data, Analytics & BI",tags:["python","tableau","power-bi","visualization"]},
+  {name:"Data Scientist Business Analyst",members:17000,cat:"Data, Analytics & BI",tags:["data-science","business-analysis","analytics","strategy"]},
+  {name:"Power BI Developers",members:6500,cat:"Data, Analytics & BI",tags:["power-bi","development","microsoft","reporting"]},
+  {name:"Data Analytics Visualization",members:6000,cat:"Data, Analytics & BI",tags:["analytics","visualization","dashboards","data"]},
+  {name:"Data Scientist R Python",members:10000,cat:"Data, Analytics & BI",tags:["data-science","r","python","statistics"]},
+  {name:"Data Science Analytics",members:9000,cat:"Data, Analytics & BI",tags:["data-science","analytics","ml","insights"]},
+
+  // Marketing & Communications (15 groups)
+  {name:"Social Media Marketing",members:3000000,cat:"Marketing & Communications",tags:["social-media","marketing","content","digital"]},
+  {name:"Digital Marketing Social Search Mobile",members:2400000,cat:"Marketing & Communications",tags:["digital-marketing","search","mobile","seo"]},
+  {name:"Digital Marketing",members:2300000,cat:"Marketing & Communications",tags:["digital-marketing","strategy","content","advertising"]},
+  {name:"Marketing Communication",members:1500000,cat:"Marketing & Communications",tags:["marketing","communications","branding","strategy"]},
+  {name:"Media Marketing Professionals",members:1300000,cat:"Marketing & Communications",tags:["media","marketing","advertising","content"]},
+  {name:"Digital Marketing SEO SEM",members:10000,cat:"Marketing & Communications",tags:["seo","sem","digital-marketing","search"]},
+  {name:"Content Marketing Institute",members:200000,cat:"Marketing & Communications",tags:["content","marketing","strategy","storytelling"]},
+  {name:"B2B Marketing Professionals",members:150000,cat:"Marketing & Communications",tags:["b2b","marketing","lead-generation","strategy"]},
+  {name:"Brand Management",members:120000,cat:"Marketing & Communications",tags:["branding","marketing","strategy","identity"]},
+  {name:"Public Relations PR",members:100000,cat:"Marketing & Communications",tags:["pr","communications","media","reputation"]},
+  {name:"Advertising Professionals",members:80000,cat:"Marketing & Communications",tags:["advertising","creative","media","campaigns"]},
+  {name:"Email Marketing",members:60000,cat:"Marketing & Communications",tags:["email","marketing","automation","campaigns"]},
+  {name:"Growth Hacking",members:50000,cat:"Marketing & Communications",tags:["growth","marketing","startups","analytics"]},
+  {name:"Influencer Marketing",members:40000,cat:"Marketing & Communications",tags:["influencer","social-media","marketing","content"]},
+  {name:"Video Marketing",members:30000,cat:"Marketing & Communications",tags:["video","marketing","content","youtube"]},
+
+  // Business & Leadership (15 groups)
+  {name:"Harvard Business Review",members:3000000,cat:"Business & Leadership",tags:["business","leadership","strategy","management"]},
+  {name:"Leadership Think Tank",members:2200000,cat:"Business & Leadership",tags:["leadership","management","executive","strategy"]},
+  {name:"Next Big Thing Club",members:1800000,cat:"Business & Leadership",tags:["innovation","startups","technology","trends"]},
+  {name:"Idea Citizen Mastermind",members:1500000,cat:"Business & Leadership",tags:["innovation","entrepreneurship","ideas","networking"]},
+  {name:"Tech Startup CEOs Investors",members:1300000,cat:"Business & Leadership",tags:["startups","ceo","investors","venture-capital"]},
+  {name:"Startup Specialists Network",members:1200000,cat:"Business & Leadership",tags:["startups","entrepreneurship","growth","networking"]},
+  {name:"Agile Scrum Master",members:62000,cat:"Business & Leadership",tags:["agile","scrum","project-management","software"]},
+  {name:"Entrepreneurs Network",members:500000,cat:"Business & Leadership",tags:["entrepreneurship","startups","business","networking"]},
+  {name:"Small Business Owners",members:400000,cat:"Business & Leadership",tags:["small-business","entrepreneurship","management","growth"]},
+  {name:"Business Strategy",members:350000,cat:"Business & Leadership",tags:["strategy","business","consulting","management"]},
+  {name:"Innovation Management",members:250000,cat:"Business & Leadership",tags:["innovation","management","r&d","strategy"]},
+  {name:"Venture Capital",members:200000,cat:"Business & Leadership",tags:["venture-capital","investors","startups","funding"]},
+  {name:"Product Management",members:180000,cat:"Business & Leadership",tags:["product","management","agile","strategy"]},
+  {name:"Change Management",members:150000,cat:"Business & Leadership",tags:["change","management","transformation","leadership"]},
+  {name:"Executive Leadership",members:100000,cat:"Business & Leadership",tags:["executive","leadership","c-suite","management"]},
+
+  // Learning & Education (12 groups)
+  {name:"Brain Expansion",members:2500000,cat:"Learning & Education",tags:["learning","personal-development","growth","mindset"]},
+  {name:"Personal Development Wellness",members:1400000,cat:"Learning & Education",tags:["personal-development","wellness","coaching","mindset"]},
+  {name:"Excel Learning",members:1300000,cat:"Learning & Education",tags:["excel","learning","spreadsheets","skills"]},
+  {name:"Learning Training Professionals",members:1300000,cat:"Learning & Education",tags:["learning","training","l&d","instructional-design"]},
+  {name:"Higher Education",members:200000,cat:"Learning & Education",tags:["higher-ed","universities","academia","research"]},
+  {name:"E-Learning Professionals",members:180000,cat:"Learning & Education",tags:["e-learning","lms","instructional-design","edtech"]},
+  {name:"Instructional Design",members:150000,cat:"Learning & Education",tags:["instructional-design","learning","curriculum","training"]},
+  {name:"STEM Education",members:100000,cat:"Learning & Education",tags:["stem","education","science","technology"]},
+  {name:"EdTech",members:80000,cat:"Learning & Education",tags:["edtech","technology","learning","innovation"]},
+  {name:"Corporate Training",members:70000,cat:"Learning & Education",tags:["training","corporate","l&d","skills"]},
+  {name:"Academic Researchers",members:60000,cat:"Learning & Education",tags:["research","academia","publishing","science"]},
+  {name:"Online Teaching",members:40000,cat:"Learning & Education",tags:["online","teaching","e-learning","education"]},
+
+  // Careers & Recruitment (8 groups)
+  {name:"Internship Group",members:1700000,cat:"Careers & Recruitment",tags:["internships","careers","students","jobs"]},
+  {name:"Dubai Recruitment",members:1400000,cat:"Careers & Recruitment",tags:["recruitment","dubai","jobs","middle-east"]},
+  {name:"Recruiter.com Network",members:1200000,cat:"Careers & Recruitment",tags:["recruitment","hiring","talent","hr"]},
+  {name:"Job Search Strategies",members:500000,cat:"Careers & Recruitment",tags:["job-search","careers","resume","interviewing"]},
+  {name:"Career Development",members:400000,cat:"Careers & Recruitment",tags:["career","development","growth","mentoring"]},
+  {name:"Staffing Professionals",members:300000,cat:"Careers & Recruitment",tags:["staffing","recruitment","agencies","talent"]},
+  {name:"Remote Work",members:250000,cat:"Careers & Recruitment",tags:["remote","work","distributed","flexibility"]},
+  {name:"Freelancers Union",members:200000,cat:"Careers & Recruitment",tags:["freelance","gig-economy","independent","consulting"]},
+
+  // Finance & FinTech (12 groups)
+  {name:"Technology Investor Club",members:1400000,cat:"Finance & FinTech",tags:["investing","technology","venture-capital","startups"]},
+  {name:"Finance Club",members:900000,cat:"Finance & FinTech",tags:["finance","accounting","investing","markets"]},
+  {name:"CFO Network",members:360000,cat:"Finance & FinTech",tags:["cfo","finance","executive","accounting"]},
+  {name:"World Finance Network",members:200000,cat:"Finance & FinTech",tags:["finance","global","markets","economics"]},
+  {name:"Tax Professionals",members:100000,cat:"Finance & FinTech",tags:["tax","accounting","compliance","finance"]},
+  {name:"Super CFO",members:75000,cat:"Finance & FinTech",tags:["cfo","finance","leadership","strategy"]},
+  {name:"Banking Professionals",members:150000,cat:"Finance & FinTech",tags:["banking","finance","lending","fintech"]},
+  {name:"FinTech Innovators",members:120000,cat:"Finance & FinTech",tags:["fintech","innovation","technology","banking"]},
+  {name:"Cryptocurrency & Blockchain",members:100000,cat:"Finance & FinTech",tags:["crypto","blockchain","defi","web3"]},
+  {name:"Private Equity",members:80000,cat:"Finance & FinTech",tags:["private-equity","investing","finance","acquisitions"]},
+  {name:"Insurance Professionals",members:60000,cat:"Finance & FinTech",tags:["insurance","risk","underwriting","finance"]},
+  {name:"Wealth Management",members:50000,cat:"Finance & FinTech",tags:["wealth","investing","financial-planning","advisory"]},
+
+  // HR & Talent (8 groups)
+  {name:"Linked HR",members:1700000,cat:"HR & Talent",tags:["hr","human-resources","talent","management"]},
+  {name:"HR Professionals",members:500000,cat:"HR & Talent",tags:["hr","recruitment","employee-relations","compliance"]},
+  {name:"Talent Acquisition",members:300000,cat:"HR & Talent",tags:["talent","recruitment","hiring","employer-branding"]},
+  {name:"Organizational Development",members:200000,cat:"HR & Talent",tags:["od","culture","change","leadership"]},
+  {name:"Diversity & Inclusion",members:180000,cat:"HR & Talent",tags:["dei","diversity","inclusion","equity"]},
+  {name:"Employee Engagement",members:150000,cat:"HR & Talent",tags:["engagement","culture","retention","hr"]},
+  {name:"Compensation & Benefits",members:100000,cat:"HR & Talent",tags:["compensation","benefits","total-rewards","hr"]},
+  {name:"Workplace Safety",members:60000,cat:"HR & Talent",tags:["safety","osha","compliance","workplace"]},
+
+  // Healthcare & Life Sciences (12 groups)
+  {name:"IHR Healthcare",members:300000,cat:"Healthcare & Life Sciences",tags:["healthcare","management","hospital","administration"]},
+  {name:"Healthcare Executives Network",members:200000,cat:"Healthcare & Life Sciences",tags:["healthcare","executive","leadership","hospital"]},
+  {name:"Pharma Biotech PPBI",members:200000,cat:"Healthcare & Life Sciences",tags:["pharma","biotech","drug-development","clinical"]},
+  {name:"BioSpace",members:150000,cat:"Healthcare & Life Sciences",tags:["biotech","pharma","life-sciences","careers"]},
+  {name:"Biotech Pharma Professionals",members:90000,cat:"Healthcare & Life Sciences",tags:["biotech","pharma","research","drug-development"]},
+  {name:"Clinical Research Professionals",members:50000,cat:"Healthcare & Life Sciences",tags:["clinical-research","trials","pharma","regulatory"]},
+  {name:"Health IT",members:80000,cat:"Healthcare & Life Sciences",tags:["health-it","ehr","interoperability","technology"]},
+  {name:"Nursing Network",members:70000,cat:"Healthcare & Life Sciences",tags:["nursing","healthcare","patient-care","clinical"]},
+  {name:"Medical Devices",members:60000,cat:"Healthcare & Life Sciences",tags:["medical-devices","fda","engineering","healthcare"]},
+  {name:"Digital Health",members:50000,cat:"Healthcare & Life Sciences",tags:["digital-health","telehealth","healthtech","innovation"]},
+  {name:"Public Health",members:40000,cat:"Healthcare & Life Sciences",tags:["public-health","epidemiology","policy","population"]},
+  {name:"Mental Health Professionals",members:30000,cat:"Healthcare & Life Sciences",tags:["mental-health","therapy","psychology","wellness"]},
+
+  // Cybersecurity & InfoSec (8 groups)
+  {name:"Information Security Community",members:400000,cat:"Cybersecurity & InfoSec",tags:["infosec","security","risk","compliance"]},
+  {name:"Cybersecurity Professionals",members:300000,cat:"Cybersecurity & InfoSec",tags:["cybersecurity","security","networking","threats"]},
+  {name:"CISO Network",members:100000,cat:"Cybersecurity & InfoSec",tags:["ciso","security","executive","risk"]},
+  {name:"Ethical Hacking",members:80000,cat:"Cybersecurity & InfoSec",tags:["hacking","pentesting","security","offensive"]},
+  {name:"Cloud Security",members:60000,cat:"Cybersecurity & InfoSec",tags:["cloud","security","aws","azure"]},
+  {name:"Privacy Professionals",members:50000,cat:"Cybersecurity & InfoSec",tags:["privacy","gdpr","compliance","data-protection"]},
+  {name:"Cyber Threat Intelligence",members:40000,cat:"Cybersecurity & InfoSec",tags:["threat-intel","cybersecurity","soc","detection"]},
+  {name:"SOC Analysts",members:30000,cat:"Cybersecurity & InfoSec",tags:["soc","monitoring","incident-response","security"]},
+
+  // Supply Chain & Manufacturing (10 groups)
+  {name:"ASCM Supply Chain",members:166000,cat:"Supply Chain & Manufacturing",tags:["supply-chain","operations","logistics","planning"]},
+  {name:"Lean Manufacturing",members:122000,cat:"Supply Chain & Manufacturing",tags:["lean","manufacturing","six-sigma","continuous-improvement"]},
+  {name:"CSCMP Supply Chain",members:93000,cat:"Supply Chain & Manufacturing",tags:["supply-chain","logistics","transportation","warehousing"]},
+  {name:"Logistics Transport",members:83000,cat:"Supply Chain & Manufacturing",tags:["logistics","transportation","freight","shipping"]},
+  {name:"Supply Chain Minded",members:67000,cat:"Supply Chain & Manufacturing",tags:["supply-chain","procurement","operations","strategy"]},
+  {name:"Supply Chain Practitioners",members:64000,cat:"Supply Chain & Manufacturing",tags:["supply-chain","operations","planning","demand"]},
+  {name:"Manufacturing Excellence",members:28000,cat:"Supply Chain & Manufacturing",tags:["manufacturing","quality","operations","engineering"]},
+  {name:"Procurement Professionals",members:100000,cat:"Supply Chain & Manufacturing",tags:["procurement","sourcing","vendor-management","supply-chain"]},
+  {name:"Quality Management",members:80000,cat:"Supply Chain & Manufacturing",tags:["quality","iso","six-sigma","continuous-improvement"]},
+  {name:"Industrial Engineering",members:50000,cat:"Supply Chain & Manufacturing",tags:["industrial-engineering","manufacturing","automation","optimization"]},
+
+  // Real Estate & Construction (8 groups)
+  {name:"Commercial Real Estate",members:250000,cat:"Real Estate & Construction",tags:["commercial","real-estate","investing","property"]},
+  {name:"Real Estate Investors",members:200000,cat:"Real Estate & Construction",tags:["real-estate","investing","rental","property"]},
+  {name:"Construction Professionals",members:180000,cat:"Real Estate & Construction",tags:["construction","building","project-management","engineering"]},
+  {name:"Property Management",members:120000,cat:"Real Estate & Construction",tags:["property","management","real-estate","leasing"]},
+  {name:"Architecture Design",members:100000,cat:"Real Estate & Construction",tags:["architecture","design","building","planning"]},
+  {name:"Sustainable Building",members:60000,cat:"Real Estate & Construction",tags:["sustainable","green-building","leed","construction"]},
+  {name:"Real Estate Technology",members:50000,cat:"Real Estate & Construction",tags:["proptech","real-estate","technology","innovation"]},
+  {name:"Infrastructure Development",members:40000,cat:"Real Estate & Construction",tags:["infrastructure","development","construction","government"]},
+
+  // Legal & Compliance (8 groups)
+  {name:"Legal Professionals Network",members:200000,cat:"Legal & Compliance",tags:["legal","law","litigation","corporate"]},
+  {name:"Corporate Counsel",members:150000,cat:"Legal & Compliance",tags:["corporate","legal","counsel","governance"]},
+  {name:"Compliance Professionals",members:120000,cat:"Legal & Compliance",tags:["compliance","regulatory","risk","governance"]},
+  {name:"Intellectual Property",members:80000,cat:"Legal & Compliance",tags:["ip","patents","trademarks","legal"]},
+  {name:"Contract Management",members:60000,cat:"Legal & Compliance",tags:["contracts","legal","procurement","negotiation"]},
+  {name:"Regulatory Affairs",members:50000,cat:"Legal & Compliance",tags:["regulatory","fda","compliance","pharma"]},
+  {name:"Privacy Law",members:40000,cat:"Legal & Compliance",tags:["privacy","gdpr","data-protection","legal"]},
+  {name:"Legal Technology",members:30000,cat:"Legal & Compliance",tags:["legaltech","technology","automation","legal"]},
+
+  // Energy & Sustainability (8 groups)
+  {name:"Renewable Energy",members:200000,cat:"Energy & Sustainability",tags:["renewable","energy","solar","wind"]},
+  {name:"Oil Gas Professionals",members:180000,cat:"Energy & Sustainability",tags:["oil","gas","energy","upstream"]},
+  {name:"Sustainability Professionals",members:150000,cat:"Energy & Sustainability",tags:["sustainability","esg","environment","strategy"]},
+  {name:"Clean Energy",members:100000,cat:"Energy & Sustainability",tags:["clean-energy","renewable","climate","technology"]},
+  {name:"ESG Investing",members:80000,cat:"Energy & Sustainability",tags:["esg","investing","sustainability","governance"]},
+  {name:"Climate Tech",members:60000,cat:"Energy & Sustainability",tags:["climate","technology","cleantech","innovation"]},
+  {name:"Solar Energy",members:50000,cat:"Energy & Sustainability",tags:["solar","energy","renewable","installation"]},
+  {name:"Energy Storage",members:30000,cat:"Energy & Sustainability",tags:["energy-storage","batteries","grid","renewable"]},
+
+  // Nonprofit & Government (6 groups)
+  {name:"Nonprofit Professionals",members:200000,cat:"Nonprofit & Government",tags:["nonprofit","fundraising","social-impact","management"]},
+  {name:"Government Professionals",members:150000,cat:"Nonprofit & Government",tags:["government","public-sector","policy","administration"]},
+  {name:"Social Impact",members:120000,cat:"Nonprofit & Government",tags:["social-impact","sustainability","csr","nonprofit"]},
+  {name:"Fundraising Professionals",members:80000,cat:"Nonprofit & Government",tags:["fundraising","nonprofit","development","grants"]},
+  {name:"Public Policy",members:60000,cat:"Nonprofit & Government",tags:["policy","government","regulation","advocacy"]},
+  {name:"International Development",members:50000,cat:"Nonprofit & Government",tags:["international","development","aid","ngo"]},
+
+  // Additional Technology & AI
+  {name:"DevOps Engineers",members:180000,cat:"Technology & AI",tags:["devops","cloud","infrastructure","automation"]},
+  {name:"Kubernetes Community",members:95000,cat:"Technology & AI",tags:["kubernetes","cloud","devops","containers"]},
+  {name:"Blockchain Developers",members:75000,cat:"Technology & AI",tags:["blockchain","development","web3","crypto"]},
+  {name:"IoT Professionals",members:120000,cat:"Technology & AI",tags:["iot","automation","engineering","sensors"]},
+  {name:"API Development",members:45000,cat:"Technology & AI",tags:["api","development","software","integration"]},
+
+  // Additional Data & BI
+  {name:"Snowflake Community",members:55000,cat:"Data, Analytics & BI",tags:["snowflake","cloud","data","analytics"]},
+  {name:"Apache Spark Users",members:42000,cat:"Data, Analytics & BI",tags:["spark","data-engineering","big-data","analytics"]},
+  {name:"Tableau Community",members:85000,cat:"Data, Analytics & BI",tags:["tableau","visualization","analytics","dashboards"]},
+  {name:"MongoDB Developers",members:60000,cat:"Data, Analytics & BI",tags:["mongodb","databases","development","nosql"]},
+
+  // Additional Marketing
+  {name:"Marketing Analytics",members:70000,cat:"Marketing & Communications",tags:["analytics","marketing","data","attribution"]},
+  {name:"Product Marketing Alliance",members:55000,cat:"Marketing & Communications",tags:["product","marketing","positioning","go-to-market"]},
+
+  // Additional Business
+  {name:"Management Consulting",members:280000,cat:"Business & Leadership",tags:["consulting","strategy","management","advisory"]},
+  {name:"Project Management Institute",members:220000,cat:"Business & Leadership",tags:["project-management","pmp","agile","planning"]},
+
+  // Additional Careers
+  {name:"Women in Tech",members:350000,cat:"Careers & Recruitment",tags:["women","technology","diversity","careers"]},
+  {name:"Veterans in Business",members:90000,cat:"Careers & Recruitment",tags:["veterans","careers","military","business"]},
+
+  // Additional Healthcare
+  {name:"Healthcare AI",members:45000,cat:"Healthcare & Life Sciences",tags:["healthcare","ai","technology","innovation"]},
+
+  // Additional Cybersecurity
+  {name:"DevSecOps",members:55000,cat:"Cybersecurity & InfoSec",tags:["devsecops","security","devops","automation"]},
+  {name:"Identity & Access Management",members:40000,cat:"Cybersecurity & InfoSec",tags:["iam","security","identity","access"]},
+
+  // Additional Supply Chain
+  {name:"Warehouse Management",members:45000,cat:"Supply Chain & Manufacturing",tags:["warehousing","logistics","operations","automation"]},
+  {name:"3D Printing Manufacturing",members:35000,cat:"Supply Chain & Manufacturing",tags:["3d-printing","manufacturing","innovation","engineering"]},
+
+  // Additional Real Estate
+  {name:"Smart Buildings",members:35000,cat:"Real Estate & Construction",tags:["smart-buildings","iot","technology","construction"]},
+  {name:"Urban Planning",members:55000,cat:"Real Estate & Construction",tags:["urban-planning","design","development","infrastructure"]},
+
+  // Additional Legal
+  {name:"GRC Professionals",members:65000,cat:"Legal & Compliance",tags:["grc","governance","risk","compliance"]},
+
+  // Additional Energy
+  {name:"Nuclear Energy",members:35000,cat:"Energy & Sustainability",tags:["nuclear","energy","clean-energy","engineering"]},
+  {name:"Carbon Markets",members:40000,cat:"Energy & Sustainability",tags:["carbon","markets","esg","sustainability"]},
+
+  // Additional Finance
+  {name:"RegTech",members:45000,cat:"Finance & FinTech",tags:["regtech","compliance","fintech","technology"]},
+
+  // Additional HR
+  {name:"People Analytics",members:75000,cat:"HR & Talent",tags:["people-analytics","hr","data","talent"]},
+
+  // Additional Learning
+  {name:"Coursera Learners",members:150000,cat:"Learning & Education",tags:["coursera","online","learning","skills"]},
+  {name:"Professional Certifications",members:110000,cat:"Learning & Education",tags:["certifications","professional-development","skills","careers"]}
+];
+
+// Build edges: connect groups sharing 2+ tags
+const edges = [];
+for(let i=0;i<groups.length;i++){
+  for(let j=i+1;j<groups.length;j++){
     const shared = groups[i].tags.filter(t => groups[j].tags.includes(t));
-    if (shared.length >= 2) {
-      links.push({source: i, target: j, shared: shared, weight: shared.length});
+    if(shared.length >= 2){
+      edges.push({source:i,target:j,shared:shared.length,tags:shared});
     }
   }
 }
 
-// Category nodes (hub)
-const cats = [...new Set(groups.map(g => g.cat))];
-const catNodes = cats.map((c, i) => ({
-  id: nodes.length + i,
-  name: c,
-  members: 0,
-  cat: c,
-  tags: [],
-  radius: 18,
-  isCat: true
+// Connection counts
+const connCount = new Array(groups.length).fill(0);
+edges.forEach(e => { connCount[e.source]++; connCount[e.target]++; });
+
+// Category hubs
+const catKeys = Object.keys(CATEGORIES);
+const hubNodes = catKeys.map((c,i) => ({
+  id: "hub_"+i, name: c, isHub: true, cat: c,
+  members: groups.filter(g=>g.cat===c).reduce((s,g)=>s+g.members,0)
 }));
 
-const catLinks = [];
-nodes.forEach((n, i) => {
-  const catIdx = cats.indexOf(n.cat);
-  catLinks.push({source: i, target: nodes.length + catIdx, shared: [], weight: 1, isCatLink: true});
-});
+// Build full node list
+const allNodes = [
+  ...groups.map((g,i) => ({...g, id:"g_"+i, idx:i, isHub:false})),
+  ...hubNodes
+];
 
-const allNodes = [...nodes, ...catNodes];
-const allLinks = [...links, ...catLinks];
+// Build full edge list (group-to-group + group-to-hub)
+const allEdges = [
+  ...edges.map(e => ({source:"g_"+e.source, target:"g_"+e.target, shared:e.shared, isHub:false})),
+  ...groups.map((g,i) => ({source:"g_"+i, target:"hub_"+catKeys.indexOf(g.cat), shared:0, isHub:true}))
+];
 
 // Stats
-document.getElementById('s-groups').textContent = nodes.length;
-document.getElementById('s-cats').textContent = cats.length;
-document.getElementById('s-edges').textContent = links.length;
-document.getElementById('s-members').textContent = (groups.reduce((a,g) => a + g.members, 0) / 1e6).toFixed(1) + 'M';
+const totalMembers = groups.reduce((s,g)=>s+g.members,0);
+const statsEl = document.getElementById("stats");
+statsEl.innerHTML = '<h4>Graph Stats</h4>' +
+  '<div class="stat-row"><span>Groups</span><span class="stat-val">'+groups.length+'</span></div>' +
+  '<div class="stat-row"><span>Categories</span><span class="stat-val">'+catKeys.length+'</span></div>' +
+  '<div class="stat-row"><span>Connections</span><span class="stat-val">'+edges.length.toLocaleString()+'</span></div>' +
+  '<div class="stat-row"><span>Total Members</span><span class="stat-val">'+(totalMembers/1e6).toFixed(1)+'M</span></div>';
 
 // Legend
-const legend = document.getElementById('legend');
-Object.entries(categoryColors).forEach(([cat, color]) => {
-  const count = groups.filter(g => g.cat === cat).length;
-  if (count === 0) return;
-  const div = document.createElement('div');
-  div.className = 'legend-item';
-  div.innerHTML = `<div class="legend-dot" style="background:${color}"></div>${cat.split(',')[0]} (${count})`;
-  legend.appendChild(div);
+const legendEl = document.getElementById("legend");
+legendEl.innerHTML = '<h4>Categories</h4>' + catKeys.map(c =>
+  '<div class="legend-item"><div class="legend-dot" style="background:'+CATEGORIES[c]+'"></div><span>'+c+'</span></div>'
+).join("");
+
+// Filters
+const filtersEl = document.getElementById("filters");
+const allBtn = document.createElement("button");
+allBtn.className = "filter-btn active";
+allBtn.textContent = "All";
+allBtn.onclick = function(){ filterCategory(null); };
+filtersEl.appendChild(allBtn);
+catKeys.forEach(function(c){
+  const btn = document.createElement("button");
+  btn.className = "filter-btn";
+  btn.textContent = c.replace(/ & /g," / ");
+  btn.style.borderColor = CATEGORIES[c]+"44";
+  btn.onclick = function(){ filterCategory(c); };
+  btn.dataset.cat = c;
+  filtersEl.appendChild(btn);
 });
 
-// Graph
+let activeFilter = null;
+function filterCategory(cat){
+  activeFilter = cat;
+  document.querySelectorAll(".filter-btn").forEach(function(b){
+    b.classList.toggle("active", cat === null ? b.textContent === "All" : b.dataset.cat === cat);
+  });
+  updateVisibility();
+}
+
+function updateVisibility(){
+  const q = document.getElementById("search").value.toLowerCase();
+  nodeEls.attr("opacity", function(d){
+    if(d.isHub){
+      if(activeFilter && d.cat !== activeFilter) return 0.05;
+      return 1;
+    }
+    let show = true;
+    if(activeFilter && d.cat !== activeFilter) show = false;
+    if(q && !d.name.toLowerCase().includes(q) && !d.tags.some(function(t){return t.includes(q);})) show = false;
+    return show ? 1 : 0.05;
+  });
+  labelEls.attr("opacity", function(d){
+    if(!d.isHub) return 0;
+    if(activeFilter && d.cat !== activeFilter) return 0.05;
+    return 1;
+  });
+  linkEls.attr("stroke-opacity", function(d){
+    const sn = typeof d.source === "object" ? d.source : allNodes.find(function(n){return n.id===d.source;});
+    const tn = typeof d.target === "object" ? d.target : allNodes.find(function(n){return n.id===d.target;});
+    if(!sn || !tn) return 0;
+    if(activeFilter){
+      if(d.isHub){
+        return sn.cat === activeFilter || tn.cat === activeFilter ? 0.15 : 0.01;
+      }
+      return (sn.cat === activeFilter || tn.cat === activeFilter) ? 0.3 : 0.01;
+    }
+    return d.isHub ? 0.06 : 0.12;
+  });
+}
+
+document.getElementById("search").addEventListener("input", updateVisibility);
+
+// About toggle
+document.getElementById("aboutToggle").addEventListener("click", function(){
+  document.getElementById("aboutPanel").classList.toggle("open");
+});
+
+// D3 graph
+const svg = d3.select("#graph");
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const svg = d3.select('#graph').attr('width', width).attr('height', height);
+const g = svg.append("g");
 
-const defs = svg.append('defs');
-const glow = defs.append('filter').attr('id', 'glow');
-glow.append('feGaussianBlur').attr('stdDeviation', '3').attr('result', 'blur');
-const merge = glow.append('feMerge');
-merge.append('feMergeNode').attr('in', 'blur');
-merge.append('feMergeNode').attr('in', 'SourceGraphic');
-
-const g = svg.append('g');
-
-svg.call(d3.zoom().scaleExtent([0.2, 5]).on('zoom', e => g.attr('transform', e.transform)));
+const zoom = d3.zoom()
+  .scaleExtent([0.2, 5])
+  .on("zoom", function(e){ g.attr("transform", e.transform); });
+svg.call(zoom);
 
 const simulation = d3.forceSimulation(allNodes)
-  .force('link', d3.forceLink(allLinks).id(d => d.id).distance(d => d.isCatLink ? 80 : 120))
-  .force('charge', d3.forceManyBody().strength(d => d.isCat ? -400 : -100))
-  .force('center', d3.forceCenter(width / 2, height / 2))
-  .force('collision', d3.forceCollide().radius(d => d.radius + 4));
+  .force("link", d3.forceLink(allEdges).id(function(d){return d.id;}).distance(function(d){return d.isHub ? 80 : 120;}).strength(function(d){return d.isHub ? 0.3 : 0.05;}))
+  .force("charge", d3.forceManyBody().strength(function(d){return d.isHub ? -600 : -80;}))
+  .force("center", d3.forceCenter(width/2, height/2))
+  .force("collision", d3.forceCollide().radius(function(d){return nodeRadius(d) + 3;}))
+  .force("x", d3.forceX(width/2).strength(0.03))
+  .force("y", d3.forceY(height/2).strength(0.03))
+  .alphaDecay(0.015);
 
-const linkElements = g.append('g')
-  .selectAll('line')
-  .data(allLinks)
-  .join('line')
-  .attr('stroke', d => d.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)')
-  .attr('stroke-width', d => d.isCatLink ? 0.5 : Math.min(d.weight, 3));
+function nodeRadius(d){
+  if(d.isHub) return 20;
+  return Math.max(3, Math.log10(d.members) * 3.5);
+}
 
-const nodeElements = g.append('g')
-  .selectAll('g')
-  .data(allNodes)
-  .join('g')
-  .call(d3.drag()
-    .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = e.x; d.fy = e.y; })
-    .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
-    .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
-
-nodeElements.append('circle')
-  .attr('r', d => d.radius)
-  .attr('fill', d => d.isCat ? categoryColors[d.cat] : categoryColors[d.cat] || '#888')
-  .attr('fill-opacity', d => d.isCat ? 0.25 : 0.6)
-  .attr('stroke', d => categoryColors[d.cat] || '#888')
-  .attr('stroke-width', d => d.isCat ? 2 : 1.5)
-  .attr('stroke-opacity', d => d.isCat ? 0.6 : 0.8)
-  .attr('filter', d => d.isCat ? 'url(#glow)' : 'none');
-
-nodeElements.append('text')
-  .text(d => {
-    if (d.isCat) return d.name.split(',')[0];
-    if (d.members >= 1000000) return d.name.length > 25 ? d.name.slice(0, 22) + '...' : d.name;
-    return '';
+const linkEls = g.append("g")
+  .selectAll("line")
+  .data(allEdges)
+  .join("line")
+  .attr("stroke", function(d){
+    if(d.isHub) return "#ffffff";
+    const si = parseInt(d.source.toString().replace("g_",""));
+    const sn = groups[si];
+    return sn ? CATEGORIES[sn.cat] : "#444";
   })
-  .attr('dx', d => d.radius + 6)
-  .attr('dy', 4)
-  .attr('font-size', d => d.isCat ? '12px' : '10px')
-  .attr('fill', d => d.isCat ? categoryColors[d.cat] : '#888')
-  .attr('font-weight', d => d.isCat ? '700' : '500')
-  .attr('font-family', '-apple-system, sans-serif');
+  .attr("stroke-opacity", function(d){return d.isHub ? 0.06 : 0.12;})
+  .attr("stroke-width", function(d){return d.isHub ? 0.5 : Math.min(d.shared * 0.5, 2);});
+
+const nodeEls = g.append("g")
+  .selectAll("circle")
+  .data(allNodes)
+  .join("circle")
+  .attr("r", function(d){return nodeRadius(d);})
+  .attr("fill", function(d){return CATEGORIES[d.cat] || "#666";})
+  .attr("fill-opacity", function(d){return d.isHub ? 0.25 : 0.8;})
+  .attr("stroke", function(d){return d.isHub ? CATEGORIES[d.cat] : "none";})
+  .attr("stroke-width", function(d){return d.isHub ? 2 : 0;})
+  .attr("stroke-opacity", 0.6)
+  .style("cursor", "pointer")
+  .call(d3.drag()
+    .on("start", function(e,d){ if(!e.active) simulation.alphaTarget(0.1).restart(); d.fx=d.x; d.fy=d.y; })
+    .on("drag", function(e,d){ d.fx=e.x; d.fy=e.y; })
+    .on("end", function(e,d){ if(!e.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; })
+  );
+
+const labelEls = g.append("g")
+  .selectAll("text")
+  .data(allNodes)
+  .join("text")
+  .text(function(d){return d.isHub ? d.name : "";})
+  .attr("text-anchor", "middle")
+  .attr("dy", function(d){return d.isHub ? -26 : 0;})
+  .attr("fill", function(d){return CATEGORIES[d.cat] || "#aaa";})
+  .attr("font-size", "11px")
+  .attr("font-weight", "600")
+  .attr("pointer-events", "none")
+  .attr("opacity", function(d){return d.isHub ? 1 : 0;});
 
 // Tooltip
-const tooltip = d3.select('#tooltip');
-nodeElements
-  .on('mouseover', (event, d) => {
-    if (d.isCat) {
-      const count = groups.filter(g => g.cat === d.cat).length;
-      const totalM = groups.filter(g => g.cat === d.cat).reduce((a, g) => a + g.members, 0);
-      tooltip.style('opacity', 1).html(`
-        <div class="group-name" style="color:${categoryColors[d.cat]}">${d.name}</div>
-        <div class="group-meta">
-          Groups: <strong>${count}</strong><br>
-          Total Members: <strong>${(totalM/1e6).toFixed(1)}M</strong>
-        </div>
-      `);
-    } else {
-      const connections = allLinks.filter(l =>
-        !l.isCatLink && (l.source.id === d.id || l.target.id === d.id)
-      ).length;
-      tooltip.style('opacity', 1).html(`
-        <div class="group-name" style="color:${categoryColors[d.cat]}">${d.name}</div>
-        <div class="group-meta">
-          Members: <strong>${d.members >= 1e6 ? (d.members/1e6).toFixed(1)+'M' : (d.members/1e3).toFixed(0)+'K'}</strong><br>
-          Category: <strong>${d.cat}</strong><br>
-          Tags: <strong>${groups[d.id]?.tags?.join(', ') || ''}</strong><br>
-          Connections: <strong>${connections} groups</strong>
-        </div>
-      `);
-    }
-    // Highlight connections
-    linkElements.attr('stroke-opacity', l =>
-      (l.source.id === d.id || l.target.id === d.id) ? 0.6 : 0.05
-    ).attr('stroke', l =>
-      (!l.isCatLink && (l.source.id === d.id || l.target.id === d.id)) ? categoryColors[d.cat] : (l.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)')
-    );
-  })
-  .on('mousemove', event => {
-    tooltip.style('left', (event.clientX + 16) + 'px').style('top', (event.clientY - 10) + 'px');
-  })
-  .on('mouseout', () => {
-    tooltip.style('opacity', 0);
-    linkElements.attr('stroke-opacity', d => d.isCatLink ? 1 : 1)
-      .attr('stroke', d => d.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)');
-  });
-
-// Tick
-simulation.on('tick', () => {
-  linkElements
-    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-  nodeElements.attr('transform', d => `translate(${d.x},${d.y})`);
+const tooltip = document.getElementById("tooltip");
+nodeEls.on("mouseover", function(e, d){
+  if(d.isHub){
+    const count = groups.filter(function(g){return g.cat===d.cat;}).length;
+    const mem = groups.filter(function(g){return g.cat===d.cat;}).reduce(function(s,g){return s+g.members;},0);
+    tooltip.innerHTML = '<h3>'+d.name+'</h3><div class="tt-members">'+count+' groups &mdash; '+formatMembers(mem)+' total members</div>';
+  } else {
+    const cc = connCount[d.idx] || 0;
+    tooltip.innerHTML = '<h3>'+d.name+'</h3>' +
+      '<div class="tt-cat">'+d.cat+'</div>' +
+      '<div class="tt-members">'+formatMembers(d.members)+' members</div>' +
+      '<div class="tt-tags">'+d.tags.map(function(t){return '<span class="tt-tag">'+t+'</span>';}).join("")+'</div>' +
+      '<div class="tt-conn">'+cc+' connection'+(cc!==1?"s":"")+'</div>';
+  }
+  tooltip.style.opacity = 1;
+  positionTooltip(e);
+}).on("mousemove", function(e){
+  positionTooltip(e);
+}).on("mouseout", function(){
+  tooltip.style.opacity = 0;
 });
 
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const cat = btn.dataset.cat;
-    nodeElements.transition().duration(400)
-      .attr('opacity', d => {
-        if (cat === 'all') return 1;
-        if (d.isCat) return d.cat === cat ? 1 : 0.05;
-        return d.cat === cat ? 1 : 0.05;
-      });
-    linkElements.transition().duration(400)
-      .attr('opacity', l => {
-        if (cat === 'all') return 1;
-        const s = typeof l.source === 'object' ? l.source : allNodes[l.source];
-        const t = typeof l.target === 'object' ? l.target : allNodes[l.target];
-        return (s.cat === cat || t.cat === cat) ? 1 : 0.02;
-      });
+function positionTooltip(e){
+  var x = e.clientX + 16, y = e.clientY - 10;
+  if(x + 320 > window.innerWidth) x = e.clientX - 330;
+  if(y + 200 > window.innerHeight) y = e.clientY - 200;
+  tooltip.style.left = x + "px";
+  tooltip.style.top = y + "px";
+}
+
+function formatMembers(n){
+  if(n >= 1e6) return (n/1e6).toFixed(1) + "M";
+  if(n >= 1e3) return (n/1e3).toFixed(n>=100000?0:1) + "K";
+  return n.toString();
+}
+
+simulation.on("tick", function(){
+  linkEls
+    .attr("x1", function(d){return d.source.x;})
+    .attr("y1", function(d){return d.source.y;})
+    .attr("x2", function(d){return d.target.x;})
+    .attr("y2", function(d){return d.target.y;});
+  nodeEls
+    .attr("cx", function(d){return d.x;})
+    .attr("cy", function(d){return d.y;});
+  labelEls
+    .attr("x", function(d){return d.x;})
+    .attr("y", function(d){return d.y;});
+});
+
+// Highlight on click
+nodeEls.on("click", function(e, d){
+  e.stopPropagation();
+  const connected = new Set();
+  connected.add(d.id);
+  allEdges.forEach(function(edge){
+    const sid = typeof edge.source === "object" ? edge.source.id : edge.source;
+    const tid = typeof edge.target === "object" ? edge.target.id : edge.target;
+    if(sid === d.id) connected.add(tid);
+    if(tid === d.id) connected.add(sid);
+  });
+  nodeEls.attr("opacity", function(n){return connected.has(n.id) ? 1 : 0.05;});
+  labelEls.attr("opacity", function(n){return n.isHub && connected.has(n.id) ? 1 : 0.05;});
+  linkEls.attr("stroke-opacity", function(l){
+    const sid = typeof l.source === "object" ? l.source.id : l.source;
+    const tid = typeof l.target === "object" ? l.target.id : l.target;
+    return (sid === d.id || tid === d.id) ? 0.5 : 0.01;
   });
 });
 
-// Search
-document.getElementById('search').addEventListener('input', e => {
-  const q = e.target.value.toLowerCase();
-  nodeElements.transition().duration(300)
-    .attr('opacity', d => {
-      if (!q) return 1;
-      return d.name.toLowerCase().includes(q) || d.tags?.some(t => t.includes(q)) ? 1 : 0.05;
-    });
+svg.on("click", function(){
+  updateVisibility();
+  linkEls.attr("stroke-opacity", function(d){return d.isHub ? 0.06 : 0.12;});
+});
+
+// Responsive
+window.addEventListener("resize", function(){
+  simulation.force("center", d3.forceCenter(window.innerWidth/2, window.innerHeight/2));
+  simulation.alpha(0.1).restart();
 });
 </script>
 </body>
