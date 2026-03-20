@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Groups Knowledge Graph | Graphify.md</title>
+<meta property="og:title" content="LinkedIn Groups as a Knowledge Graph">
+<meta property="og:description" content="90+ LinkedIn groups. 8 categories. Thousands of cross-connections. See the hidden structure of professional communities.">
+<meta property="og:image" content="https://graphifymd.com/assets/march-madness-og.png">
+<meta property="og:url" content="https://graphifymd.com/linkedin-groups-kg.html">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; overflow: hidden; }
+
+  #header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: linear-gradient(180deg, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.85) 100%);
+    backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 14px 24px; display: flex; align-items: center; gap: 16px;
+  }
+  #header a.home { text-decoration: none; color: #fff; font-size: 14px; font-weight: 700; margin-right: 8px; }
+  #header a.home span { color: #3b82f6; }
+  #header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+  #header h1 em { color: #3b82f6; font-style: normal; }
+  #header .subtitle { font-size: 11px; color: #666; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  #controls {
+    display: flex; align-items: center; gap: 10px; margin-left: auto;
+  }
+  .filter-btn {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: #888; padding: 5px 14px; border-radius: 16px; cursor: pointer;
+    font-size: 11px; font-weight: 600; transition: all 0.3s; letter-spacing: 0.3px;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .filter-btn.active { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+  #legend {
+    position: fixed; bottom: 20px; left: 20px; z-index: 100;
+    background: rgba(10,10,15,0.92); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 16px; backdrop-filter: blur(8px); min-width: 200px;
+  }
+  #legend h3 { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 12px; color: #aaa; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  #stats {
+    position: fixed; bottom: 20px; right: 20px; z-index: 100;
+    background: rgba(10,10,15,0.92); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 16px; backdrop-filter: blur(8px); min-width: 180px;
+  }
+  #stats h3 { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .stat-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 12px; color: #888; }
+  .stat-val { color: #3b82f6; font-weight: 700; }
+
+  #tooltip {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.2s;
+    background: rgba(10,10,15,0.95); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; padding: 14px 18px; z-index: 200; max-width: 340px;
+    backdrop-filter: blur(12px);
+  }
+  #tooltip .group-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  #tooltip .group-meta { font-size: 11px; color: #aaa; line-height: 1.6; }
+  #tooltip .group-meta strong { color: #3b82f6; }
+
+  #search {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc; padding: 5px 14px; border-radius: 16px; font-size: 11px;
+    outline: none; width: 160px; transition: border-color 0.3s;
+  }
+  #search:focus { border-color: #3b82f6; }
+  #search::placeholder { color: #555; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <a href="/" class="home">Graphify<span>.md</span></a>
+  <div>
+    <h1>LinkedIn Groups <em>Knowledge Graph</em></h1>
+    <div class="subtitle">90+ groups · 8 categories · cross-community relationships</div>
+  </div>
+  <div id="controls">
+    <input type="text" id="search" placeholder="Search groups...">
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="Technology & AI">AI/Tech</button>
+    <button class="filter-btn" data-cat="Marketing, Media & Communications">Marketing</button>
+    <button class="filter-btn" data-cat="Business, Leadership & Entrepreneurship">Business</button>
+    <button class="filter-btn" data-cat="Data, Analytics & Business Intelligence">Data/BI</button>
+    <button class="filter-btn" data-cat="Careers, Jobs & Recruitment">Careers</button>
+  </div>
+</div>
+
+<div id="legend">
+  <h3>Categories</h3>
+</div>
+
+<div id="stats">
+  <h3>Graph Stats</h3>
+  <div class="stat-row"><span>Groups</span><span class="stat-val" id="s-groups">0</span></div>
+  <div class="stat-row"><span>Categories</span><span class="stat-val" id="s-cats">0</span></div>
+  <div class="stat-row"><span>Connections</span><span class="stat-val" id="s-edges">0</span></div>
+  <div class="stat-row"><span>Total Members</span><span class="stat-val" id="s-members">0</span></div>
+</div>
+
+<div id="tooltip"></div>
+<svg id="graph" width="100%" height="100%"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ============================================================
+// DATA: LinkedIn Groups
+// ============================================================
+const groups = [
+  // MEGA GROUPS (1M+)
+  {name:"Harvard Business Review",members:3000000,cat:"Business, Leadership & Entrepreneurship",tags:["leadership","management","strategy"]},
+  {name:"AI, ML, Data Science & Robotics",members:2999992,cat:"Technology & AI",tags:["ai","ml","data-science","robotics"]},
+  {name:"Software/Technology: AI, Marketing, Startups",members:2998323,cat:"Technology & AI",tags:["ai","marketing","startups","blockchain"]},
+  {name:"Social Media Marketing (Josh Turner)",members:2965556,cat:"Marketing, Media & Communications",tags:["social-media","marketing","content"]},
+  {name:"Python Developers Community",members:2715325,cat:"Technology & AI",tags:["python","development","programming"]},
+  {name:"AI, Deep Learning, Machine Learning",members:2545936,cat:"Technology & AI",tags:["ai","deep-learning","ml","research"]},
+  {name:"Brain Expansion Group",members:2535214,cat:"Learning, Education & Professional Development",tags:["learning","innovation","growth"]},
+  {name:"Digital Marketing: Social, Search, Mobile",members:2388576,cat:"Marketing, Media & Communications",tags:["digital-marketing","seo","social-media"]},
+  {name:"Digital Marketing",members:2321686,cat:"Marketing, Media & Communications",tags:["digital-marketing","content","strategy"]},
+  {name:"Microsoft Excel Users",members:2165304,cat:"Data, Analytics & Business Intelligence",tags:["excel","data-analysis","reporting"]},
+  {name:"Leadership Think Tank",members:2160443,cat:"Business, Leadership & Entrepreneurship",tags:["leadership","strategy","management"]},
+  {name:"Power BI: BI Dashboards & Analysis",members:2041360,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","data-viz","analytics"]},
+  {name:"Machine Learning Community",members:2011047,cat:"Technology & AI",tags:["ml","ai","data-science"]},
+  {name:"Next Big Thing Club",members:1798606,cat:"Business, Leadership & Entrepreneurship",tags:["startups","investing","founders"]},
+  {name:"Linked:HR (#1 HR Group)",members:1672203,cat:"HR, Talent & Workplace",tags:["hr","talent","workplace"]},
+  {name:"Internship Group",members:1666088,cat:"Careers, Jobs & Recruitment",tags:["internships","early-career","jobs"]},
+  {name:"MS Excel and VBA Macros",members:1599828,cat:"Data, Analytics & Business Intelligence",tags:["excel","vba","automation"]},
+  {name:"Idea Citizen Mastermind",members:1538036,cat:"Business, Leadership & Entrepreneurship",tags:["innovation","entrepreneurship","ideas"]},
+  {name:"Marketing Communication",members:1497743,cat:"Marketing, Media & Communications",tags:["marketing","branding","pr"]},
+  {name:"Dubai Recruitment",members:1402270,cat:"Careers, Jobs & Recruitment",tags:["recruitment","dubai","jobs"]},
+  {name:"Personal Development & Wellness",members:1398640,cat:"Learning, Education & Professional Development",tags:["self-improvement","mental-health","wellness"]},
+  {name:"Technology Investor Club",members:1365122,cat:"Finance, Investment & FinTech",tags:["investing","ai","fintech","iot"]},
+  {name:"Excel Learning Group",members:1348141,cat:"Learning, Education & Professional Development",tags:["excel","learning","tutorials"]},
+  {name:"Media & Marketing Professionals",members:1347582,cat:"Marketing, Media & Communications",tags:["marketing","media","networking"]},
+  {name:"Learning & Training Professionals",members:1347850,cat:"Learning, Education & Professional Development",tags:["training","education","l&d"]},
+  {name:"Tech Startup CEOs & Investors",members:1297127,cat:"Business, Leadership & Entrepreneurship",tags:["startups","ai","fintech","saas"]},
+  {name:"AI Mindshare",members:1233743,cat:"Technology & AI",tags:["ai","ml","data-science","gen-ai"]},
+  {name:"Cloud Computing & SaaS",members:1231262,cat:"Technology & AI",tags:["cloud","saas","infrastructure"]},
+  {name:"The Recruiter.com Network",members:1206691,cat:"Careers, Jobs & Recruitment",tags:["recruitment","hiring","employer-branding"]},
+  {name:"Startup Specialists Network",members:1189035,cat:"Business, Leadership & Entrepreneurship",tags:["startups","entrepreneurship","marketing"]},
+
+  // LARGE GROUPS (100K-999K)
+  {name:"AI, ML, Robotics & Data Analytics",members:500000,cat:"Technology & AI",tags:["ai","ml","robotics","analytics"]},
+  {name:"Python Developer",members:240000,cat:"Technology & AI",tags:["python","development"]},
+  {name:"ML, AI, Deep Learning & Computer Vision",members:200000,cat:"Technology & AI",tags:["ml","ai","computer-vision"]},
+  {name:"AI Engineer & Data Scientist",members:150000,cat:"Technology & AI",tags:["ai","data-science","python","rpa"]},
+  {name:"Data Scientist & Analyst",members:150000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","analytics"]},
+  {name:"Generative AI (Large)",members:110000,cat:"Technology & AI",tags:["gen-ai","llm","ai"]},
+  {name:"Robotics & AI Community",members:105000,cat:"Technology & AI",tags:["robotics","ai","computer-vision"]},
+  {name:"Data Analytics & BI Insights",members:95000,cat:"Data, Analytics & Business Intelligence",tags:["analytics","data-science","bi"]},
+  {name:"Microsoft Power BI Community",members:90000,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","data-viz"]},
+  {name:"Generative AI",members:80000,cat:"Technology & AI",tags:["gen-ai","llm"]},
+  {name:"Data Science & AI & Robotics",members:80000,cat:"Technology & AI",tags:["data-science","ai","robotics"]},
+  {name:"SQL Server BI",members:65000,cat:"Data, Analytics & Business Intelligence",tags:["sql","bi","data"]},
+  {name:"Data Scientist & Gen AI",members:65000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","gen-ai"]},
+  {name:"Agile Scrum Master",members:62000,cat:"Business, Leadership & Entrepreneurship",tags:["agile","scrum","project-management"]},
+  {name:"Power BI Developer",members:58000,cat:"Data, Analytics & Business Intelligence",tags:["power-bi","development"]},
+  {name:"AI & Data Science (DataThick)",members:52000,cat:"Technology & AI",tags:["ai","ml","data-science","gen-ai"]},
+  {name:"Python & Data Scientist",members:51000,cat:"Technology & AI",tags:["python","data-science","ml"]},
+  {name:"JavaScript Developer",members:48000,cat:"Technology & AI",tags:["javascript","web-dev","programming"]},
+  {name:"Software Engineer & Data",members:40000,cat:"Technology & AI",tags:["software","data-science","rpa"]},
+  {name:"AI Research & Analytics",members:38000,cat:"Technology & AI",tags:["ai","ml","analytics","robotics"]},
+  {name:"BI & AI Analytics",members:35000,cat:"Data, Analytics & Business Intelligence",tags:["ai","bi","analytics"]},
+  {name:"Python & Full Stack Developer",members:35000,cat:"Technology & AI",tags:["python","full-stack","data"]},
+  {name:"SAP Community",members:30000,cat:"Technology & AI",tags:["sap","enterprise","erp"]},
+  {name:"Programming Languages",members:30000,cat:"Technology & AI",tags:["python","java","javascript","programming"]},
+  {name:"Software Developer & Architect",members:26000,cat:"Technology & AI",tags:["software","architecture","programming"]},
+  {name:"Full Stack Web Developer",members:25000,cat:"Technology & AI",tags:["full-stack","web-dev"]},
+  {name:"Data Analyst & Scientist (Python/SQL)",members:25000,cat:"Data, Analytics & Business Intelligence",tags:["data","python","sql","power-bi"]},
+  {name:"Python Programming & AI",members:24000,cat:"Technology & AI",tags:["python","ai","ml","robotics"]},
+  {name:"Data Scientist & Data Engineer",members:22000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","data-engineering"]},
+  {name:"Data Engineer & AI Developer",members:21000,cat:"Technology & AI",tags:["data-engineering","ai","python"]},
+  {name:"Python, Tableau, Power BI, SQL",members:21000,cat:"Data, Analytics & Business Intelligence",tags:["python","tableau","power-bi","sql"]},
+  {name:"Data Scientist & Business Analyst",members:17000,cat:"Data, Analytics & Business Intelligence",tags:["data-science","business-analyst","gen-ai"]},
+  {name:"Full Stack Web Developer (large)",members:14000,cat:"Technology & AI",tags:["web-dev","full-stack"]},
+  {name:"Front End Developer (React/Angular/Vue)",members:11000,cat:"Technology & AI",tags:["react","angular","vue","frontend"]},
+  {name:"Digital Marketing (SEO/SEM/SMO)",members:10000,cat:"Marketing, Media & Communications",tags:["seo","sem","digital-marketing"]},
+  {name:"Full Stack Python Django",members:10000,cat:"Technology & AI",tags:["python","django","full-stack"]},
+  {name:"Data Scientist (R & Python)",members:10000,cat:"Data, Analytics & Business Intelligence",tags:["r","python","data-science"]},
+];
+
+const categoryColors = {
+  "Technology & AI": "#3b82f6",
+  "Marketing, Media & Communications": "#f59e0b",
+  "Business, Leadership & Entrepreneurship": "#22c55e",
+  "Data, Analytics & Business Intelligence": "#8b5cf6",
+  "Learning, Education & Professional Development": "#ec4899",
+  "Careers, Jobs & Recruitment": "#14b8a6",
+  "HR, Talent & Workplace": "#f97316",
+  "Finance, Investment & FinTech": "#06b6d4"
+};
+
+// Build nodes
+const nodes = groups.map((g, i) => ({
+  id: i,
+  name: g.name,
+  members: g.members,
+  cat: g.cat,
+  tags: g.tags,
+  radius: Math.max(6, Math.min(30, Math.sqrt(g.members / 50000)))
+}));
+
+// Build edges: groups sharing tags
+const links = [];
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const shared = groups[i].tags.filter(t => groups[j].tags.includes(t));
+    if (shared.length >= 2) {
+      links.push({source: i, target: j, shared: shared, weight: shared.length});
+    }
+  }
+}
+
+// Category nodes (hub)
+const cats = [...new Set(groups.map(g => g.cat))];
+const catNodes = cats.map((c, i) => ({
+  id: nodes.length + i,
+  name: c,
+  members: 0,
+  cat: c,
+  tags: [],
+  radius: 18,
+  isCat: true
+}));
+
+const catLinks = [];
+nodes.forEach((n, i) => {
+  const catIdx = cats.indexOf(n.cat);
+  catLinks.push({source: i, target: nodes.length + catIdx, shared: [], weight: 1, isCatLink: true});
+});
+
+const allNodes = [...nodes, ...catNodes];
+const allLinks = [...links, ...catLinks];
+
+// Stats
+document.getElementById('s-groups').textContent = nodes.length;
+document.getElementById('s-cats').textContent = cats.length;
+document.getElementById('s-edges').textContent = links.length;
+document.getElementById('s-members').textContent = (groups.reduce((a,g) => a + g.members, 0) / 1e6).toFixed(1) + 'M';
+
+// Legend
+const legend = document.getElementById('legend');
+Object.entries(categoryColors).forEach(([cat, color]) => {
+  const count = groups.filter(g => g.cat === cat).length;
+  if (count === 0) return;
+  const div = document.createElement('div');
+  div.className = 'legend-item';
+  div.innerHTML = `<div class="legend-dot" style="background:${color}"></div>${cat.split(',')[0]} (${count})`;
+  legend.appendChild(div);
+});
+
+// Graph
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select('#graph').attr('width', width).attr('height', height);
+
+const defs = svg.append('defs');
+const glow = defs.append('filter').attr('id', 'glow');
+glow.append('feGaussianBlur').attr('stdDeviation', '3').attr('result', 'blur');
+const merge = glow.append('feMerge');
+merge.append('feMergeNode').attr('in', 'blur');
+merge.append('feMergeNode').attr('in', 'SourceGraphic');
+
+const g = svg.append('g');
+
+svg.call(d3.zoom().scaleExtent([0.2, 5]).on('zoom', e => g.attr('transform', e.transform)));
+
+const simulation = d3.forceSimulation(allNodes)
+  .force('link', d3.forceLink(allLinks).id(d => d.id).distance(d => d.isCatLink ? 80 : 120))
+  .force('charge', d3.forceManyBody().strength(d => d.isCat ? -400 : -100))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('collision', d3.forceCollide().radius(d => d.radius + 4));
+
+const linkElements = g.append('g')
+  .selectAll('line')
+  .data(allLinks)
+  .join('line')
+  .attr('stroke', d => d.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)')
+  .attr('stroke-width', d => d.isCatLink ? 0.5 : Math.min(d.weight, 3));
+
+const nodeElements = g.append('g')
+  .selectAll('g')
+  .data(allNodes)
+  .join('g')
+  .call(d3.drag()
+    .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = e.x; d.fy = e.y; })
+    .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+nodeElements.append('circle')
+  .attr('r', d => d.radius)
+  .attr('fill', d => d.isCat ? categoryColors[d.cat] : categoryColors[d.cat] || '#888')
+  .attr('fill-opacity', d => d.isCat ? 0.25 : 0.6)
+  .attr('stroke', d => categoryColors[d.cat] || '#888')
+  .attr('stroke-width', d => d.isCat ? 2 : 1.5)
+  .attr('stroke-opacity', d => d.isCat ? 0.6 : 0.8)
+  .attr('filter', d => d.isCat ? 'url(#glow)' : 'none');
+
+nodeElements.append('text')
+  .text(d => {
+    if (d.isCat) return d.name.split(',')[0];
+    if (d.members >= 1000000) return d.name.length > 25 ? d.name.slice(0, 22) + '...' : d.name;
+    return '';
+  })
+  .attr('dx', d => d.radius + 6)
+  .attr('dy', 4)
+  .attr('font-size', d => d.isCat ? '12px' : '10px')
+  .attr('fill', d => d.isCat ? categoryColors[d.cat] : '#888')
+  .attr('font-weight', d => d.isCat ? '700' : '500')
+  .attr('font-family', '-apple-system, sans-serif');
+
+// Tooltip
+const tooltip = d3.select('#tooltip');
+nodeElements
+  .on('mouseover', (event, d) => {
+    if (d.isCat) {
+      const count = groups.filter(g => g.cat === d.cat).length;
+      const totalM = groups.filter(g => g.cat === d.cat).reduce((a, g) => a + g.members, 0);
+      tooltip.style('opacity', 1).html(`
+        <div class="group-name" style="color:${categoryColors[d.cat]}">${d.name}</div>
+        <div class="group-meta">
+          Groups: <strong>${count}</strong><br>
+          Total Members: <strong>${(totalM/1e6).toFixed(1)}M</strong>
+        </div>
+      `);
+    } else {
+      const connections = allLinks.filter(l =>
+        !l.isCatLink && (l.source.id === d.id || l.target.id === d.id)
+      ).length;
+      tooltip.style('opacity', 1).html(`
+        <div class="group-name" style="color:${categoryColors[d.cat]}">${d.name}</div>
+        <div class="group-meta">
+          Members: <strong>${d.members >= 1e6 ? (d.members/1e6).toFixed(1)+'M' : (d.members/1e3).toFixed(0)+'K'}</strong><br>
+          Category: <strong>${d.cat}</strong><br>
+          Tags: <strong>${groups[d.id]?.tags?.join(', ') || ''}</strong><br>
+          Connections: <strong>${connections} groups</strong>
+        </div>
+      `);
+    }
+    // Highlight connections
+    linkElements.attr('stroke-opacity', l =>
+      (l.source.id === d.id || l.target.id === d.id) ? 0.6 : 0.05
+    ).attr('stroke', l =>
+      (!l.isCatLink && (l.source.id === d.id || l.target.id === d.id)) ? categoryColors[d.cat] : (l.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)')
+    );
+  })
+  .on('mousemove', event => {
+    tooltip.style('left', (event.clientX + 16) + 'px').style('top', (event.clientY - 10) + 'px');
+  })
+  .on('mouseout', () => {
+    tooltip.style('opacity', 0);
+    linkElements.attr('stroke-opacity', d => d.isCatLink ? 1 : 1)
+      .attr('stroke', d => d.isCatLink ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.08)');
+  });
+
+// Tick
+simulation.on('tick', () => {
+  linkElements
+    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+  nodeElements.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    nodeElements.transition().duration(400)
+      .attr('opacity', d => {
+        if (cat === 'all') return 1;
+        if (d.isCat) return d.cat === cat ? 1 : 0.05;
+        return d.cat === cat ? 1 : 0.05;
+      });
+    linkElements.transition().duration(400)
+      .attr('opacity', l => {
+        if (cat === 'all') return 1;
+        const s = typeof l.source === 'object' ? l.source : allNodes[l.source];
+        const t = typeof l.target === 'object' ? l.target : allNodes[l.target];
+        return (s.cat === cat || t.cat === cat) ? 1 : 0.02;
+      });
+  });
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  nodeElements.transition().duration(300)
+    .attr('opacity', d => {
+      if (!q) return 1;
+      return d.name.toLowerCase().includes(q) || d.tags?.some(t => t.includes(q)) ? 1 : 0.05;
+    });
+});
+</script>
+</body>
+</html>
