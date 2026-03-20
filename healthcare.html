@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare AI × Knowledge Graphs | Graphify.md</title>
+<meta name="description" content="$61B in healthcare AI. 85% fails to scale. The missing layer is structured intelligence. Knowledge graphs that make clinical AI reason, not guess.">
+<meta property="og:title" content="Healthcare AI Needs Structure, Not More Models">
+<meta property="og:description" content="$61B in healthcare AI. 85% fails to scale. Every health system has Epic. None have structured intelligence. That's a $50B gap.">
+<meta property="og:image" content="https://graphifymd.com/assets/healthcare-og.png">
+<meta property="og:url" content="https://graphifymd.com/healthcare.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Healthcare AI Needs Structure, Not More Models">
+<meta name="twitter:description" content="$61B in healthcare AI. 85% fails to scale. Knowledge graphs turn clinical chaos into reasoning substrate.">
+<meta name="twitter:image" content="https://graphifymd.com/assets/healthcare-og.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0a; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+  a { color: #3b82f6; text-decoration: none; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  nav .logo { font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; }
+  nav .logo span { color: #3b82f6; }
+  nav .sep { color: #333; }
+  nav .page-title { font-size: 13px; color: #888; }
+  nav .cta {
+    margin-left: auto; background: #3b82f6; color: #fff; padding: 8px 20px;
+    border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none;
+  }
+
+  .hero {
+    padding: 120px 0 60px; text-align: center;
+  }
+  .hero .label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: #ef4444; font-weight: 700; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: #fff;
+    line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px;
+  }
+  .hero h1 .red { color: #ef4444; }
+  .hero h1 .green { color: #22c55e; }
+  .hero p { font-size: 1.1rem; color: #888; max-width: 600px; margin: 0 auto; }
+
+  .metrics {
+    display: flex; justify-content: center; gap: 40px; padding: 40px 0;
+    flex-wrap: wrap;
+  }
+  .metric { text-align: center; }
+  .metric .num { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
+  .metric .num.red { color: #ef4444; }
+  .metric .num.green { color: #22c55e; }
+  .metric .lbl { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  section { padding: 60px 0; }
+  h2 { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 24px; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #ef4444; font-weight: 600; margin-bottom: 10px; display: block;
+  }
+
+  .problem-item {
+    display: flex; gap: 12px; margin: 16px 0; font-size: 0.95rem; color: #999; line-height: 1.6;
+  }
+  .problem-item .arrow { color: #ef4444; flex-shrink: 0; font-size: 1rem; }
+  .problem-item strong { color: #ccc; }
+
+  .use-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .uc {
+    background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.1);
+    border-radius: 10px; padding: 20px;
+  }
+  .uc h3 { font-size: 0.95rem; color: #22c55e; font-weight: 700; margin-bottom: 6px; }
+  .uc p { font-size: 0.85rem; color: #777; line-height: 1.5; }
+
+  .solution-item {
+    display: flex; gap: 12px; margin: 16px 0; font-size: 0.95rem; color: #999; line-height: 1.6;
+  }
+  .solution-item .arrow { color: #22c55e; flex-shrink: 0; }
+  .solution-item strong { color: #ccc; }
+
+  .cta-box {
+    background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+    padding: 48px; text-align: center; margin: 60px 0;
+  }
+  .cta-box h2 { margin-bottom: 8px; }
+  .cta-box p { color: #666; margin-bottom: 24px; }
+  .cta-box .btn {
+    display: inline-block; background: #3b82f6; color: #fff; padding: 14px 32px;
+    border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none;
+  }
+
+  footer { text-align: center; padding: 40px 0; color: #333; font-size: 0.75rem; }
+
+  @media (max-width: 600px) {
+    .use-cases { grid-template-columns: 1fr; }
+    .metrics { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Graphify<span>.md</span></a>
+  <span class="sep">›</span>
+  <span class="page-title">Healthcare</span>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="cta">Book a Demo</a>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="label">Healthcare × Knowledge Graphs</div>
+    <h1>
+      <span class="red">$61B</span> in healthcare AI.<br>
+      <span class="red">85%</span> fails to scale.<br>
+      The fix is <span class="green">structure.</span>
+    </h1>
+    <p>Every health system has Epic. None of them have structured intelligence. Knowledge graphs turn clinical chaos into reasoning substrate.</p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="num red">$4.5T</div><div class="lbl">US Healthcare Spend</div></div>
+    <div class="metric"><div class="num red">85%</div><div class="lbl">AI Pilots Fail to Scale</div></div>
+    <div class="metric"><div class="num green">10x</div><div class="lbl">vs Standard RAG</div></div>
+    <div class="metric"><div class="num green">77%</div><div class="lbl">Accuracy Gain</div></div>
+  </div>
+
+  <section>
+    <span class="section-label">The Problem</span>
+    <h2>Healthcare has the data. It doesn't have the structure.</h2>
+    <div class="problem-item"><span class="arrow">→</span><span><strong>30% of the world's data</strong> is healthcare. Almost none of it is structured for AI reasoning. Trapped in clinical notes, scanned PDFs, fax machines, and siloed EHRs.</span></div>
+    <div class="problem-item"><span class="arrow">→</span><span><strong>LLMs hallucinate drug interactions.</strong> RAG retrieves the wrong protocol. There's no relationship layer between diagnoses, medications, and outcomes.</span></div>
+    <div class="problem-item"><span class="arrow">→</span><span><strong>Interoperability is mandated. Intelligence isn't.</strong> FHIR moves data. It doesn't structure meaning. Structured pipes without structured intelligence just move unstructured data faster.</span></div>
+    <div class="problem-item"><span class="arrow">→</span><span><strong>$1.4B spent on healthcare AI in 2025.</strong> Nearly tripled year-over-year. Most of it wasted because AI pilots lack the structured domain context to operationalize.</span></div>
+  </section>
+
+  <section>
+    <span class="section-label" style="color:#22c55e;">What We Build</span>
+    <h2>Knowledge graphs for healthcare that make AI reason, not guess.</h2>
+
+    <div class="use-cases">
+      <div class="uc"><h3>Clinical Decision Support</h3><p>Diagnosis → treatment → contraindication → outcome pathways. Multi-hop reasoning across patient history, not keyword search.</p></div>
+      <div class="uc"><h3>Prior Authorization</h3><p>Payer rules, CPT codes, clinical criteria, appeal pathways — mapped as a traversable graph. Reduce denials by structuring the maze.</p></div>
+      <div class="uc"><h3>Formulary & Drug Interaction</h3><p>Medication relationships, therapeutic alternatives, interaction chains. The graph catches what flat lookups miss.</p></div>
+      <div class="uc"><h3>Regulatory & Compliance</h3><p>CMS, HIPAA, state regulations interconnected. Change one rule, see every downstream impact instantly.</p></div>
+      <div class="uc"><h3>Care Pathway Optimization</h3><p>Patient journeys across departments, handoffs, touchpoints. Bottlenecks and gaps that flat process maps can't see.</p></div>
+      <div class="uc"><h3>Physician Network Intelligence</h3><p>Referral patterns, credentialing overlaps, network dynamics that drive volume and quality.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="section-label" style="color:#22c55e;">How It Works</span>
+    <h2>Same model. Structured context. Clinical reasoning.</h2>
+    <div class="solution-item"><span class="arrow">→</span><span><strong>The problem:</strong> Healthcare organizations feed AI unstructured clinical data. It retrieves text chunks. It doesn't understand relationships. It hallucinates. It fails audit.</span></div>
+    <div class="solution-item"><span class="arrow">→</span><span><strong>The solution:</strong> Graphify.md structures your clinical domain into a queryable knowledge graph — ~200 concepts, relationships, and rules — compressed to portable .md files that plug into any AI tool.</span></div>
+    <div class="solution-item"><span class="arrow">→</span><span><strong>The result:</strong> The intelligence layer knows metformin relates to renal function relates to GFR thresholds relates to dosing adjustments — and traverses that chain in milliseconds.</span></div>
+    <div class="solution-item"><span class="arrow">→</span><span><strong>The speed:</strong> Domain knowledge graph built in days, not months. Your health system's institutional knowledge, structured and deployed before the next board meeting.</span></div>
+  </section>
+
+  <div class="cta-box">
+    <h2>30 Minutes. I'll Show You the Graph.</h2>
+    <p>The proof is in the structure, not the pitch.</p>
+    <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn">Book a Demo</a>
+  </div>
+
+</div>
+
+<footer>Graphify.md · VeritAI, LLC · Daniel Yarmoluk · March 2026</footer>
+
+</body>
+</html>
