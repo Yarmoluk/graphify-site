@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Knowledge Graph → .md | Graphify.md</title>
+<meta property="og:title" content="Healthcare Knowledge Graph — Compressed to .md">
+<meta property="og:description" content="200 clinical concepts. 500+ relationships. Compressed to 12KB of portable markdown. 170x token density. Works in Claude, ChatGPT, Cursor, anywhere.">
+<meta property="og:image" content="https://graphifymd.com/assets/healthcare-og.png">
+<meta property="og:url" content="https://graphifymd.com/healthcare-kg-demo.html">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0a; color: #e0e0e0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  nav .logo { font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; }
+  nav .logo span { color: #3b82f6; }
+  nav .sep { color: #333; }
+  nav .page-title { font-size: 13px; color: #888; }
+  nav .cta { margin-left: auto; background: #3b82f6; color: #fff; padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; }
+
+  .hero { padding: 100px 0 40px; text-align: center; }
+  .hero .label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #22c55e; font-weight: 700; }
+  .hero h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: #fff; line-height: 1.2; margin: 12px 0; }
+  .hero h1 .g { color: #22c55e; }
+  .hero p { color: #666; max-width: 650px; margin: 0 auto; font-size: 0.95rem; }
+
+  .pipeline { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 40px 0; flex-wrap: wrap; }
+  .pipe-step { background: #111; border: 1px solid #1e1e1e; border-radius: 8px; padding: 12px 20px; text-align: center; min-width: 120px; }
+  .pipe-step .step-label { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+  .pipe-step .step-val { font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 2px; }
+  .pipe-arrow { color: #333; font-size: 1.2rem; }
+  .pipe-step.active { border-color: #22c55e; }
+  .pipe-step.active .step-val { color: #22c55e; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+  .panel { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 24px; }
+  .panel h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .panel h3 .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+
+  .md-preview {
+    background: #0d1117; border: 1px solid #1e1e1e; border-radius: 10px;
+    padding: 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.75rem;
+    color: #8b949e; line-height: 1.7; overflow-x: auto; max-height: 500px; overflow-y: auto;
+    white-space: pre-wrap;
+  }
+  .md-preview .h1 { color: #fff; font-weight: 700; font-size: 0.85rem; }
+  .md-preview .h2 { color: #58a6ff; font-weight: 700; }
+  .md-preview .h3 { color: #22c55e; font-weight: 600; }
+  .md-preview .rel { color: #f59e0b; }
+  .md-preview .entity { color: #ff7b72; }
+  .md-preview .meta { color: #555; }
+  .md-preview .rule { color: #d2a8ff; }
+
+  .metrics-row { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+  .metric-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 16px 20px; flex: 1; min-width: 120px; text-align: center; }
+  .metric-card .num { font-size: 1.6rem; font-weight: 800; color: #22c55e; }
+  .metric-card .lbl { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+  .env-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 24px 0; }
+  .env-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 16px; text-align: center; transition: border-color 0.3s; }
+  .env-card:hover { border-color: #22c55e; }
+  .env-card .env-name { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .env-card .env-how { font-size: 0.75rem; color: #666; }
+
+  .graph-container { width: 100%; height: 500px; background: #0a0a0f; border: 1px solid #1e1e1e; border-radius: 12px; margin: 24px 0; position: relative; }
+
+  section { padding: 40px 0; }
+  h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .section-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; display: block; }
+
+  .cta-box { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 40px; text-align: center; margin: 40px 0; }
+  .cta-box .btn { display: inline-block; background: #3b82f6; color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+
+  footer { text-align: center; padding: 40px 0; color: #333; font-size: 0.75rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Graphify<span>.md</span></a>
+  <span class="sep">›</span>
+  <a href="healthcare.html" style="color:#888;text-decoration:none;font-size:13px;">Healthcare</a>
+  <span class="sep">›</span>
+  <span class="page-title">KG Demo</span>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="cta">Book a Demo</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="label">Live Demo — Healthcare Knowledge Graph</div>
+  <h1>200 clinical concepts. 500+ relationships.<br>Compressed to <span class="g">12KB of portable markdown.</span></h1>
+  <p>This is what a healthcare knowledge graph looks like when it's structured for AI reasoning, compressed to .md, and ready to deploy into any environment — Claude, ChatGPT, Cursor, MCP, or raw API.</p>
+</div>
+
+<div class="pipeline">
+  <div class="pipe-step"><div class="step-label">Raw Data</div><div class="step-val">~2MB</div></div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step"><div class="step-label">Knowledge Graph</div><div class="step-val">200 nodes</div></div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step"><div class="step-label">Graph Distillation</div><div class="step-val">500+ edges</div></div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step active"><div class="step-label">Compressed .md</div><div class="step-val">12KB</div></div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step"><div class="step-label">Token Density</div><div class="step-val">170x</div></div>
+</div>
+
+<div class="metrics-row">
+  <div class="metric-card"><div class="num">170x</div><div class="lbl">Token Density</div></div>
+  <div class="metric-card"><div class="num">93%</div><div class="lbl">Token Compression</div></div>
+  <div class="metric-card"><div class="num">12KB</div><div class="lbl">.md File Size</div></div>
+  <div class="metric-card"><div class="num">~3K</div><div class="lbl">Tokens (vs ~500K raw)</div></div>
+  <div class="metric-card"><div class="num">0.002</div><div class="lbl">kg CO₂ per query</div></div>
+</div>
+
+<section>
+  <span class="section-label" style="color:#22c55e;">The Graph</span>
+  <h2>Interactive Healthcare Knowledge Graph</h2>
+  <div class="graph-container" id="graph-container">
+    <svg id="graph" width="100%" height="100%"></svg>
+  </div>
+</section>
+
+<section>
+  <span class="section-label" style="color:#3b82f6;">The .md Output</span>
+  <h2>What the AI actually receives — structured, compressed, portable</h2>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3><span class="dot" style="background:#22c55e;"></span>healthcare-cardiology.md</h3>
+      <div class="md-preview"><span class="h1"># Cardiology Domain Knowledge Graph</span>
+<span class="meta"><!-- 47 entities · 89 relationships · 3.2KB --></span>
+
+<span class="h2">## Entities</span>
+
+<span class="h3">### Conditions</span>
+<span class="entity">- Atrial Fibrillation</span> | ICD: I48 | prevalence: 2.7M US
+<span class="entity">- Heart Failure</span> | ICD: I50 | prevalence: 6.2M US
+  - subtypes: HFrEF (EF≤40%), HFpEF (EF≥50%), HFmrEF
+<span class="entity">- Coronary Artery Disease</span> | ICD: I25 | #1 killer US
+<span class="entity">- Hypertension</span> | ICD: I10 | prevalence: 116M US
+<span class="entity">- Deep Vein Thrombosis</span> | ICD: I82
+
+<span class="h3">### Medications</span>
+<span class="entity">- Metoprolol</span> | class: beta-blocker | route: PO
+<span class="entity">- Lisinopril</span> | class: ACE-inhibitor | route: PO
+<span class="entity">- Warfarin</span> | class: anticoagulant | INR target: 2-3
+<span class="entity">- Apixaban</span> | class: DOAC | no INR monitoring
+<span class="entity">- Amiodarone</span> | class: antiarrhythmic | ⚠️ toxicity
+
+<span class="h3">### Diagnostics</span>
+<span class="entity">- Echocardiogram</span> | CPT: 93306 | measures: EF, valves
+<span class="entity">- Cardiac Catheterization</span> | CPT: 93458 | gold standard
+<span class="entity">- BNP/NT-proBNP</span> | CPT: 83880 | HF biomarker
+<span class="entity">- Troponin</span> | CPT: 84484 | MI biomarker
+
+<span class="h2">## Relationships</span>
+
+<span class="rel">AFib → TREATED_BY → Apixaban</span> (first-line DOAC)
+<span class="rel">AFib → TREATED_BY → Warfarin</span> (if valve disease)
+<span class="rel">AFib → RISK_FACTOR_FOR → Stroke</span> (5x risk)
+<span class="rel">AFib → DIAGNOSED_BY → ECG + Echo</span>
+<span class="rel">HFrEF → TREATED_BY → Metoprolol</span> (mortality ↓35%)
+<span class="rel">HFrEF → TREATED_BY → Lisinopril</span> (afterload ↓)
+<span class="rel">HFrEF → MONITORED_BY → BNP</span> (>400 = severe)
+<span class="rel">CAD → DIAGNOSED_BY → Cardiac Cath</span>
+<span class="rel">CAD → RISK_FACTOR → Hypertension</span>
+<span class="rel">Hypertension → TREATED_BY → Lisinopril</span>
+<span class="rel">Warfarin → INTERACTS_WITH → Amiodarone</span> ⚠️
+  <span class="rule">↳ RULE: ↑INR 50-70%. Reduce warfarin dose 30-50%.</span>
+<span class="rel">Metoprolol → CONTRAINDICATED → Bradycardia</span>
+  <span class="rule">↳ RULE: Hold if HR < 60 bpm</span>
+<span class="rel">Apixaban → REQUIRES → CrCl assessment</span>
+  <span class="rule">↳ RULE: Reduce dose if CrCl 15-29, avoid if <15</span>
+
+<span class="h2">## Traversal Examples</span>
+
+<span class="meta">Q: Patient with AFib + CKD Stage 4. Anticoagulation?</span>
+<span class="rel">AFib → TREATED_BY → Apixaban</span>
+<span class="rel">Apixaban → REQUIRES → CrCl</span>
+<span class="rule">CKD Stage 4 → CrCl 15-29 → DOSE_ADJUST Apixaban</span>
+<span class="rel">→ Answer: Apixaban 2.5mg BID (reduced dose)</span>
+
+<span class="meta">Q: Patient on Warfarin, starting Amiodarone?</span>
+<span class="rel">Warfarin → INTERACTS → Amiodarone</span>
+<span class="rule">→ RULE: Reduce warfarin 30-50%. Check INR in 3-5 days.</span>
+<span class="rel">→ Answer: Cut warfarin dose, weekly INR x4 weeks</span></div>
+    </div>
+
+    <div class="panel">
+      <h3><span class="dot" style="background:#3b82f6;"></span>Why This Works</h3>
+      <div style="font-size:0.85rem;color:#888;line-height:1.8;">
+        <p style="margin-bottom:16px;"><strong style="color:#fff;">The raw data</strong> — clinical guidelines, drug databases, ICD codes, CPT codes, formularies — is ~2MB of unstructured text across dozens of sources.</p>
+
+        <p style="margin-bottom:16px;"><strong style="color:#fff;">The knowledge graph</strong> extracts 200 entities and 500+ typed relationships. Conditions connect to treatments connect to contraindications connect to diagnostics connect to billing codes. Every connection is traversable.</p>
+
+        <p style="margin-bottom:16px;"><strong style="color:#fff;">The .md compression</strong> distills the graph into ~12KB of structured markdown. That's ~3,000 tokens. The raw data would cost ~500,000 tokens. <strong style="color:#22c55e;">170x more efficient.</strong></p>
+
+        <p style="margin-bottom:16px;"><strong style="color:#fff;">The carbon impact</strong> — fewer tokens = less compute = lower energy. A single query against the compressed .md uses ~0.002 kg CO₂ vs ~0.34 kg for the raw corpus. <strong style="color:#22c55e;">99.4% reduction in carbon per query.</strong></p>
+
+        <p style="margin-bottom:16px;"><strong style="color:#fff;">The portability</strong> — this .md file works everywhere. Drop it into Claude as a project file. Load it into ChatGPT. Reference it in Cursor. Serve it via MCP. Email it. It's just text. But it's structured text that makes any model reason like a specialist.</p>
+
+        <p><strong style="color:#fff;">The traversal</strong> — the model doesn't just retrieve text chunks. It follows relationship chains: <span style="color:#f59e0b;">AFib → Apixaban → CrCl → CKD Stage 4 → dose adjustment</span>. Multi-hop reasoning. Auditable. Explainable. No hallucination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="section-label" style="color:#22c55e;">Universal Portability</span>
+  <h2>One .md file. Every AI environment.</h2>
+  <p style="color:#666;margin-bottom:16px;">The same compressed knowledge graph works across every AI tool — no reformatting, no API integration, no vendor lock-in.</p>
+  <div class="env-grid">
+    <div class="env-card"><div class="env-name">Claude Projects</div><div class="env-how">Upload as project knowledge</div></div>
+    <div class="env-card"><div class="env-name">ChatGPT</div><div class="env-how">Custom GPT instructions</div></div>
+    <div class="env-card"><div class="env-name">Cursor / Windsurf</div><div class="env-how">.cursor/rules or context file</div></div>
+    <div class="env-card"><div class="env-name">Claude Code</div><div class="env-how">CLAUDE.md project context</div></div>
+    <div class="env-card"><div class="env-name">MCP Server</div><div class="env-how">Serve as tool context</div></div>
+    <div class="env-card"><div class="env-name">API / SDK</div><div class="env-how">System prompt injection</div></div>
+    <div class="env-card"><div class="env-name">RAG Pipeline</div><div class="env-how">Pre-retrieval context layer</div></div>
+    <div class="env-card"><div class="env-name">Email / Slack</div><div class="env-how">Just paste it. It's text.</div></div>
+  </div>
+</section>
+
+<div class="cta-box">
+  <h2>Want this for your domain?</h2>
+  <p style="color:#666;margin-bottom:20px;">Pick any vertical. 30 minutes. I'll show you what your knowledge graph looks like compressed to .md.</p>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn">Book a Demo</a>
+</div>
+
+</div>
+
+<!-- D3 Graph -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const nodes = [
+  // Conditions
+  {id:"AFib",label:"Atrial Fibrillation",type:"condition",size:14},
+  {id:"HF",label:"Heart Failure",type:"condition",size:16},
+  {id:"HFrEF",label:"HFrEF",type:"condition",size:10},
+  {id:"HFpEF",label:"HFpEF",type:"condition",size:10},
+  {id:"CAD",label:"Coronary Artery Disease",type:"condition",size:15},
+  {id:"HTN",label:"Hypertension",type:"condition",size:14},
+  {id:"DVT",label:"Deep Vein Thrombosis",type:"condition",size:10},
+  {id:"Stroke",label:"Stroke",type:"condition",size:12},
+  {id:"MI",label:"Myocardial Infarction",type:"condition",size:12},
+  {id:"CKD",label:"Chronic Kidney Disease",type:"condition",size:11},
+  {id:"Bradycardia",label:"Bradycardia",type:"condition",size:8},
+  {id:"Diabetes",label:"Type 2 Diabetes",type:"condition",size:13},
+  {id:"Obesity",label:"Obesity",type:"condition",size:11},
+  {id:"PE",label:"Pulmonary Embolism",type:"condition",size:10},
+  // Medications
+  {id:"Metoprolol",label:"Metoprolol",type:"medication",size:10},
+  {id:"Lisinopril",label:"Lisinopril",type:"medication",size:10},
+  {id:"Warfarin",label:"Warfarin",type:"medication",size:11},
+  {id:"Apixaban",label:"Apixaban",type:"medication",size:10},
+  {id:"Amiodarone",label:"Amiodarone",type:"medication",size:9},
+  {id:"Metformin",label:"Metformin",type:"medication",size:10},
+  {id:"Atorvastatin",label:"Atorvastatin",type:"medication",size:10},
+  {id:"Aspirin",label:"Aspirin",type:"medication",size:9},
+  {id:"Heparin",label:"Heparin",type:"medication",size:9},
+  {id:"Furosemide",label:"Furosemide",type:"medication",size:9},
+  {id:"Spironolactone",label:"Spironolactone",type:"medication",size:8},
+  // Diagnostics
+  {id:"Echo",label:"Echocardiogram",type:"diagnostic",size:10},
+  {id:"Cath",label:"Cardiac Cath",type:"diagnostic",size:10},
+  {id:"BNP",label:"BNP/NT-proBNP",type:"diagnostic",size:9},
+  {id:"Troponin",label:"Troponin",type:"diagnostic",size:9},
+  {id:"ECG",label:"ECG/EKG",type:"diagnostic",size:10},
+  {id:"CrCl",label:"Creatinine Clearance",type:"diagnostic",size:8},
+  {id:"INR",label:"INR",type:"diagnostic",size:8},
+  {id:"HbA1c",label:"HbA1c",type:"diagnostic",size:8},
+  {id:"Lipid",label:"Lipid Panel",type:"diagnostic",size:8},
+  // Procedures
+  {id:"PCI",label:"PCI/Stent",type:"procedure",size:10},
+  {id:"CABG",label:"CABG Surgery",type:"procedure",size:10},
+  {id:"Ablation",label:"Catheter Ablation",type:"procedure",size:9},
+  {id:"ICD",label:"ICD Implant",type:"procedure",size:9},
+  {id:"Pacemaker",label:"Pacemaker",type:"procedure",size:9},
+  // Billing
+  {id:"CPT93306",label:"CPT 93306",type:"billing",size:7},
+  {id:"CPT93458",label:"CPT 93458",type:"billing",size:7},
+  {id:"ICDI48",label:"ICD I48",type:"billing",size:7},
+  {id:"ICDI50",label:"ICD I50",type:"billing",size:7},
+  {id:"ICDI25",label:"ICD I25",type:"billing",size:7},
+];
+
+const links = [
+  // Condition → Treatment
+  {source:"AFib",target:"Apixaban",label:"treated_by",type:"treatment"},
+  {source:"AFib",target:"Warfarin",label:"treated_by",type:"treatment"},
+  {source:"AFib",target:"Amiodarone",label:"treated_by",type:"treatment"},
+  {source:"AFib",target:"Ablation",label:"treated_by",type:"treatment"},
+  {source:"HFrEF",target:"Metoprolol",label:"treated_by",type:"treatment"},
+  {source:"HFrEF",target:"Lisinopril",label:"treated_by",type:"treatment"},
+  {source:"HFrEF",target:"Furosemide",label:"treated_by",type:"treatment"},
+  {source:"HFrEF",target:"Spironolactone",label:"treated_by",type:"treatment"},
+  {source:"HFrEF",target:"ICD",label:"treated_by",type:"treatment"},
+  {source:"CAD",target:"Atorvastatin",label:"treated_by",type:"treatment"},
+  {source:"CAD",target:"Aspirin",label:"treated_by",type:"treatment"},
+  {source:"CAD",target:"PCI",label:"treated_by",type:"treatment"},
+  {source:"CAD",target:"CABG",label:"treated_by",type:"treatment"},
+  {source:"HTN",target:"Lisinopril",label:"treated_by",type:"treatment"},
+  {source:"HTN",target:"Metoprolol",label:"treated_by",type:"treatment"},
+  {source:"DVT",target:"Heparin",label:"treated_by",type:"treatment"},
+  {source:"DVT",target:"Apixaban",label:"treated_by",type:"treatment"},
+  {source:"PE",target:"Heparin",label:"treated_by",type:"treatment"},
+  {source:"Diabetes",target:"Metformin",label:"treated_by",type:"treatment"},
+  {source:"Bradycardia",target:"Pacemaker",label:"treated_by",type:"treatment"},
+  // Condition → Diagnosis
+  {source:"AFib",target:"ECG",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"AFib",target:"Echo",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"HF",target:"BNP",label:"monitored_by",type:"diagnostic_link"},
+  {source:"HF",target:"Echo",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"CAD",target:"Cath",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"CAD",target:"Troponin",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"MI",target:"Troponin",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"MI",target:"ECG",label:"diagnosed_by",type:"diagnostic_link"},
+  {source:"CKD",target:"CrCl",label:"monitored_by",type:"diagnostic_link"},
+  {source:"Diabetes",target:"HbA1c",label:"monitored_by",type:"diagnostic_link"},
+  // Risk factors
+  {source:"AFib",target:"Stroke",label:"risk_factor",type:"risk"},
+  {source:"HTN",target:"CAD",label:"risk_factor",type:"risk"},
+  {source:"HTN",target:"Stroke",label:"risk_factor",type:"risk"},
+  {source:"HTN",target:"HF",label:"risk_factor",type:"risk"},
+  {source:"Diabetes",target:"CAD",label:"risk_factor",type:"risk"},
+  {source:"Obesity",target:"Diabetes",label:"risk_factor",type:"risk"},
+  {source:"Obesity",target:"HTN",label:"risk_factor",type:"risk"},
+  {source:"CAD",target:"MI",label:"risk_factor",type:"risk"},
+  {source:"DVT",target:"PE",label:"risk_factor",type:"risk"},
+  {source:"HF",target:"HFrEF",label:"subtype",type:"hierarchy"},
+  {source:"HF",target:"HFpEF",label:"subtype",type:"hierarchy"},
+  // Drug interactions
+  {source:"Warfarin",target:"Amiodarone",label:"interacts ⚠️",type:"interaction"},
+  {source:"Metoprolol",target:"Bradycardia",label:"contraindicated",type:"interaction"},
+  {source:"Apixaban",target:"CrCl",label:"requires",type:"interaction"},
+  {source:"Metformin",target:"CrCl",label:"requires",type:"interaction"},
+  {source:"Warfarin",target:"INR",label:"monitored_by",type:"diagnostic_link"},
+  // Billing
+  {source:"Echo",target:"CPT93306",label:"billed_as",type:"billing_link"},
+  {source:"Cath",target:"CPT93458",label:"billed_as",type:"billing_link"},
+  {source:"AFib",target:"ICDI48",label:"coded_as",type:"billing_link"},
+  {source:"HF",target:"ICDI50",label:"coded_as",type:"billing_link"},
+  {source:"CAD",target:"ICDI25",label:"coded_as",type:"billing_link"},
+  // Cross-links
+  {source:"Atorvastatin",target:"Lipid",label:"monitored_by",type:"diagnostic_link"},
+  {source:"CKD",target:"HF",label:"comorbid",type:"risk"},
+];
+
+const typeColors = {
+  condition: "#ef4444",
+  medication: "#22c55e",
+  diagnostic: "#3b82f6",
+  procedure: "#f59e0b",
+  billing: "#8b5cf6"
+};
+
+const linkColors = {
+  treatment: "rgba(34,197,94,0.3)",
+  diagnostic_link: "rgba(59,130,246,0.25)",
+  risk: "rgba(239,68,68,0.25)",
+  interaction: "rgba(239,68,68,0.5)",
+  hierarchy: "rgba(255,255,255,0.1)",
+  billing_link: "rgba(139,92,246,0.2)"
+};
+
+const container = document.getElementById('graph-container');
+const width = container.clientWidth;
+const height = 500;
+const svg = d3.select('#graph').attr('viewBox', [0, 0, width, height]);
+
+const defs = svg.append('defs');
+const glow = defs.append('filter').attr('id', 'glow');
+glow.append('feGaussianBlur').attr('stdDeviation', '2.5').attr('result', 'blur');
+const m = glow.append('feMerge');
+m.append('feMergeNode').attr('in', 'blur');
+m.append('feMergeNode').attr('in', 'SourceGraphic');
+
+const g = svg.append('g');
+svg.call(d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => g.attr('transform', e.transform)));
+
+const simulation = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d => d.id).distance(70))
+  .force('charge', d3.forceManyBody().strength(-200))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('collision', d3.forceCollide().radius(d => d.size + 4));
+
+const link = g.append('g').selectAll('line').data(links).join('line')
+  .attr('stroke', d => linkColors[d.type] || '#222')
+  .attr('stroke-width', d => d.type === 'interaction' ? 2.5 : 1.2)
+  .attr('stroke-dasharray', d => d.type === 'interaction' ? '4,3' : 'none');
+
+const node = g.append('g').selectAll('circle').data(nodes).join('circle')
+  .attr('r', d => d.size)
+  .attr('fill', d => typeColors[d.type])
+  .attr('fill-opacity', 0.7)
+  .attr('stroke', d => typeColors[d.type])
+  .attr('stroke-width', 1.5)
+  .attr('stroke-opacity', 0.9)
+  .attr('filter', 'url(#glow)')
+  .call(d3.drag()
+    .on('start', (e,d) => { if(!e.active) simulation.alphaTarget(0.3).restart(); d.fx=e.x; d.fy=e.y; })
+    .on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; })
+    .on('end', (e,d) => { if(!e.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+const label = g.append('g').selectAll('text').data(nodes).join('text')
+  .text(d => d.size >= 10 ? d.label : '')
+  .attr('font-size', '9px').attr('fill', '#888').attr('dx', d => d.size + 4).attr('dy', 3)
+  .attr('font-family', '-apple-system, sans-serif');
+
+node.on('mouseover', function(e, d) {
+  d3.select(this).attr('r', d.size * 1.4).attr('stroke-width', 3);
+  link.attr('stroke-opacity', l => (l.source.id===d.id||l.target.id===d.id) ? 1 : 0.05)
+    .attr('stroke-width', l => (l.source.id===d.id||l.target.id===d.id) ? 2.5 : 0.5);
+  label.attr('fill', l => {
+    if (l.id === d.id) return '#fff';
+    const connected = links.some(lk => (lk.source.id===d.id&&lk.target.id===l.id)||(lk.target.id===d.id&&lk.source.id===l.id));
+    return connected ? '#ccc' : '#333';
+  }).text(l => {
+    const connected = l.id===d.id || links.some(lk => (lk.source.id===d.id&&lk.target.id===l.id)||(lk.target.id===d.id&&lk.source.id===l.id));
+    return connected ? l.label : '';
+  });
+}).on('mouseout', function(e, d) {
+  d3.select(this).attr('r', d.size).attr('stroke-width', 1.5);
+  link.attr('stroke-opacity', 1).attr('stroke-width', l => l.type==='interaction' ? 2.5 : 1.2);
+  label.attr('fill', '#888').text(d => d.size >= 10 ? d.label : '');
+});
+
+simulation.on('tick', () => {
+  link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+  node.attr('cx',d=>d.x).attr('cy',d=>d.y);
+  label.attr('x',d=>d.x).attr('y',d=>d.y);
+});
+</script>
+
+<footer>Graphify.md · VeritAI, LLC · Daniel Yarmoluk · March 2026</footer>
+</body>
+</html>
