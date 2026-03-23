@@ -12,34 +12,40 @@
     position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;
   }
   .title-bar {
-    padding: 28px 40px 0;
+    padding: 24px 36px 0;
+    background: linear-gradient(180deg, #060610 0%, #060610 60%, transparent 100%);
+    padding-bottom: 20px;
   }
   .label {
     font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
-    text-transform: uppercase; color: #3b82f6; margin-bottom: 6px;
+    text-transform: uppercase; color: #3b82f6; margin-bottom: 4px;
   }
   .title {
-    font-size: 28px; font-weight: 800; color: #fff;
+    font-size: 26px; font-weight: 800; color: #fff;
     letter-spacing: -0.02em; line-height: 1.15;
   }
-  .subtitle { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .subtitle { font-size: 12px; color: #64748b; margin-top: 3px; }
+  .bottom-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(0deg, #060610 0%, #060610 50%, transparent 100%);
+    padding: 24px 36px 18px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
   .legend {
-    position: absolute; bottom: 24px; left: 40px;
-    display: flex; gap: 20px; font-size: 11px; color: #94a3b8;
+    display: flex; gap: 16px; font-size: 10px; color: #94a3b8;
   }
-  .legend-item { display: flex; align-items: center; gap: 6px; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .stats-bar {
-    position: absolute; bottom: 24px; right: 40px;
-    display: flex; gap: 28px; text-align: center;
+    display: flex; gap: 24px; text-align: center;
   }
-  .stat-num { font-size: 24px; font-weight: 800; color: #fff; }
-  .stat-label { font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
+  .stat-num { font-size: 22px; font-weight: 800; color: #fff; }
+  .stat-label { font-size: 7px; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
   .brand-bar {
-    position: absolute; top: 28px; right: 40px; text-align: right;
+    position: absolute; top: 24px; right: 36px; text-align: right;
   }
-  .brand-name { font-size: 16px; font-weight: 700; color: #fff; }
-  .brand-sub { font-size: 9px; color: #475569; margin-top: 2px; }
+  .brand-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .brand-sub { font-size: 8px; color: #475569; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -47,25 +53,27 @@
 <div class="overlay">
   <div class="title-bar">
     <div class="label">Live Knowledge Graph</div>
-    <div class="title">I graphed this conversation.</div>
-    <div class="subtitle">Semantic Layer vs. Context Layer — every person, concept, and connection visualized</div>
+    <div class="title">I graphed this conversation in seconds.</div>
+    <div class="subtitle">Semantic Layer vs. Context Layer — 34 entities, 28 relationships, every argument structured</div>
   </div>
   <div class="brand-bar">
     <div class="brand-name">Graphify.md</div>
     <div class="brand-sub">graphifymd.com</div>
   </div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> People</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Concepts</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Standards / Tools</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Events</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> Hot Leads</div>
-  </div>
-  <div class="stats-bar">
-    <div><div class="stat-num">34</div><div class="stat-label">Entities</div></div>
-    <div><div class="stat-num">28</div><div class="stat-label">Relationships</div></div>
-    <div><div class="stat-num">14</div><div class="stat-label">People</div></div>
-    <div><div class="stat-num">11</div><div class="stat-label">Concepts</div></div>
+  <div class="bottom-bar">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> People</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Concepts</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Standards / Tools</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Events</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> Hot Leads</div>
+    </div>
+    <div class="stats-bar">
+      <div><div class="stat-num">34</div><div class="stat-label">Entities</div></div>
+      <div><div class="stat-num">28</div><div class="stat-label">Relationships</div></div>
+      <div><div class="stat-num">14</div><div class="stat-label">People</div></div>
+      <div><div class="stat-num">11</div><div class="stat-label">Concepts</div></div>
+    </div>
   </div>
 </div>
 
@@ -75,9 +83,11 @@
 const canvas = document.getElementById('graph');
 const ctx = canvas.getContext('2d');
 const W = 1200, H = 900;
-canvas.width = W; canvas.height = H;
+canvas.width = W * 2; canvas.height = H * 2;
 canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+ctx.scale(2, 2);
 
+// Safe zone: nodes must be within y: 110-810, x: 40-1160
 const COLORS = {
   person: '#3b82f6',
   concept: '#a855f7',
@@ -86,40 +96,50 @@ const COLORS = {
   hot: '#ef4444'
 };
 
+// Carefully positioned nodes with NO overlaps
+// Layout: cluster structure. Center = Dan + core concepts. People orbit.
 const nodes = [
-  // People - spread across left and center
-  { id: 'lulit', label: 'Lulit T.', sub: 'VP · Thread Author', type: 'person', x: 360, y: 260, r: 28 },
-  { id: 'younis', label: 'Mohammed\nYounis', sub: 'Search Sciences', type: 'hot', x: 720, y: 200, r: 26 },
-  { id: 'davis', label: 'Joseph\nDavis', sub: 'CTO KomplyAI', type: 'person', x: 200, y: 420, r: 20 },
-  { id: 'cagle', label: 'Kurt\nCagle', sub: 'Ontologist', type: 'person', x: 510, y: 520, r: 20 },
-  { id: 'talisman', label: 'Jessica\nTalisman', sub: 'Taxonomy · KG', type: 'person', x: 140, y: 580, r: 18 },
-  { id: 'hawker', label: 'Malcolm\nHawker', sub: 'CDO · Author', type: 'person', x: 280, y: 680, r: 16 },
-  { id: 'hackett', label: 'Brian\nHackett', sub: 'Peer Learning', type: 'event', x: 520, y: 140, r: 15 },
-  { id: 'pavlyshyn', label: 'Volodymyr\nPavlyshyn', sub: 'Agentic AI', type: 'person', x: 820, y: 520, r: 16 },
-  { id: 'gottgtroy', label: 'Paulo\nGottgtroy', sub: 'Decision Science', type: 'person', x: 170, y: 280, r: 14 },
-  { id: 'ming', label: 'Ming W.', sub: 'AI Agents', type: 'person', x: 650, y: 620, r: 14 },
-  { id: 'dan', label: 'Dan\nYarmoluk', sub: 'Graphify.md', type: 'hot', x: 580, y: 340, r: 30 },
-  { id: 'boris', label: 'Boris V-T.', sub: '14 AI Patents', type: 'person', x: 380, y: 140, r: 13 },
-  { id: 'mol', label: 'Yevheni\nMol', sub: 'Web3', type: 'person', x: 780, y: 660, r: 12 },
-  { id: 'rovesti', label: 'Francesco\nRovesti', sub: 'CDMP', type: 'person', x: 100, y: 470, r: 12 },
+  // === CENTER CLUSTER — Dan + core concepts ===
+  { id: 'dan', label: 'Dan Yarmoluk', type: 'hot', x: 520, y: 400, r: 32 },
+  { id: 'kg', label: 'Knowledge Graph', type: 'concept', x: 380, y: 340, r: 26 },
+  { id: 'context', label: 'Context Layer', type: 'concept', x: 400, y: 480, r: 26 },
+  { id: 'semantic', label: 'Semantic Layer', type: 'concept', x: 240, y: 480, r: 24 },
+  { id: 'graphrag', label: 'GraphRAG', type: 'tool', x: 640, y: 480, r: 22 },
 
-  // Concepts - spread across right and center
-  { id: 'semantic', label: 'Semantic\nLayer', sub: '', type: 'concept', x: 260, y: 520, r: 22 },
-  { id: 'context', label: 'Context\nLayer', sub: '', type: 'concept', x: 440, y: 420, r: 24 },
-  { id: 'kg', label: 'Knowledge\nGraph', sub: '', type: 'concept', x: 400, y: 340, r: 22 },
-  { id: 'tacit', label: 'Tacit\nKnowledge', sub: '', type: 'concept', x: 200, y: 640, r: 18 },
-  { id: 'fragmentation', label: 'Proprietary\nFragmentation', sub: '', type: 'concept', x: 560, y: 200, r: 16 },
-  { id: 'shamil', label: 'SHAMIL\nv1.0', sub: 'Open Standard', type: 'tool', x: 850, y: 320, r: 20 },
-  { id: 'authority', label: 'Entity\nAuthority', sub: '', type: 'concept', x: 780, y: 420, r: 16 },
-  { id: 'graphrag', label: 'GraphRAG', sub: '', type: 'tool', x: 700, y: 440, r: 18 },
-  { id: 'reification', label: 'Reification', sub: '', type: 'concept', x: 620, y: 560, r: 14 },
-  { id: 'agenticmem', label: 'Agentic\nMemory', sub: '', type: 'concept', x: 900, y: 600, r: 14 },
-  { id: 'dublin', label: 'Dublin KM\nSummit', sub: 'June 2026', type: 'event', x: 460, y: 100, r: 16 },
-  { id: 'nondeterm', label: 'Non-\ndeterminism', sub: '', type: 'concept', x: 900, y: 440, r: 13 },
-  { id: 'rag', label: 'RAG', sub: '(retrieval only)', type: 'concept', x: 750, y: 540, r: 13 },
-  { id: 'rdf', label: 'RDF 1.2\nSHACL', sub: '', type: 'tool', x: 580, y: 650, r: 13 },
-  { id: '3dcf', label: '3DCF', sub: 'doc2dataset', type: 'tool', x: 870, y: 720, r: 11 },
-  { id: 'governance', label: 'Data\nGovernance', sub: '', type: 'concept', x: 340, y: 620, r: 14 },
+  // === LEFT CLUSTER — Lulit + debate people ===
+  { id: 'lulit', label: 'Lulit T.', type: 'person', x: 180, y: 280, r: 30 },
+  { id: 'davis', label: 'Joseph Davis', type: 'person', x: 120, y: 400, r: 20 },
+  { id: 'gottgtroy', label: 'Paulo G.', type: 'person', x: 80, y: 300, r: 14 },
+  { id: 'talisman', label: 'Jessica Talisman', type: 'person', x: 120, y: 560, r: 18 },
+  { id: 'tacit', label: 'Tacit Knowledge', type: 'concept', x: 240, y: 620, r: 20 },
+  { id: 'hawker', label: 'Malcolm Hawker', type: 'person', x: 340, y: 640, r: 16 },
+  { id: 'governance', label: 'Data Governance', type: 'concept', x: 340, y: 560, r: 16 },
+  { id: 'rovesti', label: 'F. Rovesti', type: 'person', x: 60, y: 500, r: 12 },
+
+  // === RIGHT CLUSTER — Younis + SHAMIL ===
+  { id: 'younis', label: 'Mohammed Younis', type: 'hot', x: 780, y: 280, r: 28 },
+  { id: 'shamil', label: 'SHAMIL v1.0', type: 'tool', x: 920, y: 340, r: 22 },
+  { id: 'authority', label: 'Entity Authority', type: 'concept', x: 880, y: 460, r: 18 },
+  { id: 'nondeterm', label: 'Non-determinism', type: 'concept', x: 1020, y: 440, r: 16 },
+  { id: 'fragmentation', label: 'Proprietary\nFragmentation', type: 'concept', x: 640, y: 240, r: 18 },
+
+  // === TOP CLUSTER — Events ===
+  { id: 'hackett', label: 'Brian Hackett', type: 'event', x: 400, y: 170, r: 16 },
+  { id: 'dublin', label: 'Dublin KM Summit', type: 'event', x: 540, y: 150, r: 18 },
+  { id: 'boris', label: 'Boris V-T.', type: 'person', x: 280, y: 160, r: 13 },
+
+  // === BOTTOM-CENTER — Cagle + technical ===
+  { id: 'cagle', label: 'Kurt Cagle', type: 'person', x: 500, y: 580, r: 20 },
+  { id: 'reification', label: 'Reification', type: 'concept', x: 580, y: 640, r: 16 },
+  { id: 'rdf', label: 'RDF 1.2 / SHACL', type: 'tool', x: 440, y: 680, r: 14 },
+
+  // === BOTTOM-RIGHT — Misc ===
+  { id: 'rag', label: 'RAG', type: 'concept', x: 760, y: 540, r: 16 },
+  { id: 'pavlyshyn', label: 'V. Pavlyshyn', type: 'person', x: 880, y: 580, r: 16 },
+  { id: 'agenticmem', label: 'Agentic Memory', type: 'concept', x: 980, y: 560, r: 16 },
+  { id: 'ming', label: 'Ming W.', type: 'person', x: 660, y: 600, r: 14 },
+  { id: 'mol', label: 'Y. Mol', type: 'person', x: 820, y: 660, r: 12 },
+  { id: '3dcf', label: '3DCF', type: 'tool', x: 920, y: 680, r: 12 },
 ];
 
 const edges = [
@@ -135,18 +155,18 @@ const edges = [
   { from: 'governance', to: 'context', label: 'required by' },
   { from: 'agenticmem', to: 'context', label: 'built on' },
 
-  // People → concepts
+  // People → concepts (with their actual arguments)
   { from: 'lulit', to: 'semantic', label: 'framed debate' },
-  { from: 'lulit', to: 'context', label: 'framed debate' },
-  { from: 'lulit', to: 'fragmentation', label: 'warns against' },
+  { from: 'lulit', to: 'context', label: 'vs.' },
+  { from: 'lulit', to: 'fragmentation', label: 'warns: silos return' },
   { from: 'davis', to: 'kg', label: '"KG = context graph"' },
-  { from: 'cagle', to: 'reification', label: 'defines via' },
+  { from: 'cagle', to: 'reification', label: '"reified events"' },
   { from: 'cagle', to: 'rdf', label: 'advocates' },
-  { from: 'talisman', to: 'tacit', label: 'requires HITL' },
-  { from: 'hawker', to: 'governance', label: 'extends to record level' },
-  { from: 'pavlyshyn', to: 'agenticmem', label: 'wrote book on' },
+  { from: 'talisman', to: 'tacit', label: '"requires HITL"' },
+  { from: 'hawker', to: 'governance', label: '"record-level"' },
+  { from: 'pavlyshyn', to: 'agenticmem', label: 'wrote book' },
   { from: 'ming', to: 'cagle', label: '"theory or practical?"' },
-  { from: 'gottgtroy', to: 'semantic', label: 'skeptic of new terms' },
+  { from: 'gottgtroy', to: 'semantic', label: '"don\'t need new term"' },
   { from: 'mol', to: '3dcf', label: 'promotes' },
 
   // Dan connections
@@ -156,97 +176,157 @@ const edges = [
 
   // Partnership
   { from: 'younis', to: 'shamil', label: 'created' },
-  { from: 'younis', to: 'dan', label: 'wants partnership' },
+  { from: 'younis', to: 'dan', highlight: true, label: '"let\'s talk"' },
   { from: 'shamil', to: 'authority', label: 'declares' },
-  { from: 'shamil', to: 'dan', label: 'complementary to' },
+  { from: 'shamil', to: 'dan', label: 'complementary' },
 
   // Events
   { from: 'hackett', to: 'dublin', label: 'flagged' },
-  { from: 'lulit', to: 'dublin', label: 'confirmed attending' },
+  { from: 'lulit', to: 'dublin', label: 'attending' },
+  { from: 'lulit', to: 'dan', label: 'engaged' },
 
   { from: 'rovesti', to: 'talisman', label: 'tagged' },
   { from: 'boris', to: 'lulit', label: 'amplified' },
 ];
 
 function getNode(id) { return nodes.find(n => n.id === id); }
-
 function getColor(type) { return COLORS[type] || COLORS.concept; }
 
-function drawEdge(from, to) {
+function drawEdge(e, time) {
+  const from = getNode(e.from);
+  const to = getNode(e.to);
+  if (!from || !to) return;
+
   const dx = to.x - from.x;
   const dy = to.y - from.y;
   const dist = Math.sqrt(dx*dx + dy*dy);
-  const sx = from.x + (dx/dist) * from.r;
-  const sy = from.y + (dy/dist) * from.r;
-  const ex = to.x - (dx/dist) * to.r;
-  const ey = to.y - (dy/dist) * to.r;
+  if (dist === 0) return;
 
-  ctx.beginPath();
-  ctx.moveTo(sx, sy);
-  ctx.lineTo(ex, ey);
-  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
+  const sx = from.x + (dx/dist) * (from.r + 2);
+  const sy = from.y + (dy/dist) * (from.r + 2);
+  const ex = to.x - (dx/dist) * (to.r + 2);
+  const ey = to.y - (dy/dist) * (to.r + 2);
+
+  // Edge line — BRIGHT
+  const isHighlight = e.highlight;
+  const fromColor = getColor(from.type);
+  const toColor = getColor(to.type);
+
+  if (isHighlight) {
+    // Glowing partnership edge
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(ex, ey);
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#ef4444';
+    ctx.shadowBlur = 8;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  } else {
+    // Gradient edge
+    const grad = ctx.createLinearGradient(sx, sy, ex, ey);
+    grad.addColorStop(0, fromColor + '60');
+    grad.addColorStop(1, toColor + '60');
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(ex, ey);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
 
   // Arrow
   const angle = Math.atan2(ey - sy, ex - sx);
-  const aLen = 6;
+  const aLen = 7;
   ctx.beginPath();
   ctx.moveTo(ex, ey);
-  ctx.lineTo(ex - aLen * Math.cos(angle - 0.4), ey - aLen * Math.sin(angle - 0.4));
-  ctx.lineTo(ex - aLen * Math.cos(angle + 0.4), ey - aLen * Math.sin(angle + 0.4));
+  ctx.lineTo(ex - aLen * Math.cos(angle - 0.35), ey - aLen * Math.sin(angle - 0.35));
+  ctx.lineTo(ex - aLen * Math.cos(angle + 0.35), ey - aLen * Math.sin(angle + 0.35));
   ctx.closePath();
-  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.fillStyle = isHighlight ? '#ef444499' : toColor + '50';
   ctx.fill();
+
+  // Edge label
+  if (e.label) {
+    const mx = (sx + ex) / 2;
+    const my = (sy + ey) / 2;
+    ctx.font = '500 8px -apple-system, Helvetica Neue, Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    // Background pill
+    const tw = ctx.measureText(e.label).width + 8;
+    ctx.fillStyle = '#060610cc';
+    ctx.beginPath();
+    ctx.roundRect(mx - tw/2, my - 7, tw, 14, 3);
+    ctx.fill();
+    // Text
+    ctx.fillStyle = isHighlight ? '#ef4444' : '#64748bcc';
+    ctx.fillText(e.label, mx, my);
+  }
 }
 
 function drawNode(n, time) {
   const color = getColor(n.type);
-  const pulse = n.type === 'hot' ? 1 + 0.08 * Math.sin(time * 0.003 + n.x) : 1;
+  const isHot = n.type === 'hot';
+  const pulse = isHot ? 1 + 0.06 * Math.sin(time * 0.003 + n.x * 0.01) : 1;
+  const r = n.r * pulse;
 
-  // Glow
-  const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.5 * pulse);
-  grd.addColorStop(0, color + '25');
+  // Outer glow
+  const grd = ctx.createRadialGradient(n.x, n.y, r * 0.5, n.x, n.y, r * 3);
+  grd.addColorStop(0, color + (isHot ? '30' : '20'));
   grd.addColorStop(1, 'transparent');
   ctx.beginPath();
-  ctx.arc(n.x, n.y, n.r * 2.5 * pulse, 0, Math.PI * 2);
+  ctx.arc(n.x, n.y, r * 3, 0, Math.PI * 2);
   ctx.fillStyle = grd;
   ctx.fill();
 
-  // Ring
+  // Filled circle
   ctx.beginPath();
-  ctx.arc(n.x, n.y, n.r * pulse, 0, Math.PI * 2);
-  ctx.fillStyle = color + '18';
+  ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+  ctx.fillStyle = color + '20';
   ctx.fill();
-  ctx.strokeStyle = color + '80';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = isHot ? 2.5 : 1.8;
   ctx.stroke();
 
-  // Center dot
+  // Inner bright dot
   ctx.beginPath();
-  ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+  ctx.arc(n.x, n.y, 3.5, 0, Math.PI * 2);
   ctx.fillStyle = color;
   ctx.fill();
 
-  // Label
+  // Label — INSIDE or BELOW depending on node size
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
   const lines = n.label.split('\n');
-  const lineH = n.r > 18 ? 13 : 11;
-  const startY = n.y - ((lines.length - 1) * lineH) / 2;
+  const fontSize = r >= 26 ? 12 : r >= 20 ? 11 : r >= 16 ? 10 : 9;
+  const lineH = fontSize + 2;
 
-  ctx.font = (n.r > 22 ? '600 12px' : n.r > 16 ? '600 11px' : '600 10px') + ' -apple-system, Helvetica Neue, Arial, sans-serif';
-  ctx.fillStyle = '#fff';
-  lines.forEach((line, i) => {
-    ctx.fillText(line, n.x, startY + i * lineH);
-  });
-
-  // Sub label
-  if (n.sub && n.r > 14) {
-    ctx.font = '9px -apple-system, Helvetica Neue, Arial, sans-serif';
-    ctx.fillStyle = '#64748b';
-    ctx.fillText(n.sub, n.x, n.y + n.r + 12);
+  if (r >= 20) {
+    // Label INSIDE node
+    ctx.font = `600 ${fontSize}px -apple-system, Helvetica Neue, Arial, sans-serif`;
+    ctx.fillStyle = '#fff';
+    const startY = n.y - ((lines.length - 1) * lineH) / 2;
+    lines.forEach((line, i) => {
+      // Text shadow for readability
+      ctx.shadowColor = '#000';
+      ctx.shadowBlur = 4;
+      ctx.fillText(line, n.x, startY + i * lineH);
+      ctx.shadowBlur = 0;
+    });
+  } else {
+    // Label BELOW node
+    ctx.font = `600 ${fontSize}px -apple-system, Helvetica Neue, Arial, sans-serif`;
+    ctx.fillStyle = '#cbd5e1';
+    ctx.shadowColor = '#000';
+    ctx.shadowBlur = 3;
+    const startY = n.y + r + 12;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, n.x, startY + i * lineH);
+    });
+    ctx.shadowBlur = 0;
   }
 }
 
@@ -257,24 +337,25 @@ function render(time) {
   ctx.fillStyle = '#060610';
   ctx.fillRect(0, 0, W, H);
 
-  // Subtle grid
-  ctx.strokeStyle = 'rgba(59,130,246,0.025)';
-  ctx.lineWidth = 0.5;
-  for (let x = 0; x < W; x += 50) {
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-  }
-  for (let y = 0; y < H; y += 50) {
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  // Subtle radial gradient center
+  const bgGrd = ctx.createRadialGradient(500, 400, 0, 500, 400, 500);
+  bgGrd.addColorStop(0, 'rgba(59,130,246,0.03)');
+  bgGrd.addColorStop(1, 'transparent');
+  ctx.fillStyle = bgGrd;
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid dots
+  ctx.fillStyle = 'rgba(255,255,255,0.025)';
+  for (let x = 30; x < W; x += 40) {
+    for (let y = 30; y < H; y += 40) {
+      ctx.fillRect(x, y, 1, 1);
+    }
   }
 
-  // Edges
-  edges.forEach(e => {
-    const from = getNode(e.from);
-    const to = getNode(e.to);
-    if (from && to) drawEdge(from, to);
-  });
+  // Edges first (behind nodes)
+  edges.forEach(e => drawEdge(e, time));
 
-  // Nodes
+  // Nodes on top
   nodes.forEach(n => drawNode(n, time));
 
   requestAnimationFrame(render);
