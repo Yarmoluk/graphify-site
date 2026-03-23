@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Graph — Context Layer Debate</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #060610; overflow: hidden; }
+  canvas { display: block; }
+  .overlay {
+    position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 10;
+  }
+  .title-bar {
+    padding: 28px 40px 0;
+  }
+  .label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #3b82f6; margin-bottom: 6px;
+  }
+  .title {
+    font-size: 28px; font-weight: 800; color: #fff;
+    letter-spacing: -0.02em; line-height: 1.15;
+  }
+  .subtitle { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .legend {
+    position: absolute; bottom: 24px; left: 40px;
+    display: flex; gap: 20px; font-size: 11px; color: #94a3b8;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .stats-bar {
+    position: absolute; bottom: 24px; right: 40px;
+    display: flex; gap: 28px; text-align: center;
+  }
+  .stat-num { font-size: 24px; font-weight: 800; color: #fff; }
+  .stat-label { font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
+  .brand-bar {
+    position: absolute; top: 28px; right: 40px; text-align: right;
+  }
+  .brand-name { font-size: 16px; font-weight: 700; color: #fff; }
+  .brand-sub { font-size: 9px; color: #475569; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="overlay">
+  <div class="title-bar">
+    <div class="label">Live Knowledge Graph</div>
+    <div class="title">I graphed this conversation.</div>
+    <div class="subtitle">Semantic Layer vs. Context Layer — every person, concept, and connection visualized</div>
+  </div>
+  <div class="brand-bar">
+    <div class="brand-name">Graphify.md</div>
+    <div class="brand-sub">graphifymd.com</div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> People</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Concepts</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Standards / Tools</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Events</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> Hot Leads</div>
+  </div>
+  <div class="stats-bar">
+    <div><div class="stat-num">34</div><div class="stat-label">Entities</div></div>
+    <div><div class="stat-num">28</div><div class="stat-label">Relationships</div></div>
+    <div><div class="stat-num">14</div><div class="stat-label">People</div></div>
+    <div><div class="stat-num">11</div><div class="stat-label">Concepts</div></div>
+  </div>
+</div>
+
+<canvas id="graph"></canvas>
+
+<script>
+const canvas = document.getElementById('graph');
+const ctx = canvas.getContext('2d');
+const W = 1200, H = 900;
+canvas.width = W; canvas.height = H;
+canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+
+const COLORS = {
+  person: '#3b82f6',
+  concept: '#a855f7',
+  tool: '#22c55e',
+  event: '#f59e0b',
+  hot: '#ef4444'
+};
+
+const nodes = [
+  // People - spread across left and center
+  { id: 'lulit', label: 'Lulit T.', sub: 'VP · Thread Author', type: 'person', x: 360, y: 260, r: 28 },
+  { id: 'younis', label: 'Mohammed\nYounis', sub: 'Search Sciences', type: 'hot', x: 720, y: 200, r: 26 },
+  { id: 'davis', label: 'Joseph\nDavis', sub: 'CTO KomplyAI', type: 'person', x: 200, y: 420, r: 20 },
+  { id: 'cagle', label: 'Kurt\nCagle', sub: 'Ontologist', type: 'person', x: 510, y: 520, r: 20 },
+  { id: 'talisman', label: 'Jessica\nTalisman', sub: 'Taxonomy · KG', type: 'person', x: 140, y: 580, r: 18 },
+  { id: 'hawker', label: 'Malcolm\nHawker', sub: 'CDO · Author', type: 'person', x: 280, y: 680, r: 16 },
+  { id: 'hackett', label: 'Brian\nHackett', sub: 'Peer Learning', type: 'event', x: 520, y: 140, r: 15 },
+  { id: 'pavlyshyn', label: 'Volodymyr\nPavlyshyn', sub: 'Agentic AI', type: 'person', x: 820, y: 520, r: 16 },
+  { id: 'gottgtroy', label: 'Paulo\nGottgtroy', sub: 'Decision Science', type: 'person', x: 170, y: 280, r: 14 },
+  { id: 'ming', label: 'Ming W.', sub: 'AI Agents', type: 'person', x: 650, y: 620, r: 14 },
+  { id: 'dan', label: 'Dan\nYarmoluk', sub: 'Graphify.md', type: 'hot', x: 580, y: 340, r: 30 },
+  { id: 'boris', label: 'Boris V-T.', sub: '14 AI Patents', type: 'person', x: 380, y: 140, r: 13 },
+  { id: 'mol', label: 'Yevheni\nMol', sub: 'Web3', type: 'person', x: 780, y: 660, r: 12 },
+  { id: 'rovesti', label: 'Francesco\nRovesti', sub: 'CDMP', type: 'person', x: 100, y: 470, r: 12 },
+
+  // Concepts - spread across right and center
+  { id: 'semantic', label: 'Semantic\nLayer', sub: '', type: 'concept', x: 260, y: 520, r: 22 },
+  { id: 'context', label: 'Context\nLayer', sub: '', type: 'concept', x: 440, y: 420, r: 24 },
+  { id: 'kg', label: 'Knowledge\nGraph', sub: '', type: 'concept', x: 400, y: 340, r: 22 },
+  { id: 'tacit', label: 'Tacit\nKnowledge', sub: '', type: 'concept', x: 200, y: 640, r: 18 },
+  { id: 'fragmentation', label: 'Proprietary\nFragmentation', sub: '', type: 'concept', x: 560, y: 200, r: 16 },
+  { id: 'shamil', label: 'SHAMIL\nv1.0', sub: 'Open Standard', type: 'tool', x: 850, y: 320, r: 20 },
+  { id: 'authority', label: 'Entity\nAuthority', sub: '', type: 'concept', x: 780, y: 420, r: 16 },
+  { id: 'graphrag', label: 'GraphRAG', sub: '', type: 'tool', x: 700, y: 440, r: 18 },
+  { id: 'reification', label: 'Reification', sub: '', type: 'concept', x: 620, y: 560, r: 14 },
+  { id: 'agenticmem', label: 'Agentic\nMemory', sub: '', type: 'concept', x: 900, y: 600, r: 14 },
+  { id: 'dublin', label: 'Dublin KM\nSummit', sub: 'June 2026', type: 'event', x: 460, y: 100, r: 16 },
+  { id: 'nondeterm', label: 'Non-\ndeterminism', sub: '', type: 'concept', x: 900, y: 440, r: 13 },
+  { id: 'rag', label: 'RAG', sub: '(retrieval only)', type: 'concept', x: 750, y: 540, r: 13 },
+  { id: 'rdf', label: 'RDF 1.2\nSHACL', sub: '', type: 'tool', x: 580, y: 650, r: 13 },
+  { id: '3dcf', label: '3DCF', sub: 'doc2dataset', type: 'tool', x: 870, y: 720, r: 11 },
+  { id: 'governance', label: 'Data\nGovernance', sub: '', type: 'concept', x: 340, y: 620, r: 14 },
+];
+
+const edges = [
+  // Core conceptual
+  { from: 'semantic', to: 'context', label: 'defines structure for' },
+  { from: 'kg', to: 'context', label: 'generates' },
+  { from: 'kg', to: 'semantic', label: 'implements' },
+  { from: 'graphrag', to: 'rag', label: 'displaces' },
+  { from: 'context', to: 'fragmentation', label: 'risks' },
+  { from: 'authority', to: 'nondeterm', label: 'prevents' },
+  { from: 'reification', to: 'context', label: 'enables' },
+  { from: 'tacit', to: 'kg', label: 'captured by' },
+  { from: 'governance', to: 'context', label: 'required by' },
+  { from: 'agenticmem', to: 'context', label: 'built on' },
+
+  // People → concepts
+  { from: 'lulit', to: 'semantic', label: 'framed debate' },
+  { from: 'lulit', to: 'context', label: 'framed debate' },
+  { from: 'lulit', to: 'fragmentation', label: 'warns against' },
+  { from: 'davis', to: 'kg', label: '"KG = context graph"' },
+  { from: 'cagle', to: 'reification', label: 'defines via' },
+  { from: 'cagle', to: 'rdf', label: 'advocates' },
+  { from: 'talisman', to: 'tacit', label: 'requires HITL' },
+  { from: 'hawker', to: 'governance', label: 'extends to record level' },
+  { from: 'pavlyshyn', to: 'agenticmem', label: 'wrote book on' },
+  { from: 'ming', to: 'cagle', label: '"theory or practical?"' },
+  { from: 'gottgtroy', to: 'semantic', label: 'skeptic of new terms' },
+  { from: 'mol', to: '3dcf', label: 'promotes' },
+
+  // Dan connections
+  { from: 'dan', to: 'kg', label: 'builds' },
+  { from: 'dan', to: 'graphrag', label: 'advocates' },
+  { from: 'dan', to: 'context', label: '.md delivery' },
+
+  // Partnership
+  { from: 'younis', to: 'shamil', label: 'created' },
+  { from: 'younis', to: 'dan', label: 'wants partnership' },
+  { from: 'shamil', to: 'authority', label: 'declares' },
+  { from: 'shamil', to: 'dan', label: 'complementary to' },
+
+  // Events
+  { from: 'hackett', to: 'dublin', label: 'flagged' },
+  { from: 'lulit', to: 'dublin', label: 'confirmed attending' },
+
+  { from: 'rovesti', to: 'talisman', label: 'tagged' },
+  { from: 'boris', to: 'lulit', label: 'amplified' },
+];
+
+function getNode(id) { return nodes.find(n => n.id === id); }
+
+function getColor(type) { return COLORS[type] || COLORS.concept; }
+
+function drawEdge(from, to) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  const sx = from.x + (dx/dist) * from.r;
+  const sy = from.y + (dy/dist) * from.r;
+  const ex = to.x - (dx/dist) * to.r;
+  const ey = to.y - (dy/dist) * to.r;
+
+  ctx.beginPath();
+  ctx.moveTo(sx, sy);
+  ctx.lineTo(ex, ey);
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Arrow
+  const angle = Math.atan2(ey - sy, ex - sx);
+  const aLen = 6;
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex - aLen * Math.cos(angle - 0.4), ey - aLen * Math.sin(angle - 0.4));
+  ctx.lineTo(ex - aLen * Math.cos(angle + 0.4), ey - aLen * Math.sin(angle + 0.4));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.fill();
+}
+
+function drawNode(n, time) {
+  const color = getColor(n.type);
+  const pulse = n.type === 'hot' ? 1 + 0.08 * Math.sin(time * 0.003 + n.x) : 1;
+
+  // Glow
+  const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.5 * pulse);
+  grd.addColorStop(0, color + '25');
+  grd.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(n.x, n.y, n.r * 2.5 * pulse, 0, Math.PI * 2);
+  ctx.fillStyle = grd;
+  ctx.fill();
+
+  // Ring
+  ctx.beginPath();
+  ctx.arc(n.x, n.y, n.r * pulse, 0, Math.PI * 2);
+  ctx.fillStyle = color + '18';
+  ctx.fill();
+  ctx.strokeStyle = color + '80';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  // Label
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const lines = n.label.split('\n');
+  const lineH = n.r > 18 ? 13 : 11;
+  const startY = n.y - ((lines.length - 1) * lineH) / 2;
+
+  ctx.font = (n.r > 22 ? '600 12px' : n.r > 16 ? '600 11px' : '600 10px') + ' -apple-system, Helvetica Neue, Arial, sans-serif';
+  ctx.fillStyle = '#fff';
+  lines.forEach((line, i) => {
+    ctx.fillText(line, n.x, startY + i * lineH);
+  });
+
+  // Sub label
+  if (n.sub && n.r > 14) {
+    ctx.font = '9px -apple-system, Helvetica Neue, Arial, sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(n.sub, n.x, n.y + n.r + 12);
+  }
+}
+
+function render(time) {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#060610';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grid
+  ctx.strokeStyle = 'rgba(59,130,246,0.025)';
+  ctx.lineWidth = 0.5;
+  for (let x = 0; x < W; x += 50) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 0; y < H; y += 50) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  // Edges
+  edges.forEach(e => {
+    const from = getNode(e.from);
+    const to = getNode(e.to);
+    if (from && to) drawEdge(from, to);
+  });
+
+  // Nodes
+  nodes.forEach(n => drawNode(n, time));
+
+  requestAnimationFrame(render);
+}
+
+requestAnimationFrame(render);
+</script>
+
+</body>
+</html>
