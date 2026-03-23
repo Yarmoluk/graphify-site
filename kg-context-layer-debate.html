@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Graph — Lulit T. Context Graph Thread</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #fff; color: #1a1a1a; line-height: 1.5; font-size: 10pt; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  h1 { font-size: 20pt; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; margin-bottom: 4px; line-height: 1.1; }
+  h2 { font-size: 13pt; font-weight: 700; color: #0f172a; margin: 24px 0 8px; border-bottom: 2px solid #0f172a; padding-bottom: 3px; }
+  h3 { font-size: 10.5pt; font-weight: 700; color: #1e293b; margin: 12px 0 4px; }
+  p { margin-bottom: 6px; }
+  strong { color: #0f172a; }
+  .hero { padding: 28px 0 14px; border-bottom: 3px solid #0f172a; }
+  .hero .meta { font-size: 8pt; color: #64748b; margin-top: 4px; }
+  .label { font-size: 7pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #2563eb; margin-bottom: 3px; display: block; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9pt; }
+  th { text-align: left; padding: 5px 7px; font-weight: 700; color: #0f172a; background: #f1f5f9; border-bottom: 2px solid #cbd5e1; font-size: 7pt; letter-spacing: 0.04em; text-transform: uppercase; }
+  td { padding: 5px 7px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  ul { margin: 4px 0 4px 16px; }
+  li { margin-bottom: 3px; }
+  .callout { border-left: 3px solid #2563eb; padding: 10px 14px; margin: 10px 0; background: #f0f9ff; font-size: 9.5pt; page-break-inside: avoid; }
+  .callout-red { border-left-color: #dc2626; background: #fef2f2; }
+  .callout-green { border-left-color: #16a34a; background: #f0fdf4; }
+  .callout-amber { border-left-color: #d97706; background: #fffbeb; }
+  .card { border: 1px solid #e2e8f0; border-radius: 5px; padding: 10px 12px; margin-bottom: 8px; background: #f8fafc; page-break-inside: avoid; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 7pt; font-weight: 600; margin-right: 4px; }
+  .tag-person { background: #dbeafe; color: #1e40af; }
+  .tag-concept { background: #f3e8ff; color: #6b21a8; }
+  .tag-org { background: #dcfce7; color: #166534; }
+  .tag-event { background: #fef3c7; color: #92400e; }
+  .tag-tool { background: #fee2e2; color: #991b1b; }
+  .edge { font-size: 8pt; color: #64748b; font-style: italic; }
+  .page-break { page-break-before: always; }
+  .footer { padding: 16px 0; text-align: center; font-size: 7.5pt; color: #94a3b8; border-top: 1px solid #e2e8f0; margin-top: 20px; }
+  @media print { body { font-size: 9pt; } .container { padding: 0 10px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <span class="label">Knowledge Graph &mdash; LinkedIn Thread Intelligence</span>
+    <h1>Semantic Layer vs. Context Layer<br>The Industry Debate</h1>
+    <p style="font-size: 10pt; color: #475569;">Source: Lulit T. LinkedIn post (178 reactions, 38 comments, 17 reposts) &bull; March 2026</p>
+    <p class="meta">Extracted March 23, 2026 &bull; Graphify.md</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ENTITIES -->
+<h2>Entities (34 nodes)</h2>
+
+<h3>People (14)</h3>
+<table>
+  <tr><th>Entity</th><th>Role / Affiliation</th><th>Position in Debate</th><th>Signal</th></tr>
+  <tr>
+    <td><span class="tag tag-person">Lulit T.</span></td>
+    <td>Vice President (unnamed org). Verified. Large following.</td>
+    <td><strong>Thought leader framing the debate.</strong> Distinguishes semantic layer vs. context layer. Warns against proprietary fragmentation.</td>
+    <td>178 reactions. Influencer. Gatekeeper.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Mohammed Younis</span></td>
+    <td>Founder &amp; Managing Partner, Search Sciences. Chief Scientist. 1st connection to Dan.</td>
+    <td><strong>Wants to partner.</strong> Created SHAMIL v1.0 open notation standard. Sees Graphify.md as complementary. "Piloting in London. Would make sense to talk."</td>
+    <td style="color: #dc2626; font-weight: 600;">HOT LEAD. Wants meeting. UK pilot. Open standard alignment.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Kurt Cagle</span></td>
+    <td>Editor in Chief, The Cagle Report. Ontologist. Author.</td>
+    <td>Context graph = "graph-based log of reified events." Technical purist. RDF 1.2 + SHACL + Holons. Publishes on Substack (ontologist.substack.com).</td>
+    <td>3 likes. Domain authority. Academic-practitioner bridge.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Joseph Davis</span></td>
+    <td>CTO, KomplyAI. Director, Knowledge Discovery, University of Sydney.</td>
+    <td><strong>"All correct knowledge graphs are by definition context graphs."</strong> Unifying position. Dismisses the distinction.</td>
+    <td>Academic authority. Potential ally for Graphify thesis.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Malcolm Hawker</span></td>
+    <td>CDO. Author. Keynote Speaker. Podcast Host.</td>
+    <td>Context layer needs data management + governance at the record level, not just schema level.</td>
+    <td>2 likes. Governance angle. CDO buyer persona.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Jessica Talisman</span></td>
+    <td>Taxonomy / Ontology / Knowledge Graphs specialist.</td>
+    <td>Tacit knowledge requires knowledge elicitation framework + HITL + auditability. Can't just scrape.</td>
+    <td>2 likes. Validates Graphify's human-curated approach.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Paulo Gottgtroy</span></td>
+    <td>Head of Decision Science &amp; Analytics, Mercury NZ.</td>
+    <td>Skeptic of new terminology. Cites Tom Gruber. "We may not need to create a new term." Object modeling already covers structure, state, behavior.</td>
+    <td>Pragmatist voice. Anti-buzzword.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Brian Hackett</span></td>
+    <td>Peer learning connector.</td>
+    <td>Flags Dublin KM Summit (June 2026) as venue for this conversation. Lulit confirmed attending.</td>
+    <td style="color: #d97706; font-weight: 600;">EVENT LEAD. Dublin KM Summit = speaking opportunity.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Volodymyr Pavlyshyn</span></td>
+    <td>Senior Staff Engineer / Architect. SSI, Agentic AI, Personal KGs.</td>
+    <td>Wrote book: "Beyond Context Graphs" (Leanpub). Agentic memory, cognitive processes, promise graphs.</td>
+    <td>Published author on exact topic. Competitor or collaborator.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Yevheni Mol</span></td>
+    <td>Web3 Security.</td>
+    <td>Promotes 3DCF context compression (doc2dataset on GitHub).</td>
+    <td>Tool pusher. Dan challenged: "what are the results?"</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Ming W.</span></td>
+    <td>"Making AI agents smarter." Hiring.</td>
+    <td>Challenged Kurt Cagle: "Is this theory or do you have a practical example?"</td>
+    <td>Practitioner. Skeptic of theory-only. Potential buyer persona.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Boris Villazon-Terrazas</span></td>
+    <td>Global Gen AI CoE Leader. Agentics Foundation Member. 14 AI patents.</td>
+    <td>Tagged 7 people. Distribution node. Agentics Foundation connection.</td>
+    <td>Connector. Access to Agentics Foundation network.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Francesco Rovesti</span></td>
+    <td>CDMP certified. BBS Exec Master Analytics. Triathlete.</td>
+    <td>Tagged Jessica Talisman to bring in taxonomy expertise.</td>
+    <td>Connector in data management community.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-person">Dan Yarmoluk</span></td>
+    <td>Context Architect. Founder, Graphify.md.</td>
+    <td>"You can use a knowledge graph as context at the .md level, enjoying best of both multiplied." 144 impressions on comment. Mohammed Younis responded directly with partnership interest.</td>
+    <td>3 comments. 327 total impressions. Generated 1 partnership lead (Younis).</td>
+  </tr>
+</table>
+
+<h3>Concepts (11)</h3>
+<table>
+  <tr><th>Concept</th><th>Definition (from thread)</th><th>Graphify.md Position</th></tr>
+  <tr>
+    <td><span class="tag tag-concept">Semantic Layer</span></td>
+    <td>Schema-level abstraction. Defines what things mean and how they relate structurally. Ontologies, taxonomies, data models.</td>
+    <td>Necessary foundation but not sufficient for AI reasoning.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Context Layer</span></td>
+    <td>Dynamic, situational layer. What's relevant NOW for THIS query/decision. Temporal, user-aware, task-specific.</td>
+    <td><strong>This is what Graphify.md builds.</strong> The .md delivery = context, not schema.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Knowledge Graph</span></td>
+    <td>Entity-relationship structure. Joseph Davis: "All correct KGs are by definition context graphs."</td>
+    <td>Our substrate. The thing we build that enables the context layer.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Context Graph</span></td>
+    <td>Kurt Cagle: "Graph-based log of reified events." Dynamic world model. Decision support.</td>
+    <td>Aligns with ADA's Decision Bots layer.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Reification</span></td>
+    <td>Making statements about statements. "This relationship has confidence X, was asserted by Y, at time Z."</td>
+    <td>Maps to Graphify's explainability layer. Audit trails.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Tacit Knowledge</span></td>
+    <td>Jessica Talisman: Knowledge in people's heads. Requires elicitation framework + HITL + auditability.</td>
+    <td><strong>This is EXACTLY what Graphify captures.</strong> The estimator's judgment. The sales rep's instinct. The thing that retires when they do.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Proprietary Fragmentation</span></td>
+    <td>Lulit/Younis warning: if context layers become proprietary, we recreate the silo problem one layer up.</td>
+    <td>Graphify uses open standards (.md, MCP, Neo4j). This is a positioning advantage.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Entity Authority</span></td>
+    <td>Younis/SHAMIL: declaring at the entity level what something is authorized to do, under what governance.</td>
+    <td>Governance gap we haven't addressed yet. Potential integration point.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Non-determinism</span></td>
+    <td>Younis: without declared entity authority, agents must INFER governance &mdash; that's where non-determinism returns.</td>
+    <td>SHAMIL solves notation. Graphify solves structure. Complementary.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">Agentic Memory</span></td>
+    <td>Pavlyshyn's book concept. Memory + cognitive processes + promise graphs for multi-agent systems.</td>
+    <td>Adjacent to Graphify. Our graphs ARE the memory layer for agents.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-concept">GraphRAG</span></td>
+    <td>Dan's comment: "I'm tired of being on the RAG, I want GraphRAG." 112 impressions.</td>
+    <td>Our positioning. RAG retrieves. GraphRAG reasons.</td>
+  </tr>
+</table>
+
+<h3>Organizations &amp; Tools (5)</h3>
+<table>
+  <tr><th>Entity</th><th>Type</th><th>Relevance</th></tr>
+  <tr><td><span class="tag tag-org">Search Sciences</span></td><td>Research firm (Younis)</td><td>Created SHAMIL standard. Piloting in London. Partnership target.</td></tr>
+  <tr><td><span class="tag tag-tool">SHAMIL v1.0</span></td><td>Open notation standard</td><td>Entity identity + capability + relationship + authority. At shamil.foundation. Open spec. Complementary to Graphify.</td></tr>
+  <tr><td><span class="tag tag-tool">3DCF / doc2dataset</span></td><td>GitHub tool (Mol)</td><td>Token-efficient document compression. Competitor approach. Dan challenged for results.</td></tr>
+  <tr><td><span class="tag tag-tool">RDF 1.2 + SHACL + Holons</span></td><td>W3C standards</td><td>Kurt Cagle's preferred stack. Academic-grade. Heavy. Not our market.</td></tr>
+  <tr><td><span class="tag tag-event">Dublin KM Summit</span></td><td>Conference, June 2026</td><td>Lulit confirmed attending. Brian Hackett flagged. Speaking/networking opportunity.</td></tr>
+</table>
+
+<!-- RELATIONSHIPS -->
+<h2 class="page-break">Relationships (28 edges)</h2>
+
+<h3>Partnership / Collaboration Signals</h3>
+<table>
+  <tr><th>From</th><th>Edge</th><th>To</th><th>Strength</th></tr>
+  <tr><td>Mohammed Younis</td><td class="edge">wants to partner with</td><td>Dan Yarmoluk / Graphify.md</td><td style="color: #dc2626; font-weight: 700;">STRONG &mdash; "Would make sense to talk." Piloting in London.</td></tr>
+  <tr><td>SHAMIL v1.0</td><td class="edge">is complementary to</td><td>Graphify.md</td><td style="color: #16a34a; font-weight: 600;">SHAMIL = notation/authority. Graphify = structure/reasoning. Non-overlapping.</td></tr>
+  <tr><td>Mohammed Younis</td><td class="edge">validated framing of</td><td>Dan's ".md level" comment</td><td>"Best of both multiplied is the right framing."</td></tr>
+  <tr><td>Search Sciences</td><td class="edge">is piloting in</td><td>London, UK</td><td>Active deployment. International reach.</td></tr>
+</table>
+
+<h3>Conceptual Relationships</h3>
+<table>
+  <tr><th>From</th><th>Edge</th><th>To</th></tr>
+  <tr><td>Semantic Layer</td><td class="edge">defines structure for</td><td>Context Layer</td></tr>
+  <tr><td>Context Layer</td><td class="edge">is dynamically generated from</td><td>Knowledge Graph</td></tr>
+  <tr><td>Knowledge Graph</td><td class="edge">"is by definition" (Davis)</td><td>Context Graph</td></tr>
+  <tr><td>Context Graph</td><td class="edge">is "graph-based log of reified events" (Cagle)</td><td>Reification</td></tr>
+  <tr><td>Tacit Knowledge</td><td class="edge">requires for capture</td><td>Knowledge Elicitation + HITL + Auditability (Talisman)</td></tr>
+  <tr><td>Tacit Knowledge</td><td class="edge">is exactly what is captured by</td><td>Graphify.md methodology</td></tr>
+  <tr><td>Proprietary Fragmentation</td><td class="edge">is warned against by</td><td>Lulit T. + Mohammed Younis</td></tr>
+  <tr><td>Entity Authority</td><td class="edge">is solved at notation layer by</td><td>SHAMIL v1.0</td></tr>
+  <tr><td>Non-determinism</td><td class="edge">returns when agents must infer</td><td>Entity Authority (without SHAMIL)</td></tr>
+  <tr><td>Agentic Memory</td><td class="edge">is built on</td><td>Context Graphs + Promise Graphs (Pavlyshyn)</td></tr>
+  <tr><td>GraphRAG</td><td class="edge">displaces</td><td>RAG (retrieval-only)</td></tr>
+  <tr><td>GraphRAG</td><td class="edge">is the market position of</td><td>Graphify.md</td></tr>
+</table>
+
+<h3>Debate Positions</h3>
+<table>
+  <tr><th>Person</th><th>Edge</th><th>Position</th></tr>
+  <tr><td>Paulo Gottgtroy</td><td class="edge">argues against</td><td>New terminology. "We may not need a new term."</td></tr>
+  <tr><td>Joseph Davis</td><td class="edge">unifies by saying</td><td>KG and context graph are the same thing done correctly.</td></tr>
+  <tr><td>Kurt Cagle</td><td class="edge">defines technically via</td><td>RDF 1.2 + SHACL + Holons reification model.</td></tr>
+  <tr><td>Malcolm Hawker</td><td class="edge">extends by requiring</td><td>Data governance at the individual record level.</td></tr>
+  <tr><td>Jessica Talisman</td><td class="edge">grounds by requiring</td><td>HITL knowledge elicitation for tacit knowledge.</td></tr>
+  <tr><td>Ming W.</td><td class="edge">challenges with</td><td>"Is this theory or do you have a practical example?"</td></tr>
+  <tr><td>Dan Yarmoluk</td><td class="edge">bridges by proposing</td><td>KG as context at the .md level = "best of both multiplied"</td></tr>
+</table>
+
+<!-- STRATEGIC IMPLICATIONS -->
+<h2 class="page-break">Strategic Implications for Graphify.md</h2>
+
+<div class="callout-red callout">
+  <strong>ACTION REQUIRED: Mohammed Younis wants a meeting.</strong> He created an open standard (SHAMIL) that's complementary, not competitive. He has a London pilot. He validated Dan's framing publicly. This is a real partnership lead &mdash; DM him today. SHAMIL handles entity authority/governance notation. Graphify handles structure/reasoning delivery. Together: full stack.
+</div>
+
+<div class="callout-amber callout">
+  <strong>EVENT: Dublin KM Summit, June 2026.</strong> Lulit T. confirmed attending. Brian Hackett suggested this topic for the agenda. This is the exact audience for Graphify's thesis. Investigate speaking slot or demo opportunity. Lulit is a potential connector/endorser.
+</div>
+
+<div class="callout-green callout">
+  <strong>POSITIONING VALIDATION:</strong> This thread confirms Graphify.md sits at the exact intersection the industry is debating. Key validations:
+  <ul>
+    <li><strong>Jessica Talisman</strong> validates that tacit knowledge capture requires human-in-the-loop &mdash; that's our methodology, not automated scraping.</li>
+    <li><strong>Joseph Davis</strong> validates that "correct KGs are context graphs" &mdash; we don't need to choose, we ARE both.</li>
+    <li><strong>Ming W.</strong> asks "is this theory or practical?" &mdash; we have 17 production deployments. That's our answer.</li>
+    <li><strong>Proprietary fragmentation warning</strong> &mdash; our .md + MCP open delivery model is the antidote. Use this in positioning.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Competitive Landscape Update</h3>
+  <table>
+    <tr><th>Player</th><th>Approach</th><th>Gap vs. Graphify</th></tr>
+    <tr><td>SHAMIL (Younis)</td><td>Open notation standard for entity authority</td><td>Complementary, not competitive. Partner.</td></tr>
+    <tr><td>3DCF / doc2dataset (Mol)</td><td>Token compression for documents</td><td>Document-level, not graph-level. No reasoning paths.</td></tr>
+    <tr><td>RDF 1.2 stack (Cagle)</td><td>Academic-grade semantic web standards</td><td>Heavy. Enterprise-only. Years to implement. We ship in days.</td></tr>
+    <tr><td>Pavlyshyn "Beyond Context Graphs"</td><td>Book on agentic memory + promise graphs</td><td>Theory. No production deployments mentioned.</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Messaging Refinements from This Thread</h3>
+  <ul>
+    <li><strong>Use Joseph Davis's line:</strong> "All correct knowledge graphs are by definition context graphs." This kills the semantic-vs-context debate in one sentence and positions Graphify as doing it right.</li>
+    <li><strong>Use Jessica Talisman's framing:</strong> "Tacit knowledge requires knowledge elicitation + HITL + auditability." That's literally our process. Quote her.</li>
+    <li><strong>Anti-fragmentation positioning:</strong> "We deliver via .md and MCP &mdash; open, portable, model-agnostic. Your intelligence shouldn't be locked into any vendor's proprietary context format."</li>
+    <li><strong>The "practical example" answer:</strong> When anyone asks "is this theory?" &mdash; "We have 17 production deployments across defense, healthcare, legal, construction, and industrial IoT. Here's one running right now."</li>
+    <li><strong>Dan's comment that resonated:</strong> "Best of both multiplied" = 144 impressions + direct partnership request. Keep using this framing.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Follow-Up Actions</h3>
+  <table>
+    <tr><th style="width: 5%;">#</th><th style="width: 25%;">Action</th><th>Owner</th><th style="width: 15%;">Priority</th></tr>
+    <tr><td>1</td><td><strong>DM Mohammed Younis</strong> &mdash; schedule call re: SHAMIL + Graphify partnership. London pilot. Open standard alignment.</td><td>Dan</td><td style="color: #dc2626; font-weight: 700;">TODAY</td></tr>
+    <tr><td>2</td><td><strong>Research Dublin KM Summit</strong> &mdash; speaking slot? Demo? Registration? Lulit confirmed attending.</td><td>Ben</td><td style="color: #d97706; font-weight: 600;">This week</td></tr>
+    <tr><td>3</td><td><strong>Connect with Jessica Talisman</strong> &mdash; her tacit knowledge + HITL framing validates our approach. Potential advisor or co-author.</td><td>Dan</td><td style="color: #d97706; font-weight: 600;">This week</td></tr>
+    <tr><td>4</td><td><strong>Connect with Joseph Davis</strong> &mdash; CTO at KomplyAI + Univ of Sydney. Academic validation of "KG = context graph" thesis.</td><td>Dan</td><td>Next week</td></tr>
+    <tr><td>5</td><td><strong>Read SHAMIL v1.0 spec</strong> at shamil.foundation/specifications/shamil/v1-0 &mdash; understand integration points.</td><td>Dan / Chris</td><td>This week</td></tr>
+    <tr><td>6</td><td><strong>Read Pavlyshyn's book</strong> (Leanpub) &mdash; "Beyond Context Graphs." Competitive intelligence. May cite or counter.</td><td>Ben</td><td>Next week</td></tr>
+    <tr><td>7</td><td><strong>Follow Lulit T.</strong> &mdash; engage on future posts. She shapes this conversation for thousands. Gatekeeper access.</td><td>Dan</td><td>Ongoing</td></tr>
+    <tr><td>8</td><td><strong>Write LinkedIn response post</strong> referencing this thread. "The semantic layer vs. context layer debate is missing one thing: production deployments." Link to graph demo.</td><td>Dan</td><td>This week</td></tr>
+  </table>
+</div>
+
+<h2>Thread Performance (Dan's Engagement)</h2>
+<table>
+  <tr><th>Comment</th><th>Impressions</th><th>Result</th></tr>
+  <tr><td>"Best of both multiplied at .md level"</td><td>144</td><td>Mohammed Younis partnership request</td></tr>
+  <tr><td>"I'm tired of being on the RAG, I want GraphRAG"</td><td>112</td><td>Engagement + brand positioning</td></tr>
+  <tr><td>"What are the results?" (to Yevheni Mol)</td><td>21</td><td>Challenged competitor. No response.</td></tr>
+  <tr><td>"So you want to try it and use it in UK?" (to Younis)</td><td>48</td><td>Advanced partnership conversation</td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>325</strong></td><td><strong>1 hot lead, 1 event lead, brand presence established in core debate</strong></td></tr>
+</table>
+
+</div>
+
+<div class="footer">
+  <div class="container">
+    <p><strong>Graphify.md</strong> &bull; Knowledge Graph extracted March 23, 2026 &bull; 34 entities, 28 relationships, 8 action items</p>
+  </div>
+</div>
+
+</body>
+</html>
