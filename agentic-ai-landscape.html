@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphify.md | The Agentic AI Landscape: What $20.8B Actually Bought</title>
+<meta property="og:title" content="The Agentic AI Landscape: What $20.8B Actually Bought">
+<meta property="og:description" content="92 companies. 10 categories. 47 doing the same thing. 7 PE roll-up plays identified. Powered by Graphify.md knowledge graph intelligence.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://graphifymd.com/agentic-ai-landscape.html">
+<meta property="og:image" content="https://graphifymd.com/assets/og-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0f;
+    color: #e0e0e8;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 60px 40px 40px;
+    text-align: center;
+    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a0f 100%);
+    border-bottom: 1px solid rgba(99,102,241,0.15);
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #818cf8 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .subtitle {
+    font-size: 20px;
+    color: #9ca3af;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .hero .hook {
+    font-size: 15px;
+    color: #f87171;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 24px 40px;
+    background: rgba(15,15,26,0.8);
+    border-bottom: 1px solid rgba(99,102,241,0.1);
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: #818cf8;
+  }
+  .stat-number.red { color: #f87171; }
+  .stat-number.green { color: #34d399; }
+  .stat-number.amber { color: #fbbf24; }
+  .stat-label {
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 40px;
+    background: #0a0a0f;
+    border-bottom: 1px solid rgba(99,102,241,0.1);
+    flex-wrap: wrap;
+  }
+  .nav-tab {
+    padding: 8px 20px;
+    background: rgba(99,102,241,0.06);
+    border: 1px solid rgba(99,102,241,0.15);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-tab:hover, .nav-tab.active {
+    background: rgba(99,102,241,0.15);
+    border-color: rgba(99,102,241,0.4);
+    color: #818cf8;
+  }
+
+  /* MAIN CONTENT */
+  .main { padding: 30px 40px; }
+
+  /* SECTION HEADERS */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .section-count {
+    padding: 3px 10px;
+    background: rgba(99,102,241,0.15);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #818cf8;
+  }
+  .section-insight {
+    font-size: 13px;
+    color: #f87171;
+    font-weight: 500;
+    margin: -12px 0 16px;
+    padding-left: 2px;
+  }
+
+  /* MARKET MAP GRID */
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .company-card {
+    background: rgba(15,15,26,0.6);
+    border: 1px solid rgba(99,102,241,0.12);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .company-card:hover {
+    border-color: rgba(99,102,241,0.4);
+    background: rgba(25,25,40,0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.1);
+  }
+  .company-card.redundant {
+    border-left: 3px solid #f87171;
+  }
+  .company-card.rollup {
+    border-left: 3px solid #fbbf24;
+  }
+  .company-card.moat {
+    border-left: 3px solid #34d399;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .company-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .funding-badge {
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .funding-mega { background: rgba(99,102,241,0.2); color: #818cf8; }
+  .funding-mid { background: rgba(52,211,153,0.15); color: #34d399; }
+  .funding-early { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .funding-seed { background: rgba(156,163,175,0.15); color: #9ca3af; }
+
+  .company-desc {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .card-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: #6b7280;
+  }
+  .card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .card-investors {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* PE SIGNAL TAGS */
+  .signal-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+    margin-right: 4px;
+  }
+  .signal-redundant { background: rgba(248,113,113,0.15); color: #f87171; }
+  .signal-rollup { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .signal-moat { background: rgba(52,211,153,0.15); color: #34d399; }
+  .signal-overvalued { background: rgba(244,114,182,0.15); color: #f472b6; }
+
+  /* D3 GRAPH */
+  #graph-container {
+    width: 100%;
+    height: 700px;
+    background: rgba(10,10,15,0.9);
+    border: 1px solid rgba(99,102,241,0.15);
+    border-radius: 12px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #graph-container svg { width: 100%; height: 100%; }
+
+  .graph-legend {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(10,10,15,0.9);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    z-index: 10;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* INVESTOR OVERLAP */
+  .investor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .investor-card {
+    background: rgba(15,15,26,0.6);
+    border: 1px solid rgba(99,102,241,0.12);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .investor-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #818cf8;
+    margin-bottom: 4px;
+  }
+  .investor-count {
+    font-size: 12px;
+    color: #f87171;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .investor-companies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .inv-chip {
+    padding: 3px 8px;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.15);
+    border-radius: 5px;
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  /* PE THESIS */
+  .thesis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .thesis-card {
+    background: linear-gradient(135deg, rgba(15,15,26,0.8), rgba(25,25,45,0.6));
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .thesis-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .thesis-card .thesis-type {
+    font-size: 11px;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .thesis-card p {
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+  .thesis-card .target-list {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(99,102,241,0.1);
+  }
+  .thesis-card .target-list span {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(99,102,241,0.1);
+    border-radius: 5px;
+    font-size: 11px;
+    color: #818cf8;
+    margin: 2px;
+  }
+
+  /* REDUNDANCY HEATMAP */
+  .heatmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 12px;
+  }
+  .heatmap-table th {
+    padding: 8px 12px;
+    text-align: left;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(99,102,241,0.15);
+  }
+  .heatmap-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(99,102,241,0.06);
+    color: #d1d5db;
+  }
+  .heatmap-table tr:hover { background: rgba(99,102,241,0.04); }
+  .heat-high { color: #f87171; font-weight: 700; }
+  .heat-med { color: #fbbf24; font-weight: 600; }
+
+  /* VIEW TOGGLES */
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid rgba(99,102,241,0.1);
+    margin-top: 40px;
+  }
+  .footer-brand {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #818cf8, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .footer p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+  .footer a {
+    color: #818cf8;
+    text-decoration: none;
+  }
+  .footer .cta-btn {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .footer .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+  }
+
+  /* TOOLTIP */
+  .tooltip {
+    position: fixed;
+    background: rgba(15,15,26,0.95);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #d1d5db;
+    max-width: 300px;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .tooltip .tt-name { font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 4px; }
+  .tooltip .tt-funding { color: #818cf8; font-weight: 600; }
+  .tooltip .tt-desc { color: #9ca3af; margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero { padding: 30px 20px 20px; }
+    .main { padding: 20px; }
+    .stats-bar { gap: 20px; }
+    .stat-number { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Site Nav -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(99,102,241,0.1);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:18px;color:#fff;">
+    <img src="assets/graphify-logo.svg" alt="" style="width:24px;height:24px;">Graphify<span style="color:#818cf8">.md</span>
+  </a>
+  <div style="display:flex;gap:20px;align-items:center;font-size:13px;">
+    <a href="index.html" style="color:#9ca3af;text-decoration:none;">Home</a>
+    <a href="verticals.html" style="color:#9ca3af;text-decoration:none;">Verticals</a>
+    <a href="graph-demo.html" style="color:#9ca3af;text-decoration:none;">Live Graph</a>
+    <a href="context-architecture.html" style="color:#9ca3af;text-decoration:none;">The Science</a>
+    <a href="https://calendly.com/daniel-yarmoluk/30min" style="padding:6px 16px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:6px;color:#fff;text-decoration:none;font-weight:600;font-size:12px;">Book Demo</a>
+  </div>
+</nav>
+
+<div class="hero" style="padding-top:100px;">
+  <div class="hero-badge">Graphify.md Intelligence Report</div>
+  <h1>The Agentic AI Landscape</h1>
+  <p class="subtitle">What $20.8B in VC Money Actually Bought</p>
+  <p class="hook">92 companies. 10 categories. 47 doing the same thing. Here's what the graph reveals.</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">$20.8B</div>
+    <div class="stat-label">Total Capital Deployed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">1,041</div>
+    <div class="stat-label">Active Companies</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number red">63%</div>
+    <div class="stat-label">Category Overlap</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number amber">$52.6B</div>
+    <div class="stat-label">2030 Projected Market</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number green">7</div>
+    <div class="stat-label">Roll-Up Plays Identified</div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showView('market-map')">Market Map</div>
+  <div class="nav-tab" onclick="showView('knowledge-graph')">Knowledge Graph</div>
+  <div class="nav-tab" onclick="showView('investor-overlap')">Investor Overlap</div>
+  <div class="nav-tab" onclick="showView('redundancy')">Redundancy Analysis</div>
+  <div class="nav-tab" onclick="showView('pe-thesis')">PE Thesis</div>
+</div>
+
+<div class="main">
+
+<!-- ==================== MARKET MAP VIEW ==================== -->
+<div class="view-panel active" id="view-market-map">
+
+<!-- CUSTOMER SERVICE -->
+<div class="section-header">
+  <h2>Customer Service Agents</h2>
+  <span class="section-count">12 companies</span>
+</div>
+<p class="section-insight">Most crowded category. 12 companies, $2.1B+ deployed, nearly identical value props. Prime roll-up territory.</p>
+<div class="map-grid">
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Sierra AI</span>
+      <span class="funding-badge funding-mega">$635M</span>
+    </div>
+    <div class="company-desc">Autonomous customer service agents for enterprise support</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series C: $350M (Sep 2025)</span>
+    </div>
+    <div class="card-investors">Sequoia, Benchmark, Greenoaks, ICONIQ, Thrive</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+    <span class="signal-tag signal-overvalued">Premium Valuation</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Parloa</span>
+      <span class="funding-badge funding-mega">$560M+</span>
+    </div>
+    <div class="company-desc">AI voice agents for contact centers. Tripled valuation to $3B in 8 months.</div>
+    <div class="card-meta">
+      <span>2020 &middot; Berlin</span>
+      <span>Series D: $350M (Jan 2026)</span>
+    </div>
+    <div class="card-investors">Atomico, Tencent, Headline</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+    <span class="signal-tag signal-overvalued">3x in 8mo</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Decagon</span>
+      <span class="funding-badge funding-mega">$520M+</span>
+    </div>
+    <div class="company-desc">Customer service AI agent builder for enterprises</div>
+    <div class="card-meta">
+      <span>2021 &middot; SF</span>
+      <span>Series D: $250M (2025)</span>
+    </div>
+    <div class="card-investors">Coatue, Index Ventures</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Cresta</span>
+      <span class="funding-badge funding-mid">$276M</span>
+    </div>
+    <div class="company-desc">Real-time AI guidance for sales &amp; customer service reps</div>
+    <div class="card-meta">
+      <span>2019 &middot; SF</span>
+      <span>Series D: $100M+ (2025)</span>
+    </div>
+    <div class="card-investors">Greylock, Sequoia, Khosla, Sapphire</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Observe.AI</span>
+      <span class="funding-badge funding-mid">$214M</span>
+    </div>
+    <div class="company-desc">Voice AI platform for call center coaching &amp; QA</div>
+    <div class="card-meta">
+      <span>2017 &middot; SF</span>
+      <span>Series D (2024)</span>
+    </div>
+    <div class="card-investors">Sapphire, Accel, Salesforce Ventures, Summit</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Forethought</span>
+      <span class="funding-badge funding-mid">$115M</span>
+    </div>
+    <div class="company-desc">Multi-agent customer support system (Agatha AI copilot)</div>
+    <div class="card-meta">
+      <span>2017 &middot; SF</span>
+      <span>Series D: $25M (2025)</span>
+    </div>
+    <div class="card-investors">Blue Cloud Ventures</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Wonderful</span>
+      <span class="funding-badge funding-mid">$134M</span>
+    </div>
+    <div class="company-desc">Customer-facing AI agents for voice, chat, email</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series A: $100M (Nov 2025)</span>
+    </div>
+    <div class="card-investors">General Catalyst, Sequoia</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+    <span class="signal-tag signal-overvalued">$100M Series A?!</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">PolyAI</span>
+      <span class="funding-badge funding-mid">$86M+</span>
+    </div>
+    <div class="company-desc">Voice AI agent platform for customer service</div>
+    <div class="card-meta">
+      <span>2017 &middot; London</span>
+      <span>Series D: $86M (2024-25)</span>
+    </div>
+    <div class="card-investors">Khosla Ventures</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Crescendo</span>
+      <span class="funding-badge funding-early">$50M+</span>
+    </div>
+    <div class="company-desc">AI-powered customer service automation (chat, email, voice)</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series C: $50M (Oct 2024)</span>
+    </div>
+    <div class="card-investors">General Catalyst</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Cognigy</span>
+      <span class="funding-badge funding-early">Undisclosed</span>
+    </div>
+    <div class="company-desc">Conversational AI agent platform for enterprise contact centers</div>
+    <div class="card-meta">
+      <span>2012 &middot; D&uuml;sseldorf</span>
+    </div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">14.ai</span>
+      <span class="funding-badge funding-seed">$3M</span>
+    </div>
+    <div class="company-desc">Customer support AI agents replacing support teams for startups</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Seed: $3M (Mar 2026)</span>
+    </div>
+    <div class="card-investors">Y Combinator, General Catalyst</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Retell</span>
+      <span class="funding-badge funding-seed">Undisclosed</span>
+    </div>
+    <div class="company-desc">Voice AI agent platform for phone automation</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+    </div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+</div>
+
+<!-- CODING AGENTS -->
+<div class="section-header">
+  <h2>Coding Agents</h2>
+  <span class="section-count">4 companies</span>
+</div>
+<p class="section-insight">Highest valuations per company. Winner-take-most dynamics. Anysphere (Cursor) at $10B is the current king.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Anysphere (Cursor)</span>
+      <span class="funding-badge funding-mega">$900M</span>
+    </div>
+    <div class="company-desc">AI coding agent &amp; editor. $10B valuation. The IDE everyone's switching to.</div>
+    <div class="card-meta">
+      <span>2021 &middot; SF</span>
+      <span>Series C: $900M (2025)</span>
+    </div>
+    <div class="card-investors">Thrive Capital</div>
+    <span class="signal-tag signal-moat">Has Moat</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Cognition AI (Devin)</span>
+      <span class="funding-badge funding-mega">$575M</span>
+    </div>
+    <div class="company-desc">AI software engineer. Codes, tests, deploys autonomously. Overpromised on launch.</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series C: $400M (Sep 2025)</span>
+    </div>
+    <div class="card-investors">Founders Fund, Lux Capital, 8VC, Bain Capital</div>
+    <span class="signal-tag signal-overvalued">Hype Risk</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Replit</span>
+      <span class="funding-badge funding-mega">$522M</span>
+    </div>
+    <div class="company-desc">AI-powered software creation platform. $9B valuation. Agentic IDE.</div>
+    <div class="card-meta">
+      <span>2010 &middot; SF</span>
+      <span>Series E: $250M (Sep 2025)</span>
+    </div>
+    <div class="card-investors">a16z, Google Ventures, Khosla</div>
+    <span class="signal-tag signal-moat">Has Moat</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">LangChain</span>
+      <span class="funding-badge funding-mid">$125M</span>
+    </div>
+    <div class="company-desc">Open-source agent engineering, orchestration, observability. $1.25B valuation.</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series B: $125M (Oct 2025)</span>
+    </div>
+    <div class="card-investors">IVP, Sequoia, Benchmark, CapitalG</div>
+    <span class="signal-tag signal-moat">Infrastructure Moat</span>
+  </div>
+</div>
+
+<!-- SALES AGENTS -->
+<div class="section-header">
+  <h2>Sales Agents</h2>
+  <span class="section-count">6 companies</span>
+</div>
+<p class="section-insight">6 companies doing "AI SDR" with nearly identical pitch decks. Rox hit $1.2B valuation on hype alone.</p>
+<div class="map-grid">
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Rox</span>
+      <span class="funding-badge funding-mid">$1.2B val</span>
+    </div>
+    <div class="company-desc">AI sales agent platform for revenue teams</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+    </div>
+    <div class="card-investors">General Catalyst</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+    <span class="signal-tag signal-overvalued">$1.2B on what?</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">1mind</span>
+      <span class="funding-badge funding-early">$40M</span>
+    </div>
+    <div class="company-desc">Autonomous prospecting &amp; outbound agent "Mindy." From 6sense founder.</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series A: $30M (Nov 2025)</span>
+    </div>
+    <div class="card-investors">Battery Ventures</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Monaco</span>
+      <span class="funding-badge funding-early">$35M</span>
+    </div>
+    <div class="company-desc">Autonomous sales engagement agents</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series A: $25M</span>
+    </div>
+    <div class="card-investors">Founders Fund, Human Capital</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Actively AI</span>
+      <span class="funding-badge funding-early">$22.5M</span>
+    </div>
+    <div class="company-desc">Sales "superintelligence" agents replacing AI SDRs</div>
+    <div class="card-meta">
+      <span>2023 &middot; NYC</span>
+      <span>Series A: $17.5M (Apr 2025)</span>
+    </div>
+    <div class="card-investors">Bain Capital Ventures, First Round</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Winn.AI</span>
+      <span class="funding-badge funding-early">$18M</span>
+    </div>
+    <div class="company-desc">Real-time sales guidance &amp; execution agents</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series A: $18M</span>
+    </div>
+    <div class="card-investors">Insight Partners, S Capital</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">FINNY</span>
+      <span class="funding-badge funding-early">$17M</span>
+    </div>
+    <div class="company-desc">AI prospecting &amp; marketing for financial advisors</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series A: $17M (Dec 2025)</span>
+    </div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+</div>
+
+<!-- LEGAL AGENTS -->
+<div class="section-header">
+  <h2>Legal Agents</h2>
+  <span class="section-count">3 companies</span>
+</div>
+<p class="section-insight">Harvey leads but EvenUp carved a niche in personal injury. Regulatory moats matter here.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Harvey</span>
+      <span class="funding-badge funding-mega">$400M+</span>
+    </div>
+    <div class="company-desc">AI legal agent for research, document analysis, contract review</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series F: $150M (2025)</span>
+    </div>
+    <div class="card-investors">Sequoia, Kleiner Perkins, Y Combinator</div>
+    <span class="signal-tag signal-moat">Domain Moat</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">EvenUp</span>
+      <span class="funding-badge funding-mega">$385M</span>
+    </div>
+    <div class="company-desc">AI agent for personal injury law. Demand letters, case evaluation.</div>
+    <div class="card-meta">
+      <span>2020 &middot; SF</span>
+      <span>Series D: $150M (Aug 2025)</span>
+    </div>
+    <div class="card-investors">Lightspeed, OpenAI Ventures, Sequoia, Bain Capital</div>
+    <span class="signal-tag signal-moat">Niche Moat</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Legora</span>
+      <span class="funding-badge funding-mid">$150M+</span>
+    </div>
+    <div class="company-desc">Legal AI agent platform</div>
+    <div class="card-meta">
+      <span>2020</span>
+      <span>Series C: $150M+ (2025)</span>
+    </div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+</div>
+
+<!-- HEALTHCARE AGENTS -->
+<div class="section-header">
+  <h2>Healthcare Agents</h2>
+  <span class="section-count">6 companies</span>
+</div>
+<p class="section-insight">Abridge dominates ambient scribe ($5.3B). But hospital ops, scheduling, and rev cycle are wide open for consolidation.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Abridge</span>
+      <span class="funding-badge funding-mega">$550M+</span>
+    </div>
+    <div class="company-desc">Ambient scribe AI. Clinical note generation from patient-clinician audio.</div>
+    <div class="card-meta">
+      <span>2018 &middot; Pittsburgh</span>
+      <span>Series E: $300M (2025)</span>
+    </div>
+    <div class="card-investors">Sequoia, General Catalyst, Insight Partners</div>
+    <span class="signal-tag signal-moat">Category Leader</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">OpenEvidence</span>
+      <span class="funding-badge funding-mega">$1.33B+</span>
+    </div>
+    <div class="company-desc">Clinical evidence &amp; decision-making AI agents</div>
+    <div class="card-meta">
+      <span>2019</span>
+      <span>Series C: $200M (Oct 2025)</span>
+    </div>
+    <span class="signal-tag signal-moat">Domain Moat</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Tennr</span>
+      <span class="funding-badge funding-mid">$101M</span>
+    </div>
+    <div class="company-desc">Healthcare AI platform with clinical agents</div>
+    <div class="card-meta">
+      <span>2019 &middot; SF</span>
+      <span>Series C: $101M (2025)</span>
+    </div>
+    <div class="card-investors">IVP</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Doctronic</span>
+      <span class="funding-badge funding-early">$65M</span>
+    </div>
+    <div class="company-desc">Healthcare agents for regulated verticals</div>
+    <div class="card-meta">
+      <span>Series B: $40M (2025)</span>
+    </div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Attuned Intelligence</span>
+      <span class="funding-badge funding-seed">$13M</span>
+    </div>
+    <div class="company-desc">Hospital call center AI for patient scheduling &amp; triage</div>
+    <div class="card-meta">
+      <span>2023 &middot; Boston</span>
+    </div>
+    <div class="card-investors">Khosla Impact</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Atlas Health (Ava)</span>
+      <span class="funding-badge funding-seed">Undisclosed</span>
+    </div>
+    <div class="company-desc">Patient affordability enrollment AI agent</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+    </div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+</div>
+
+<!-- SECURITY AGENTS -->
+<div class="section-header">
+  <h2>Security Agents</h2>
+  <span class="section-count">5 companies</span>
+</div>
+<p class="section-insight">Brand new category. $455M+ deployed in 12 months. Watch for rapid consolidation — cybersecurity acquirers move fast.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">7AI</span>
+      <span class="funding-badge funding-mid">$130M</span>
+    </div>
+    <div class="company-desc">Agentic cybersecurity: threat intel, incident response</div>
+    <div class="card-meta">
+      <span>2025 &middot; London</span>
+      <span>Series A: $130M (Dec 2025)</span>
+    </div>
+    <div class="card-investors">Index Ventures, Greylock, Spark, CRV</div>
+    <span class="signal-tag signal-moat">First Mover</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Kai</span>
+      <span class="funding-badge funding-mid">$125M</span>
+    </div>
+    <div class="company-desc">AI-native cybersecurity with agentic threat detection</div>
+    <div class="card-meta">
+      <span>2024 &middot; NYC</span>
+      <span>Series A: $125M (Mar 2026)</span>
+    </div>
+    <div class="card-investors">Evolution Equity Partners, N47</div>
+    <span class="signal-tag signal-redundant">Redundant with 7AI</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Noma Security</span>
+      <span class="funding-badge funding-mid">$100M</span>
+    </div>
+    <div class="company-desc">AI agent security &mdash; protecting LLMs &amp; agents themselves</div>
+    <div class="card-meta">
+      <span>2023 &middot; Israel</span>
+      <span>Series B: $100M (2025)</span>
+    </div>
+    <span class="signal-tag signal-rollup">Different angle</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Upwind Security</span>
+      <span class="funding-badge funding-mid">$100M</span>
+    </div>
+    <div class="company-desc">Cloud runtime visibility for AI agents &amp; LLMs</div>
+    <div class="card-meta">
+      <span>2022 &middot; Israel</span>
+      <span>Series B: $100M (Dec 2024)</span>
+    </div>
+    <span class="signal-tag signal-rollup">Adjacent play</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Zafran Security</span>
+      <span class="funding-badge funding-early">$60M</span>
+    </div>
+    <div class="company-desc">AI-native exposure management with autonomous agents</div>
+    <div class="card-meta">
+      <span>2021 &middot; NYC</span>
+      <span>Series C: $60M (2025)</span>
+    </div>
+    <div class="card-investors">Menlo Ventures</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+</div>
+
+<!-- RECRUITING AGENTS -->
+<div class="section-header">
+  <h2>Recruiting Agents</h2>
+  <span class="section-count">5 companies</span>
+</div>
+<p class="section-insight">5 companies automating "AI recruiter." Mercor leads at $135M but differentiation is thin.</p>
+<div class="map-grid">
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Mercor</span>
+      <span class="funding-badge funding-mid">$135M+</span>
+    </div>
+    <div class="company-desc">AI agent marketplace for remote talent matching &amp; recruitment</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series B: $100M (Feb 2025)</span>
+    </div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Paraform</span>
+      <span class="funding-badge funding-early">$65M</span>
+    </div>
+    <div class="company-desc">AI hiring agent combining recruiter expertise with automation</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series B: $40M (Mar 2026)</span>
+    </div>
+    <div class="card-investors">Scale Venture Partners</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Perfect</span>
+      <span class="funding-badge funding-early">$23M</span>
+    </div>
+    <div class="company-desc">AI recruiting for candidate sourcing &amp; placement</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Seed: $23M (Feb 2025)</span>
+    </div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Alex</span>
+      <span class="funding-badge funding-early">$20M+</span>
+    </div>
+    <div class="company-desc">AI recruiter conducting autonomous phone/video screening</div>
+    <div class="card-meta">
+      <span>2023 &middot; India</span>
+      <span>Series A: $17M (2025)</span>
+    </div>
+    <div class="card-investors">Peak XV Partners</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Tezi</span>
+      <span class="funding-badge funding-seed">$9M</span>
+    </div>
+    <div class="company-desc">AI recruiter automating full hiring workflow</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+    </div>
+    <div class="card-investors">Y Combinator</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+</div>
+
+<!-- FINANCIAL AGENTS -->
+<div class="section-header">
+  <h2>Financial / Data Agents</h2>
+  <span class="section-count">7 companies</span>
+</div>
+<p class="section-insight">Scattered across wealth management, back-office, and financial modeling. No clear winner yet. PE should be watching.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">AppZen</span>
+      <span class="funding-badge funding-mega">$290M</span>
+    </div>
+    <div class="company-desc">Finance team AI: real-time auditing, compliance, fraud detection</div>
+    <div class="card-meta">
+      <span>2014 &middot; San Jose</span>
+      <span>Series D: $180M (2025)</span>
+    </div>
+    <div class="card-investors">Riverwood Capital, Lightspeed, Battery</div>
+    <span class="signal-tag signal-moat">Incumbent Advantage</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Fundamental</span>
+      <span class="funding-badge funding-mega">$255M</span>
+    </div>
+    <div class="company-desc">AI agent for financial modeling &amp; enterprise forecasting</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series A: $255M (Feb 2026)</span>
+    </div>
+    <div class="card-investors">Sequoia, Tiger Global, GV, SoftBank</div>
+    <span class="signal-tag signal-overvalued">$255M Series A</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">LayerX</span>
+      <span class="funding-badge funding-mid">$140M+</span>
+    </div>
+    <div class="company-desc">Enterprise back-office automation (expense, invoicing, compliance)</div>
+    <div class="card-meta">
+      <span>2018 &middot; Tokyo</span>
+      <span>Series B: $100M (Sep 2025)</span>
+    </div>
+    <div class="card-investors">TCV, Founders Fund</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Rogo</span>
+      <span class="funding-badge funding-early">$75M</span>
+    </div>
+    <div class="company-desc">Financial workflow agents (expense, invoice, deal automation)</div>
+    <div class="card-meta">
+      <span>2022 &middot; SF</span>
+      <span>Series C: $75M (2025)</span>
+    </div>
+    <div class="card-investors">Sequoia Capital</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Nevis</span>
+      <span class="funding-badge funding-early">$40M+</span>
+    </div>
+    <div class="company-desc">AI platform for Registered Investment Advisors</div>
+    <div class="card-meta">
+      <span>2024 &middot; NYC</span>
+      <span>Series A: $35M (2025)</span>
+    </div>
+    <div class="card-investors">Sequoia, ICONIQ, Ribbit Capital</div>
+    <span class="signal-tag signal-rollup">Niche</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Unique AI</span>
+      <span class="funding-badge funding-early">$30M+</span>
+    </div>
+    <div class="company-desc">Enterprise AI agent for financial services (compliance-aware)</div>
+    <div class="card-meta">
+      <span>2023 &middot; Zurich</span>
+      <span>Series A: $30M</span>
+    </div>
+    <div class="card-investors">CommerzVentures, DN Capital</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Data Sutram</span>
+      <span class="funding-badge funding-seed">$9M+</span>
+    </div>
+    <div class="company-desc">AI agent for financial workflows (India-based)</div>
+    <div class="card-meta">
+      <span>2022 &middot; India</span>
+      <span>Series A: $9M (May 2025)</span>
+    </div>
+    <div class="card-investors">B Capital, Lightspeed</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+</div>
+
+<!-- INFRASTRUCTURE -->
+<div class="section-header">
+  <h2>Infrastructure / Orchestration</h2>
+  <span class="section-count">10 companies</span>
+</div>
+<p class="section-insight">The picks-and-shovels layer. Baseten ($2.1B), Uniphore ($987M), and a flood of agent builders nobody asked for.</p>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Uniphore</span>
+      <span class="funding-badge funding-mega">$987M</span>
+    </div>
+    <div class="company-desc">Enterprise AI platform: conversational AI agents across CS, IT, HR</div>
+    <div class="card-meta">
+      <span>2011 &middot; San Jose</span>
+      <span>Series F: $260M (Oct 2025)</span>
+    </div>
+    <div class="card-investors">Nvidia, Snowflake, Databricks, AMD, Insight</div>
+    <span class="signal-tag signal-moat">Platform Moat</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Baseten</span>
+      <span class="funding-badge funding-mid">$150M</span>
+    </div>
+    <div class="company-desc">AI infrastructure for deploying agentic applications. $2.1B valuation.</div>
+    <div class="card-meta">
+      <span>2021 &middot; SF</span>
+      <span>Series D: $150M (Sep 2025)</span>
+    </div>
+    <div class="card-investors">Bond, Sequoia</div>
+    <span class="signal-tag signal-moat">Infrastructure Moat</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Moveworks</span>
+      <span class="funding-badge funding-mega">$305M</span>
+    </div>
+    <div class="company-desc">IT operations AI agent for employee support</div>
+    <div class="card-meta">
+      <span>2016 &middot; Mountain View</span>
+      <span>Series D (2024)</span>
+    </div>
+    <div class="card-investors">a16z, Lightspeed, Sapphire</div>
+    <span class="signal-tag signal-moat">Enterprise Lock-in</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Kore.ai</span>
+      <span class="funding-badge funding-mega">$530M+</span>
+    </div>
+    <div class="company-desc">Enterprise AI agent platform with NLU across verticals</div>
+    <div class="card-meta">
+      <span>2013 &middot; Multiple</span>
+      <span>Series D: $150M (2024)</span>
+    </div>
+    <div class="card-investors">Battery, Sapphire, Goldman Sachs</div>
+    <span class="signal-tag signal-rollup">Legacy Platform</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Relevance AI</span>
+      <span class="funding-badge funding-early">$64.6M</span>
+    </div>
+    <div class="company-desc">No-code platform for building teams of AI agents</div>
+    <div class="card-meta">
+      <span>2022 &middot; Sydney</span>
+      <span>Series B (2025)</span>
+    </div>
+    <div class="card-investors">Bessemer, Insight Partners, Peak XV</div>
+    <span class="signal-tag signal-redundant">Crowded space</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Dust</span>
+      <span class="funding-badge funding-early">$21.5M</span>
+    </div>
+    <div class="company-desc">Enterprise AI assistant builder connected to internal data</div>
+    <div class="card-meta">
+      <span>2021 &middot; Paris</span>
+      <span>Series A: $16M (Jun 2024)</span>
+    </div>
+    <div class="card-investors">Sequoia Capital</div>
+    <span class="signal-tag signal-rollup">Roll-up Target</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Arcade</span>
+      <span class="funding-badge funding-seed">$12M</span>
+    </div>
+    <div class="company-desc">AI agent dev platform (Perplexity co-founder)</div>
+    <div class="card-meta">
+      <span>2025 &middot; SF</span>
+      <span>Seed: $12M (Mar 2025)</span>
+    </div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Resolve.ai</span>
+      <span class="funding-badge funding-mid">$150M</span>
+    </div>
+    <div class="company-desc">AI SRE agent for production incident detection &amp; auto-remediation</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series A: $125M (Dec 2025)</span>
+    </div>
+    <div class="card-investors">Lightspeed</div>
+    <span class="signal-tag signal-moat">Differentiated</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Trace</span>
+      <span class="funding-badge funding-seed">$3M</span>
+    </div>
+    <div class="company-desc">Workflow orchestration for AI agents</div>
+    <div class="card-meta">
+      <span>2025 &middot; SF</span>
+      <span>Seed: $3M (Feb 2026)</span>
+    </div>
+    <div class="card-investors">Y Combinator</div>
+    <span class="signal-tag signal-redundant">Redundant</span>
+  </div>
+
+  <div class="company-card redundant">
+    <div class="card-top">
+      <span class="company-name">Aisera</span>
+      <span class="funding-badge funding-mid">$164.5M</span>
+    </div>
+    <div class="company-desc">Enterprise AI agent for IT, HR, CS self-service. Acquired by Automation Anywhere Nov 2025.</div>
+    <div class="card-meta">
+      <span>2019 &middot; SF</span>
+    </div>
+    <div class="card-investors">Goldman Sachs, Thoma Bravo, Norwest</div>
+    <span class="signal-tag signal-moat">Acquired</span>
+  </div>
+</div>
+
+<!-- GENERAL PURPOSE -->
+<div class="section-header">
+  <h2>General Purpose / Research</h2>
+  <span class="section-count">5 companies</span>
+</div>
+<div class="map-grid">
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">Genspark</span>
+      <span class="funding-badge funding-mega">$575M</span>
+    </div>
+    <div class="company-desc">All-in-one AI workspace with agentic orchestration</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series B + $300M top-up (Jan 2026)</span>
+    </div>
+    <div class="card-investors">Emergence, LG, SBI</div>
+    <span class="signal-tag signal-overvalued">Fast money</span>
+  </div>
+
+  <div class="company-card moat">
+    <div class="card-top">
+      <span class="company-name">H Company</span>
+      <span class="funding-badge funding-mid">$220M</span>
+    </div>
+    <div class="company-desc">Agentic AI platform for enterprise workflow automation</div>
+    <div class="card-meta">
+      <span>2022 &middot; Paris</span>
+    </div>
+    <div class="card-investors">Khosla Ventures, Accel</div>
+    <span class="signal-tag signal-moat">Differentiated</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Simile</span>
+      <span class="funding-badge funding-mid">$100M</span>
+    </div>
+    <div class="company-desc">AI agent mimicking human decision-making for simulations</div>
+    <div class="card-meta">
+      <span>2023 &middot; SF</span>
+      <span>Series A: $100M (Feb 2026)</span>
+    </div>
+    <div class="card-investors">Index Ventures</div>
+    <span class="signal-tag signal-overvalued">$100M Series A</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Aaru</span>
+      <span class="funding-badge funding-early">$50M</span>
+    </div>
+    <div class="company-desc">AI synthetic population simulator for market research</div>
+    <div class="card-meta">
+      <span>2024 &middot; SF</span>
+      <span>Series A: $50M (Dec 2025)</span>
+    </div>
+    <div class="card-investors">Redpoint, Accenture, EY</div>
+    <span class="signal-tag signal-moat">Novel approach</span>
+  </div>
+
+  <div class="company-card rollup">
+    <div class="card-top">
+      <span class="company-name">Lindy.ai</span>
+      <span class="funding-badge funding-seed">Undisclosed</span>
+    </div>
+    <div class="company-desc">AI personal assistant with agentic capabilities</div>
+    <div class="card-meta">
+      <span>2021 &middot; SF</span>
+    </div>
+    <div class="card-investors">Y Combinator</div>
+    <span class="signal-tag signal-redundant">Crowded</span>
+  </div>
+</div>
+
+</div><!-- end market map view -->
+
+<!-- ==================== KNOWLEDGE GRAPH VIEW ==================== -->
+<div class="view-panel" id="view-knowledge-graph">
+  <div class="section-header"><h2>Agentic AI Knowledge Graph</h2></div>
+  <p style="color:#9ca3af;font-size:13px;margin-bottom:16px;">Node size = funding. Color = category. Edges = shared investors. Clusters reveal the redundancy.</p>
+  <div id="graph-container">
+    <div class="graph-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#818cf8"></div> Customer Service</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div> Sales Agents</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Healthcare</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div> Coding/Dev Tools</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div> Legal</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Security</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div> Financial</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fb923c"></div> Infrastructure</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div> Recruiting</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e2e8f0"></div> General Purpose</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.15);border:1px dashed #6b7280"></div> Investor Node</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INVESTOR OVERLAP VIEW ==================== -->
+<div class="view-panel" id="view-investor-overlap">
+  <div class="section-header"><h2>Investor Overlap Analysis</h2></div>
+  <p style="color:#f87171;font-size:13px;margin-bottom:16px;font-weight:500;">These VCs are betting on the same thesis multiple times. They're creating their own competition.</p>
+
+  <div class="investor-grid">
+    <div class="investor-card">
+      <div class="investor-name">Sequoia Capital</div>
+      <div class="investor-count">7+ agentic AI bets &mdash; competing with themselves</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Sierra AI ($635M)</span>
+        <span class="inv-chip">Harvey ($400M)</span>
+        <span class="inv-chip">EvenUp ($385M)</span>
+        <span class="inv-chip">Cresta ($276M)</span>
+        <span class="inv-chip">Fundamental ($255M)</span>
+        <span class="inv-chip">LangChain ($125M)</span>
+        <span class="inv-chip">Wonderful ($134M)</span>
+        <span class="inv-chip">Baseten ($150M)</span>
+        <span class="inv-chip">Rogo ($75M)</span>
+        <span class="inv-chip">Nevis ($40M)</span>
+        <span class="inv-chip">Dust ($21.5M)</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">General Catalyst</div>
+      <div class="investor-count">5+ bets across overlapping categories</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Wonderful ($134M)</span>
+        <span class="inv-chip">Abridge ($550M)</span>
+        <span class="inv-chip">Rox ($1.2B val)</span>
+        <span class="inv-chip">Crescendo ($50M)</span>
+        <span class="inv-chip">14.ai ($3M)</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">Khosla Ventures</div>
+      <div class="investor-count">4+ bets spanning customer service to healthcare</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Replit ($522M)</span>
+        <span class="inv-chip">Cresta ($276M)</span>
+        <span class="inv-chip">H Company ($220M)</span>
+        <span class="inv-chip">PolyAI ($86M)</span>
+        <span class="inv-chip">Attuned ($13M)</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">Founders Fund</div>
+      <div class="investor-count">3 bets &mdash; hedging across coding + sales + finance</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Cognition/Devin ($575M)</span>
+        <span class="inv-chip">Monaco ($35M)</span>
+        <span class="inv-chip">LayerX ($140M)</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">Y Combinator</div>
+      <div class="investor-count">20+ agentic AI startups &mdash; spray and pray at scale</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Harvey ($400M)</span>
+        <span class="inv-chip">Tezi ($9M)</span>
+        <span class="inv-chip">Trace ($3M)</span>
+        <span class="inv-chip">14.ai ($3M)</span>
+        <span class="inv-chip">Lindy.ai</span>
+        <span class="inv-chip">Arcade ($12M)</span>
+        <span class="inv-chip">+14 more</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">Lightspeed Venture Partners</div>
+      <div class="investor-count">3+ bets across legal, finance, infrastructure</div>
+      <div class="investor-companies">
+        <span class="inv-chip">EvenUp ($385M)</span>
+        <span class="inv-chip">AppZen ($290M)</span>
+        <span class="inv-chip">Resolve.ai ($150M)</span>
+        <span class="inv-chip">Data Sutram ($9M)</span>
+      </div>
+    </div>
+
+    <div class="investor-card">
+      <div class="investor-name">Bain Capital Ventures</div>
+      <div class="investor-count">Betting both sides of sales agent market</div>
+      <div class="investor-companies">
+        <span class="inv-chip">Cognition/Devin ($575M)</span>
+        <span class="inv-chip">EvenUp ($385M)</span>
+        <span class="inv-chip">Actively AI ($22.5M)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REDUNDANCY VIEW ==================== -->
+<div class="view-panel" id="view-redundancy">
+  <div class="section-header"><h2>Redundancy Heatmap</h2></div>
+  <p style="color:#f87171;font-size:13px;margin-bottom:16px;font-weight:500;">Categories where VCs funded the same product 3+ times. This is where PE consolidation creates value.</p>
+
+  <table class="heatmap-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Companies</th>
+        <th>Total Capital</th>
+        <th>Redundancy</th>
+        <th>Roll-up Potential</th>
+        <th>Signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;color:#fff">Customer Service Agents</td>
+        <td class="heat-high">12</td>
+        <td>$2.1B+</td>
+        <td class="heat-high">EXTREME</td>
+        <td class="heat-high">$800M+ acquirable</td>
+        <td>7 companies doing identical voice/chat/email automation</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Sales Agents ("AI SDR")</td>
+        <td class="heat-high">6</td>
+        <td>$134M+</td>
+        <td class="heat-high">HIGH</td>
+        <td class="heat-med">$100M+ acquirable</td>
+        <td>All doing "autonomous prospecting" with same pitch deck</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Recruiting Agents</td>
+        <td class="heat-med">5</td>
+        <td>$252M+</td>
+        <td class="heat-high">HIGH</td>
+        <td class="heat-med">$100M+ acquirable</td>
+        <td>5 companies automating "AI recruiter" &mdash; thin differentiation</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Agent Builders / No-Code</td>
+        <td class="heat-med">6</td>
+        <td>$80M+</td>
+        <td class="heat-med">MEDIUM</td>
+        <td class="heat-med">Multiple targets</td>
+        <td>Relevance AI, Relay, SmythOS, Softr &mdash; same "no-code agents" play</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Security Agents</td>
+        <td>5</td>
+        <td>$515M+</td>
+        <td class="heat-med">MEDIUM</td>
+        <td class="heat-high">CrowdStrike/Palo acquires</td>
+        <td>7AI vs Kai is a coinflip &mdash; one gets acquired</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Financial Back-Office</td>
+        <td>4</td>
+        <td>$514M+</td>
+        <td class="heat-med">MEDIUM</td>
+        <td class="heat-med">$200M+ acquirable</td>
+        <td>AppZen, LayerX, Rogo overlapping in expense/invoice</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Healthcare Agents</td>
+        <td>6</td>
+        <td>$2B+</td>
+        <td>LOW</td>
+        <td class="heat-med">Sub-specialty targets</td>
+        <td>Different niches (scribe, scheduling, rev cycle) but convergence coming</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:#fff">Coding Agents</td>
+        <td>4</td>
+        <td>$2.1B+</td>
+        <td>LOW</td>
+        <td>LOW</td>
+        <td>Winner-take-most. Cursor winning. Devin overhyped.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== PE THESIS VIEW ==================== -->
+<div class="view-panel" id="view-pe-thesis">
+  <div class="section-header"><h2>PE Consolidation Playbook</h2></div>
+  <p style="color:#9ca3af;font-size:13px;margin-bottom:16px;">7 actionable roll-up theses extracted from the Graphify knowledge graph. Each one is a $500M+ play.</p>
+
+  <div class="thesis-grid">
+    <div class="thesis-card">
+      <h3>Roll-Up #1: Contact Center AI</h3>
+      <div class="thesis-type">Consolidation Play &mdash; $800M+ Addressable</div>
+      <p>12 companies, $2.1B deployed, doing the same thing. Acquire 3-4 sub-scale players (Forethought, Crescendo, PolyAI, Cognigy) at reasonable multiples, consolidate tech stack, cross-sell enterprise accounts. Platform play against Sierra and Parloa.</p>
+      <div class="target-list">
+        <span>Forethought $115M</span>
+        <span>Crescendo $50M</span>
+        <span>PolyAI $86M</span>
+        <span>Cognigy</span>
+        <span>Retell</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #2: AI SDR Stack</h3>
+      <div class="thesis-type">Consolidation Play &mdash; $200M+ Addressable</div>
+      <p>6 companies with identical "AI sales agent" pitch. None has escaped velocity. Acquirer rolls up 3-4 (Monaco, Actively, Winn.AI, FINNY), combines prospecting + guidance + engagement into one platform. Challenge Rox before they earn their $1.2B valuation.</p>
+      <div class="target-list">
+        <span>Monaco $35M</span>
+        <span>Actively AI $22.5M</span>
+        <span>Winn.AI $18M</span>
+        <span>FINNY $17M</span>
+        <span>1mind $40M</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #3: AI Recruiting</h3>
+      <div class="thesis-type">Consolidation Play &mdash; $150M+ Addressable</div>
+      <p>5 companies doing "AI recruiter." Mercor leads but hasn't locked the market. Acquire Perfect, Alex, Tezi &mdash; combine sourcing + screening + placement into one end-to-end agent. Recruiting is a $500B TAM with zero loyalty.</p>
+      <div class="target-list">
+        <span>Perfect $23M</span>
+        <span>Alex $20M</span>
+        <span>Tezi $9M</span>
+        <span>Paraform $65M</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #4: Healthcare Agent Stack</h3>
+      <div class="thesis-type">Vertical Integration &mdash; $300M+ Addressable</div>
+      <p>Abridge owns ambient scribe. But scheduling, rev cycle, triage, and enrollment are fragmented across 4+ small players. Roll up Tennr + Doctronic + Attuned + Atlas Health into one "healthcare ops agent platform." Sell to health systems as integrated suite vs. point solutions.</p>
+      <div class="target-list">
+        <span>Tennr $101M</span>
+        <span>Doctronic $65M</span>
+        <span>Attuned $13M</span>
+        <span>Atlas Health</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #5: Finance Back-Office</h3>
+      <div class="thesis-type">Consolidation Play &mdash; $400M+ Addressable</div>
+      <p>AppZen (auditing), LayerX (expense), Rogo (workflows), Unique AI (compliance). All touching the same CFO buyer. One platform that does all four beats four logins. AppZen is the natural anchor; acquire 2-3 complementary pieces.</p>
+      <div class="target-list">
+        <span>LayerX $140M</span>
+        <span>Rogo $75M</span>
+        <span>Unique AI $30M</span>
+        <span>Data Sutram $9M</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #6: Agentic Security</h3>
+      <div class="thesis-type">Strategic M&A Target &mdash; $500M+ Acquirable</div>
+      <p>$515M deployed across 5 security agent startups in 12 months. CrowdStrike, Palo Alto, or SentinelOne will acquire 1-2 within 18 months. 7AI vs Kai is a coinflip &mdash; the other gets rolled up. Noma and Upwind protect the agents themselves (meta-play).</p>
+      <div class="target-list">
+        <span>7AI $130M</span>
+        <span>Kai $125M</span>
+        <span>Noma $100M</span>
+        <span>Upwind $100M</span>
+        <span>Zafran $60M</span>
+      </div>
+    </div>
+
+    <div class="thesis-card">
+      <h3>Roll-Up #7: Agent Infrastructure</h3>
+      <div class="thesis-type">Platform Play &mdash; $200M+ Addressable</div>
+      <p>Too many "agent builder" platforms with no differentiation. Relevance AI, Dust, Trace, Arcade &mdash; all competing for the same "build your own agent team" buyer. The infrastructure layer will consolidate around LangChain + 1-2 others. Rest are acqui-hire fodder.</p>
+      <div class="target-list">
+        <span>Relevance AI $64.6M</span>
+        <span>Dust $21.5M</span>
+        <span>Arcade $12M</span>
+        <span>Trace $3M</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE GRAPHIFY PITCH -->
+  <div style="margin-top:40px;padding:32px;background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(99,102,241,0.02));border:1px solid rgba(99,102,241,0.25);border-radius:12px;">
+    <h3 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;">Why This Report Exists</h3>
+    <p style="font-size:14px;color:#9ca3af;line-height:1.7;margin-bottom:16px;">
+      This landscape was generated by <strong style="color:#818cf8;">Graphify.md</strong> &mdash; a knowledge graph intelligence layer that maps markets, surfaces redundancy, identifies roll-up targets, and scores companies on real signals instead of pitch decks.
+    </p>
+    <p style="font-size:14px;color:#9ca3af;line-height:1.7;margin-bottom:16px;">
+      What CB Insights sells for <strong style="color:#f87171;">$50K-$265K/year</strong> as static quarterly updates, Graphify delivers as a <strong style="color:#34d399;">living knowledge graph</strong> that updates in real time and reveals what spreadsheets can't: <em>relationship patterns, investor overlap, consolidation signals, and competitive blind spots.</em>
+    </p>
+    <p style="font-size:14px;color:#e0e0e8;line-height:1.7;font-weight:500;">
+      If your fund is deploying capital into agentic AI &mdash; or evaluating roll-up plays in any of these 10 categories &mdash; you're making decisions without the graph.
+    </p>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<div class="footer">
+  <div class="footer-brand">Graphify.md</div>
+  <p>Knowledge Graph Intelligence &mdash; What spreadsheets can't show you.</p>
+  <p style="font-size:12px;margin-top:8px;">92 companies &middot; 10 categories &middot; 7 roll-up theses &middot; $20.8B mapped</p>
+  <p style="font-size:12px;">Data sourced from TechCrunch, Crunchbase, Fortune, Bloomberg, PitchBook, official announcements. March 2026.</p>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="cta-btn">Book a Demo &rarr;</a>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tt-name"></div>
+  <div class="tt-funding"></div>
+  <div class="tt-desc"></div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// View switching
+function showView(viewId) {
+  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + viewId).classList.add('active');
+  event.target.classList.add('active');
+
+  if (viewId === 'knowledge-graph' && !window.graphRendered) {
+    renderGraph();
+    window.graphRendered = true;
+  }
+}
+
+// D3 Knowledge Graph
+function renderGraph() {
+  const container = document.getElementById('graph-container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const categoryColors = {
+    'cs': '#818cf8',
+    'sales': '#f87171',
+    'health': '#34d399',
+    'coding': '#fbbf24',
+    'legal': '#f472b6',
+    'security': '#a78bfa',
+    'financial': '#38bdf8',
+    'infra': '#fb923c',
+    'recruiting': '#94a3b8',
+    'general': '#e2e8f0',
+    'investor': 'rgba(255,255,255,0.08)'
+  };
+
+  const companies = [
+    // Customer Service
+    { id: 'sierra', name: 'Sierra AI', cat: 'cs', funding: 635, investors: ['sequoia','benchmark'] },
+    { id: 'parloa', name: 'Parloa', cat: 'cs', funding: 560, investors: ['atomico'] },
+    { id: 'decagon', name: 'Decagon', cat: 'cs', funding: 520, investors: ['coatue','index'] },
+    { id: 'cresta', name: 'Cresta', cat: 'cs', funding: 276, investors: ['greylock','sequoia','khosla'] },
+    { id: 'observe', name: 'Observe.AI', cat: 'cs', funding: 214, investors: ['sapphire','accel'] },
+    { id: 'wonderful', name: 'Wonderful', cat: 'cs', funding: 134, investors: ['gc','sequoia'] },
+    { id: 'forethought', name: 'Forethought', cat: 'cs', funding: 115, investors: [] },
+    { id: 'polyai', name: 'PolyAI', cat: 'cs', funding: 86, investors: ['khosla'] },
+    { id: 'crescendo', name: 'Crescendo', cat: 'cs', funding: 50, investors: ['gc'] },
+    // Coding
+    { id: 'cursor', name: 'Cursor', cat: 'coding', funding: 900, investors: ['thrive'] },
+    { id: 'devin', name: 'Cognition/Devin', cat: 'coding', funding: 575, investors: ['ff','bain'] },
+    { id: 'replit', name: 'Replit', cat: 'coding', funding: 522, investors: ['a16z','khosla'] },
+    { id: 'langchain', name: 'LangChain', cat: 'coding', funding: 125, investors: ['sequoia','benchmark'] },
+    // Sales
+    { id: 'rox', name: 'Rox', cat: 'sales', funding: 60, investors: ['gc'] },
+    { id: '1mind', name: '1mind', cat: 'sales', funding: 40, investors: ['battery'] },
+    { id: 'monaco', name: 'Monaco', cat: 'sales', funding: 35, investors: ['ff'] },
+    { id: 'actively', name: 'Actively AI', cat: 'sales', funding: 22, investors: ['bain'] },
+    { id: 'winn', name: 'Winn.AI', cat: 'sales', funding: 18, investors: ['insight'] },
+    // Legal
+    { id: 'harvey', name: 'Harvey', cat: 'legal', funding: 400, investors: ['sequoia','kp'] },
+    { id: 'evenup', name: 'EvenUp', cat: 'legal', funding: 385, investors: ['lightspeed','sequoia','bain'] },
+    { id: 'legora', name: 'Legora', cat: 'legal', funding: 150, investors: [] },
+    // Healthcare
+    { id: 'openev', name: 'OpenEvidence', cat: 'health', funding: 1330, investors: [] },
+    { id: 'abridge', name: 'Abridge', cat: 'health', funding: 550, investors: ['sequoia','gc'] },
+    { id: 'tennr', name: 'Tennr', cat: 'health', funding: 101, investors: [] },
+    { id: 'doctronic', name: 'Doctronic', cat: 'health', funding: 65, investors: [] },
+    // Security
+    { id: '7ai', name: '7AI', cat: 'security', funding: 130, investors: ['index','greylock'] },
+    { id: 'kai', name: 'Kai', cat: 'security', funding: 125, investors: [] },
+    { id: 'noma', name: 'Noma', cat: 'security', funding: 100, investors: [] },
+    { id: 'upwind', name: 'Upwind', cat: 'security', funding: 100, investors: [] },
+    // Financial
+    { id: 'appzen', name: 'AppZen', cat: 'financial', funding: 290, investors: ['lightspeed','battery'] },
+    { id: 'fundamental', name: 'Fundamental', cat: 'financial', funding: 255, investors: ['sequoia','tiger'] },
+    { id: 'layerx', name: 'LayerX', cat: 'financial', funding: 140, investors: ['ff'] },
+    { id: 'rogo', name: 'Rogo', cat: 'financial', funding: 75, investors: ['sequoia'] },
+    { id: 'nevis', name: 'Nevis', cat: 'financial', funding: 40, investors: ['sequoia'] },
+    // Infrastructure
+    { id: 'uniphore', name: 'Uniphore', cat: 'infra', funding: 987, investors: ['nvidia','insight'] },
+    { id: 'kore', name: 'Kore.ai', cat: 'infra', funding: 530, investors: ['battery','sapphire'] },
+    { id: 'moveworks', name: 'Moveworks', cat: 'infra', funding: 305, investors: ['a16z','lightspeed'] },
+    { id: 'baseten', name: 'Baseten', cat: 'infra', funding: 150, investors: ['sequoia'] },
+    { id: 'resolve', name: 'Resolve.ai', cat: 'infra', funding: 150, investors: ['lightspeed'] },
+    { id: 'relevance', name: 'Relevance AI', cat: 'infra', funding: 64, investors: ['bessemer'] },
+    // Recruiting
+    { id: 'mercor', name: 'Mercor', cat: 'recruiting', funding: 135, investors: [] },
+    { id: 'paraform', name: 'Paraform', cat: 'recruiting', funding: 65, investors: [] },
+    { id: 'perfect', name: 'Perfect', cat: 'recruiting', funding: 23, investors: [] },
+    // General
+    { id: 'genspark', name: 'Genspark', cat: 'general', funding: 575, investors: [] },
+    { id: 'hcompany', name: 'H Company', cat: 'general', funding: 220, investors: ['khosla','accel'] },
+    { id: 'simile', name: 'Simile', cat: 'general', funding: 100, investors: ['index'] },
+  ];
+
+  const investorSet = new Set();
+  companies.forEach(c => c.investors.forEach(i => investorSet.add(i)));
+
+  const investorNames = {
+    'sequoia': 'Sequoia', 'gc': 'General Catalyst', 'khosla': 'Khosla',
+    'ff': 'Founders Fund', 'a16z': 'a16z', 'benchmark': 'Benchmark',
+    'bain': 'Bain Capital', 'lightspeed': 'Lightspeed', 'battery': 'Battery',
+    'index': 'Index Ventures', 'greylock': 'Greylock', 'coatue': 'Coatue',
+    'thrive': 'Thrive Capital', 'insight': 'Insight Partners', 'accel': 'Accel',
+    'sapphire': 'Sapphire', 'atomico': 'Atomico', 'kp': 'Kleiner Perkins',
+    'tiger': 'Tiger Global', 'nvidia': 'Nvidia', 'bessemer': 'Bessemer'
+  };
+
+  const nodes = [
+    ...companies.map(c => ({
+      id: c.id, name: c.name, type: 'company', cat: c.cat,
+      radius: Math.max(8, Math.sqrt(c.funding) * 1.2),
+      funding: c.funding
+    })),
+    ...[...investorSet].map(i => ({
+      id: i, name: investorNames[i] || i, type: 'investor', cat: 'investor',
+      radius: 6, funding: 0
+    }))
+  ];
+
+  const links = [];
+  companies.forEach(c => {
+    c.investors.forEach(inv => {
+      links.push({ source: c.id, target: inv, type: 'invested' });
+    });
+  });
+
+  const svg = d3.select('#graph-container')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svg.append('g');
+
+  // Zoom
+  svg.call(d3.zoom()
+    .scaleExtent([0.3, 4])
+    .on('zoom', (event) => g.attr('transform', event.transform)));
+
+  const simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d => d.id).distance(80).strength(0.3))
+    .force('charge', d3.forceManyBody().strength(-200))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 4));
+
+  const link = g.append('g')
+    .selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('stroke', 'rgba(99,102,241,0.15)')
+    .attr('stroke-width', 1);
+
+  const node = g.append('g')
+    .selectAll('circle')
+    .data(nodes)
+    .join('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => categoryColors[d.cat])
+    .attr('stroke', d => d.type === 'investor' ? '#4b5563' : 'none')
+    .attr('stroke-width', d => d.type === 'investor' ? 1 : 0)
+    .attr('stroke-dasharray', d => d.type === 'investor' ? '3,3' : 'none')
+    .attr('cursor', 'pointer')
+    .call(d3.drag()
+      .on('start', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+      })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+      }));
+
+  const label = g.append('g')
+    .selectAll('text')
+    .data(nodes.filter(n => n.type === 'company' && n.funding > 100 || n.type === 'investor'))
+    .join('text')
+    .text(d => d.name)
+    .attr('font-size', d => d.type === 'investor' ? '9px' : '10px')
+    .attr('fill', d => d.type === 'investor' ? '#6b7280' : '#d1d5db')
+    .attr('font-weight', d => d.type === 'investor' ? '400' : '600')
+    .attr('text-anchor', 'middle')
+    .attr('dy', d => d.radius + 14)
+    .style('pointer-events', 'none');
+
+  // Tooltip
+  const tooltip = document.getElementById('tooltip');
+  node.on('mouseover', (event, d) => {
+    if (d.type === 'company') {
+      tooltip.style.display = 'block';
+      tooltip.querySelector('.tt-name').textContent = d.name;
+      tooltip.querySelector('.tt-funding').textContent = '$' + d.funding + 'M raised';
+      tooltip.querySelector('.tt-desc').textContent = d.cat.toUpperCase();
+    }
+  }).on('mousemove', (event) => {
+    tooltip.style.left = (event.clientX + 12) + 'px';
+    tooltip.style.top = (event.clientY - 10) + 'px';
+  }).on('mouseout', () => {
+    tooltip.style.display = 'none';
+  });
+
+  simulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    node.attr('cx', d => d.x).attr('cy', d => d.y);
+    label.attr('x', d => d.x).attr('y', d => d.y);
+  });
+}
+</script>
+
+</body>
+</html>
