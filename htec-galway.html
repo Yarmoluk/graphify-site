@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medtronic × HTEC | Galway Talent Build</title>
+
+<!-- Open Graph / iMessage preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yarmoluk.github.io/medtronic-htec-galway/">
+<meta property="og:title" content="Medtronic × HTEC — Galway Talent Build">
+<meta property="og:description" content="60 software engineers in 12 months. HTEC's proven Build-Operate-Transfer model, trained on live Medtronic projects. No repeat of India.">
+<meta property="og:image" content="https://yarmoluk.github.io/medtronic-htec-galway/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Medtronic × HTEC — Galway Talent Build">
+<meta name="twitter:description" content="60 software engineers in 12 months. HTEC's proven Build-Operate-Transfer model, trained on live Medtronic projects.">
+<meta name="twitter:image" content="https://yarmoluk.github.io/medtronic-htec-galway/preview.png">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy2: #1A2E4A;
+    --teal: #00A39A;
+    --teal-light: #E6F5F4;
+    --teal-dark: #007A73;
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --light-bg: #F2F4F7;
+    --slate: #4A5568;
+    --med-gray: #718096;
+    --light-line: #E2E8F0;
+    --orange: #E8622A;
+    --gold: #F6A623;
+    --blue: #2563EB;
+    --purple: #7C3AED;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #111;
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+  }
+
+  /* ── DECK WRAPPER ── */
+  .deck {
+    width: 100vw; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── SLIDE BASE ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(13,27,42,0.96);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 1000;
+    border-top: 2px solid var(--teal);
+  }
+  .nav-brand {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .nav-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--teal);
+    background: transparent;
+    color: var(--teal);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: var(--teal); color: var(--navy); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .slide-counter {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+  }
+  .nav-right {
+    font-size: 10px;
+    color: var(--med-gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--teal);
+    z-index: 1001;
+    transition: width 0.4s ease;
+  }
+
+  /* ── LAYOUT HELPERS ── */
+  .slide-inner {
+    flex: 1;
+    padding: 0 52px 70px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── SLIDE TYPES ── */
+
+  /* TITLE SLIDE */
+  .s-title {
+    background: var(--navy);
+  }
+  .s-title .title-top {
+    background: var(--navy2);
+    padding: 28px 52px 28px;
+    border-bottom: 3px solid var(--teal);
+  }
+  .s-title .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .s-title h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+  }
+  .s-title .sub {
+    font-size: 15px;
+    color: var(--med-gray);
+    margin-top: 10px;
+  }
+  .s-title .title-body {
+    flex: 1;
+    padding: 36px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .s-title .footer-strip {
+    display: flex;
+  }
+  .s-title .strip-1 { flex: 1; height: 8px; background: var(--teal); }
+  .s-title .strip-2 { flex: 1; height: 8px; background: var(--orange); }
+  .s-title .strip-3 { flex: 1; height: 8px; background: var(--navy2); }
+
+  /* SECTION DIVIDER */
+  .s-divider {
+    background: var(--navy);
+  }
+  .s-divider .div-inner {
+    flex: 1;
+    padding: 40px 60px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .s-divider .big-num {
+    font-size: clamp(80px, 15vw, 160px);
+    font-weight: 900;
+    color: #1A2E4A;
+    line-height: 1;
+    margin-bottom: -10px;
+  }
+  .s-divider h2 {
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 700;
+    color: #fff;
+  }
+  .s-divider .div-bar {
+    width: 80px;
+    height: 4px;
+    margin-top: 16px;
+  }
+
+  /* CONTENT SLIDES */
+  .s-content {
+    background: var(--off-white);
+  }
+  .s-dark {
+    background: var(--navy);
+  }
+
+  .slide-header {
+    padding: 18px 52px;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .s-dark .slide-header { background: var(--navy2); border-bottom: 2px solid var(--teal); }
+  .slide-header h2 {
+    font-size: clamp(14px, 2vw, 20px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .slide-header .htec-badge {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+  .card {
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid var(--light-line);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-dark {
+    background: #1A2535;
+    border-color: #2A3A50;
+  }
+  .card-top {
+    height: 5px;
+  }
+  .card-body {
+    padding: 14px 16px;
+    flex: 1;
+  }
+  .card-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .card-items {
+    list-style: none;
+  }
+  .card-items li {
+    font-size: 11px;
+    color: var(--slate);
+    padding: 4px 0;
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .card-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 2px;
+    border-radius: 1px;
+  }
+  .card-dark .card-items li { color: #94A3B8; }
+
+  .big-stat {
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    color: var(--slate);
+  }
+  .stat-note {
+    font-size: 9px;
+    color: var(--med-gray);
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  /* ── CHALLENGE BANNER ── */
+  .challenge-banner {
+    background: #FFF8F5;
+    border-left: 4px solid var(--orange);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+  .challenge-banner .ch-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .challenge-banner p {
+    font-size: 11.5px;
+    color: var(--navy);
+    line-height: 1.55;
+  }
+
+  /* ── OPTION CARDS (exec summary) ── */
+  .option-card {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .option-card .oc-top { height: 5px; }
+  .option-card .oc-body { padding: 12px 14px; }
+  .option-card .rec-badge {
+    background: var(--teal);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .option-card .oc-num {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .option-card .oc-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: 5px;
+    line-height: 1.3;
+  }
+  .option-card .oc-meta {
+    font-size: 9px;
+    color: var(--med-gray);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  .option-card .oc-fee {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--light-line);
+    font-size: 9px;
+    font-weight: 600;
+  }
+
+  /* ── PROS/CONS ── */
+  .pc-row {
+    display: flex;
+    gap: 3px;
+    align-items: stretch;
+    margin-bottom: 3px;
+  }
+  .pc-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    border-radius: 3px 0 0 3px;
+  }
+  .pc-content {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 0 3px 3px 0;
+    padding: 8px 12px;
+  }
+  .pc-title {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pc-list {
+    list-style: none;
+  }
+  .pc-list li {
+    font-size: 10px;
+    color: var(--slate);
+    padding: 2px 0 2px 10px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .pc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 5px; height: 2px;
+    border-radius: 1px;
+    background: var(--med-gray);
+  }
+  .pro-list li::before { background: var(--teal); }
+  .con-list li::before { background: var(--orange); }
+
+  /* ── RISK ROWS ── */
+  .risk-row {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 4px;
+    display: flex;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .risk-stripe { width: 5px; flex-shrink: 0; }
+  .risk-body { flex: 1; display: flex; padding: 10px 14px; gap: 20px; }
+  .risk-col { flex: 1; }
+  .risk-tag {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .risk-text { font-size: 10.5px; color: var(--slate); line-height: 1.5; }
+  .risk-divider { width: 1px; background: var(--light-line); flex-shrink: 0; }
+
+  /* ── PROCESS FLOW ── */
+  .process-flow {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+  }
+  .process-step {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 4px;
+    display: flex;
+    flex-direction: column;
+  }
+  .process-top { height: 5px; }
+  .process-num {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    margin: 12px auto 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .process-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    padding: 0 8px;
+    line-height: 1.3;
+  }
+  .process-desc {
+    font-size: 9px;
+    color: var(--slate);
+    text-align: center;
+    padding: 6px 8px;
+    line-height: 1.45;
+    flex: 1;
+  }
+  .process-owner {
+    font-size: 8px;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px 4px;
+    background: var(--light-bg);
+    letter-spacing: 0.5px;
+  }
+  .process-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--light-line);
+    font-size: 20px;
+    flex-shrink: 0;
+    margin: 0 -2px;
+    z-index: 1;
+  }
+
+  /* ── R&R TABLE ── */
+  .rr-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .rr-hcell {
+    padding: 8px 14px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .rr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+  .rr-cell {
+    padding: 8px 14px;
+    border: 1px solid var(--light-line);
+    border-radius: 4px;
+  }
+  .rr-cell:nth-child(odd) { background: var(--off-white); }
+  .rr-cell:nth-child(even) { background: var(--light-bg); }
+  .rr-cell-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .rr-cell-body {
+    font-size: 9px;
+    color: var(--slate);
+    line-height: 1.45;
+  }
+
+  /* ── CASE STUDIES ── */
+  .case-card {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 6px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .case-top { height: 5px; }
+  .case-body { padding: 14px 18px; flex: 1; }
+  .case-status {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .case-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .case-desc { font-size: 10px; color: var(--slate); line-height: 1.55; margin-bottom: 10px; }
+  .case-services-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .case-services li {
+    font-size: 9.5px;
+    color: var(--slate);
+    padding: 2px 0 2px 12px;
+    position: relative;
+    line-height: 1.35;
+  }
+  .case-services li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 5px; height: 2px;
+    border-radius: 1px;
+  }
+  .case-stats {
+    display: flex;
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--light-line);
+  }
+  .case-stat {
+    flex: 1;
+    background: var(--off-white);
+    border-radius: 4px;
+    padding: 6px;
+    text-align: center;
+  }
+  .case-stat-val { font-size: 16px; font-weight: 900; line-height: 1; }
+  .case-stat-label { font-size: 7px; color: var(--med-gray); margin-top: 2px; line-height: 1.3; }
+
+  /* ── GEO COMPARISON ── */
+  .geo-card {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0;
+  }
+  .geo-top { height: 4px; }
+  .geo-body { padding: 12px 14px; }
+  .geo-country { font-size: 16px; font-weight: 800; color: var(--navy); }
+  .geo-cost {
+    display: inline-block;
+    font-size: 8px; font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .geo-note { font-size: 9.5px; color: var(--slate); margin: 5px 0; font-style: italic; line-height: 1.4; }
+  .geo-stat { font-size: 9px; color: var(--slate); margin: 2px 0; }
+  .geo-stat span { font-weight: 600; color: var(--navy); }
+
+  /* ── WHY HTEC ── */
+  .why-card {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .why-top { height: 4px; }
+  .why-body { padding: 14px 16px; flex: 1; }
+  .why-val { font-size: 32px; font-weight: 900; line-height: 1; }
+  .why-label { font-size: 10px; font-weight: 700; color: var(--navy); margin: 4px 0; line-height: 1.3; }
+  .why-desc { font-size: 9px; color: var(--slate); line-height: 1.5; }
+
+  /* ── INDIA LESSON ── */
+  .india-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    height: 100%;
+  }
+  .india-col {
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .india-col h3 {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .india-list { list-style: none; flex: 1; }
+  .india-list li {
+    font-size: 10.5px;
+    color: var(--slate);
+    padding: 6px 0 6px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--light-line);
+    line-height: 1.4;
+  }
+  .india-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 12px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  /* ── BOT MODELS ── */
+  .bot-card {
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .bot-tag {
+    padding: 6px 14px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #fff;
+  }
+  .bot-body { padding: 14px 16px; flex: 1; }
+  .bot-title { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .bot-desc { font-size: 10px; color: var(--slate); line-height: 1.5; margin-bottom: 10px; }
+  .bot-bullets { list-style: none; }
+  .bot-bullets li {
+    font-size: 9.5px;
+    color: var(--slate);
+    padding: 4px 0 4px 12px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .bot-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 5px; height: 2px;
+    border-radius: 1px;
+  }
+
+  /* ── SOURCING TABLE ── */
+  .sourcing-row {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--light-line);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .sourcing-stripe { width: 5px; flex-shrink: 0; height: 100%; }
+  .sourcing-body { flex: 1; padding: 10px 14px; display: flex; align-items: center; gap: 16px; }
+  .sourcing-country { font-size: 13px; font-weight: 700; color: var(--navy); min-width: 80px; }
+  .sourcing-pool { font-size: 10px; color: var(--slate); flex: 1; }
+  .sourcing-badge {
+    font-size: 8px; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .note-box {
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 10.5px;
+    color: var(--teal-dark);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .warn-box {
+    background: #FFF8F5;
+    border: 1px solid var(--orange);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 10px;
+    color: var(--orange);
+    font-weight: 600;
+    line-height: 1.45;
+    margin-top: 8px;
+  }
+  .outcome-box {
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 10.5px;
+    color: var(--teal-dark);
+    font-weight: 600;
+  }
+
+  /* ── THANK YOU ── */
+  .s-thanks {
+    background: var(--navy);
+  }
+  .thanks-top {
+    background: var(--navy2);
+    border-bottom: 3px solid var(--teal);
+    padding: 36px 52px 30px;
+  }
+  .thanks-top h1 {
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 900;
+    color: #fff;
+  }
+  .thanks-top .thanks-sub {
+    font-size: 18px;
+    color: var(--teal);
+    margin-top: 6px;
+  }
+  .office-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .office-card {
+    background: #1A2535;
+    border-radius: 6px;
+    border: 1px solid #2A3A50;
+    overflow: hidden;
+  }
+  .office-card-top { height: 4px; background: var(--teal); }
+  .office-card-body { padding: 14px 16px; }
+  .office-city { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .office-addr { font-size: 10px; color: #718096; line-height: 1.7; }
+
+  /* SCROLL within slide */
+  .scroll-inner {
+    overflow-y: auto;
+    flex: 1;
+  }
+  .scroll-inner::-webkit-scrollbar { width: 4px; }
+  .scroll-inner::-webkit-scrollbar-thumb { background: var(--light-line); border-radius: 2px; }
+
+  /* ── MOBILE RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body {
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: auto;
+    }
+
+    .deck {
+      height: auto;
+      overflow: visible;
+    }
+
+    .slide {
+      position: relative;
+      opacity: 1;
+      transform: none;
+      pointer-events: all;
+      transition: none;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    .slide.prev { opacity: 1; transform: none; }
+
+    /* Hide nav in scroll mode */
+    .nav { display: none; }
+    .progress { display: none; }
+
+    /* Reduce padding everywhere */
+    .slide-inner { padding: 16px 16px 24px; }
+    .s-title .title-top { padding: 20px 16px; }
+    .s-title .title-body { padding: 20px 16px; }
+    .s-divider .div-inner { padding: 28px 20px 32px; }
+    .slide-header { padding: 12px 16px; }
+
+    /* Title slide */
+    .s-title h1 { font-size: clamp(28px, 8vw, 42px); }
+    .s-title .title-body div[style*="display:flex"] {
+      flex-direction: column !important;
+      gap: 16px !important;
+    }
+
+    /* Section divider */
+    .s-divider .big-num { font-size: clamp(60px, 20vw, 100px); }
+    .s-divider h2 { font-size: clamp(20px, 5vw, 32px); }
+
+    /* Card grids → single column */
+    .grid-2, .grid-3, .grid-4 {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Two-column layouts within slides */
+    div[style*="grid-template-columns: 1fr 1fr"],
+    div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Pros/Cons 2-col layout */
+    .slide-inner > div[style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Why HTEC 5-col grid */
+    div[style*="repeat(3, 1fr) repeat(2, 1fr)"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Process flow → vertical stack */
+    .process-flow {
+      flex-direction: column;
+      gap: 4px;
+    }
+    .process-arrow {
+      transform: rotate(90deg);
+      font-size: 14px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .process-step {
+      margin: 0;
+    }
+
+    /* Card bodies — slightly bigger text for mobile */
+    .card-items li { font-size: 13px; padding: 5px 0 5px 14px; }
+    .card-title { font-size: 12px; }
+    .card-body { padding: 16px; }
+
+    /* Option cards */
+    .option-card .oc-body { padding: 16px; }
+    .option-card .oc-meta { font-size: 12px; }
+    .option-card .oc-title { font-size: 14px; }
+    .option-card .oc-fee { font-size: 11px; }
+
+    /* Pros/Cons */
+    .pc-label {
+      writing-mode: horizontal-tb;
+      text-orientation: initial;
+      padding: 8px 12px;
+      border-radius: 3px 3px 0 0;
+      text-align: center;
+    }
+    .pc-row {
+      flex-direction: column;
+    }
+    .pc-content {
+      border-radius: 0 0 3px 3px;
+    }
+    .pc-list li { font-size: 12px; padding: 4px 0 4px 14px; }
+    .pc-title { font-size: 12px; }
+
+    /* India lesson columns */
+    .india-cols {
+      grid-template-columns: 1fr !important;
+    }
+    .india-list li { font-size: 13px; padding: 8px 0 8px 16px; }
+
+    /* Risk rows */
+    .risk-body { flex-direction: column; gap: 10px; padding: 12px 16px; }
+    .risk-divider { width: 100%; height: 1px; }
+    .risk-text { font-size: 12px; }
+
+    /* R&R table */
+    .rr-header { grid-template-columns: 1fr; gap: 4px; }
+    .rr-row { grid-template-columns: 1fr; gap: 4px; }
+    .rr-cell-title { font-size: 11px; }
+    .rr-cell-body { font-size: 11px; }
+
+    /* BOT cards */
+    .bot-title { font-size: 16px; }
+    .bot-desc { font-size: 12px; }
+    .bot-bullets li { font-size: 12px; }
+
+    /* Case cards */
+    .case-title { font-size: 16px; }
+    .case-desc { font-size: 12px; }
+    .case-services li { font-size: 11px; }
+    .case-stats { flex-wrap: wrap; }
+    .case-stat { min-width: 45%; }
+
+    /* Geo cards */
+    .geo-country { font-size: 18px; }
+    .geo-note { font-size: 12px; }
+    .geo-stat { font-size: 11px; }
+
+    /* Sourcing rows */
+    .sourcing-body { flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
+    .sourcing-country { font-size: 14px; min-width: auto; }
+    .sourcing-pool { font-size: 11px; }
+
+    /* Why HTEC cards */
+    .why-val { font-size: 36px; }
+    .why-label { font-size: 13px; }
+    .why-desc { font-size: 11px; }
+
+    /* Stat boxes */
+    .big-stat { font-size: clamp(28px, 8vw, 36px); }
+    .stat-label { font-size: 11px; }
+
+    /* Office grid */
+    .office-grid { grid-template-columns: 1fr; }
+    .office-addr { font-size: 12px; }
+
+    /* Thank you */
+    .thanks-top { padding: 24px 16px; }
+    .thanks-top h1 { font-size: clamp(36px, 10vw, 56px); }
+
+    /* Challenge banner */
+    .challenge-banner p { font-size: 13px; }
+
+    /* Note/warn boxes */
+    .note-box { font-size: 12px; }
+    .warn-box { font-size: 12px; }
+    .outcome-box { font-size: 12px; }
+
+    /* Market stat boxes inside talent slide */
+    .slide-inner .card-grid.grid-2 {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* Slide header */
+    .slide-header h2 { font-size: clamp(12px, 3vw, 16px); }
+
+    /* Add mobile slide separators */
+    .slide + .slide {
+      border-top: 4px solid var(--teal);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide-inner .card-grid.grid-2 {
+      grid-template-columns: 1fr !important;
+    }
+
+    .case-stat { min-width: 100%; }
+
+    .s-title h1 { font-size: 28px; }
+    .s-title .sub { font-size: 13px; }
+
+    .sourcing-body { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S1: TITLE -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-title active" data-idx="0">
+    <div class="title-top">
+      <div class="label">HTEC × Medtronic</div>
+      <h1>Galway Talent Build</h1>
+      <div class="sub">Strategic Engagement Options &nbsp;|&nbsp; March 2026</div>
+    </div>
+    <div class="title-body">
+      <div style="color:#94A3B8; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px;">Confidential &nbsp;|&nbsp; HTEC Group Inc.</div>
+      <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px;">
+          <div style="font-size:10px; font-weight:700; color:var(--teal); letter-spacing:2px; margin-bottom:8px;">THE GOAL</div>
+          <div style="font-size:13px; color:#CBD5E0; line-height:1.6;">60 SW engineers · Galway, Ireland · 12 months<br>Medical device domain · FY27 start</div>
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <div style="font-size:10px; font-weight:700; color:var(--teal); letter-spacing:2px; margin-bottom:8px;">HTEC BRINGS</div>
+          <div style="font-size:13px; color:#CBD5E0; line-height:1.6;">25+ years med-device · 30K+ network<br>Proven BOT model · &lt;5% churn</div>
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <div style="font-size:10px; font-weight:700; color:var(--teal); letter-spacing:2px; margin-bottom:8px;">FOUR OPTIONS</div>
+          <div style="font-size:13px; color:#CBD5E0; line-height:1.6;">Transitionary Training · Technical Interviews<br>BOT (Agnostic) · BOT via M&A</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-strip">
+      <div class="strip-1"></div>
+      <div class="strip-2"></div>
+      <div class="strip-3"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S2: WHY BOT -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="1">
+    <div class="slide-header">
+      <h2>Scaling Engineering Capability — BOT</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">A partnership-led approach to building sustainable engineering capacity.</div>
+      <div class="card-grid grid-3" style="flex:1;">
+        <div class="card">
+          <div class="card-top" style="background:var(--blue);"></div>
+          <div class="card-body">
+            <div class="card-title" style="color:var(--blue);">Why Execute a BOT with HTEC?</div>
+            <ul class="card-items">
+              <li style="--c:var(--blue)">Build internal capability without disrupting delivery</li>
+              <li>Accelerate time to productivity — reduce poor onboarding impact</li>
+              <li>Reduce hiring and operational risk</li>
+              <li>Retain control over culture and outcomes</li>
+              <li>Learn new markets before fully committing</li>
+              <li>Predictable engineering costs through partner-managed setup</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-title" style="color:var(--teal);">What We Have Heard So Far</div>
+            <ul class="card-items">
+              <li>60 new roles in 12 months starting FY27</li>
+              <li>No current European software FTE presence</li>
+              <li>Challenges with existing delivery models</li>
+              <li>Strategic interest in Ireland alongside talent &amp; cost constraints</li>
+              <li>Leverage Ireland tax incentives for Medtronic P&amp;L</li>
+              <li>Leverage engineering talent to create more CRM value</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--orange);"></div>
+          <div class="card-body">
+            <div class="card-title" style="color:var(--orange);">Strategic Value of BOT</div>
+            <ul class="card-items">
+              <li>Consulting-led, partnership-first approach</li>
+              <li>Phased ramp-up with clear decision gates</li>
+              <li>Focus on sustainability and talent retention</li>
+              <li>Proven experience in regulated environments</li>
+              <li>Reduced risk on talent acquisition</li>
+              <li>Named strategic vendor — not a transactional partner</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S3: EXEC SUMMARY -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="2">
+    <div class="slide-header">
+      <h2>Executive Summary — Four Engagement Options</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div class="challenge-banner" style="margin:10px 0 14px;">
+        <div class="ch-label">The Challenge</div>
+        <p>Medtronic CRM needs 60 engineers in Galway, Ireland within 12 months (FY27) — no current European software FTE presence, highly competitive market, and a failed India onboarding model that cannot be repeated.</p>
+      </div>
+      <div class="card-grid grid-4" style="flex:1;">
+        <div class="option-card">
+          <div class="oc-top" style="background:var(--blue);"></div>
+          <div class="oc-body">
+            <div class="rec-badge">★ RECOMMENDED</div>
+            <div class="oc-num" style="color:var(--blue);">01</div>
+            <div class="oc-title">Transitionary Training Program</div>
+            <div class="oc-meta">HTEC sources, hires, onboards and trains engineers on live Medtronic projects across a 12-month program before transfer.</div>
+            <div class="oc-fee" style="color:var(--blue);">12 months &nbsp;·&nbsp; Monthly rate + transfer fee</div>
+          </div>
+        </div>
+        <div class="option-card">
+          <div class="oc-top" style="background:var(--teal);"></div>
+          <div class="oc-body">
+            <div class="oc-num" style="color:var(--teal);">02</div>
+            <div class="oc-title">Technical Interview + Onboarding</div>
+            <div class="oc-meta">HTEC screens candidates and executes a 3-month onboarding program. Medtronic makes all hiring decisions.</div>
+            <div class="oc-fee" style="color:var(--teal);">3 months &nbsp;·&nbsp; Monthly rate + interview fee</div>
+          </div>
+        </div>
+        <div class="option-card">
+          <div class="oc-top" style="background:var(--orange);"></div>
+          <div class="oc-body">
+            <div class="oc-num" style="color:var(--orange);">03</div>
+            <div class="oc-title">Build-Operate-Transfer</div>
+            <div class="oc-meta">HTEC builds a dedicated team in Eastern Europe and transitions them to Galway over time.</div>
+            <div class="oc-fee" style="color:var(--orange);">12–18 months &nbsp;·&nbsp; Operating margin</div>
+          </div>
+        </div>
+        <div class="option-card">
+          <div class="oc-top" style="background:var(--purple);"></div>
+          <div class="oc-body">
+            <div class="oc-num" style="color:var(--purple);">04</div>
+            <div class="oc-title">BOT via M&A</div>
+            <div class="oc-meta">HTEC acquires a small Galway or Spanish firm, operates it as an HTEC entity, then transfers to Medtronic.</div>
+            <div class="oc-fee" style="color:var(--purple);">12–18 months &nbsp;·&nbsp; Op margin + M&A fee</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S4: SECTION DIVIDER -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-divider" data-idx="3">
+    <div class="div-inner">
+      <div class="big-num">02</div>
+      <h2>Options for Medtronic</h2>
+      <div class="div-bar" style="background:var(--teal);"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S5: PROS & CONS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="4">
+    <div class="slide-header">
+      <h2>Engagement Options — Pros &amp; Cons</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner" style="padding-bottom:70px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; flex:1; margin-top:10px;">
+        <div>
+          <div class="pc-row">
+            <div class="pc-label" style="background:#EBF3FF; color:var(--blue);">01</div>
+            <div class="pc-content">
+              <div class="pc-title" style="color:var(--blue);">Transitionary Training</div>
+              <ul class="pc-list pro-list">
+                <li>Directly addresses the India onboarding failure</li>
+                <li>Proven AMD BOT model — tested &amp; repeatable</li>
+                <li>Recurring monthly revenue + transfer fee</li>
+                <li>Engineers job-ready before Medtronic badge</li>
+              </ul>
+              <ul class="pc-list con-list" style="margin-top:5px;">
+                <li>MDT prefers to own headcount from day one</li>
+                <li>Resource-intensive during ramp phase</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pc-row" style="margin-top:8px;">
+            <div class="pc-label" style="background:#E6F5F4; color:var(--teal);">02</div>
+            <div class="pc-content">
+              <div class="pc-title" style="color:var(--teal);">Technical Interview</div>
+              <ul class="pc-list pro-list">
+                <li>Fastest to stand up — uses existing MDT HR</li>
+                <li>25+ yrs med-device domain expertise applied</li>
+                <li>Simple ~20% per-placement commercial model</li>
+              </ul>
+              <ul class="pc-list con-list" style="margin-top:5px;">
+                <li>Commoditized — any specialist firm can offer</li>
+                <li>Does not solve the India onboarding problem</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="pc-row">
+            <div class="pc-label" style="background:#FEF0E7; color:var(--orange);">03</div>
+            <div class="pc-content">
+              <div class="pc-title" style="color:var(--orange);">BOT (Loc.-Agnostic)</div>
+              <ul class="pc-list pro-list">
+                <li>Leverages HTEC pools in Serbia, Spain, Czechia</li>
+                <li>Full quality, training and culture control</li>
+                <li>Avoids competitive Galway local hiring market</li>
+              </ul>
+              <ul class="pc-list con-list" style="margin-top:5px;">
+                <li>MDT prefers Galway-based headcount</li>
+                <li>Balkan engineers reluctant to relocate</li>
+              </ul>
+            </div>
+          </div>
+          <div class="pc-row" style="margin-top:8px;">
+            <div class="pc-label" style="background:#F3EEFF; color:var(--purple);">04</div>
+            <div class="pc-content">
+              <div class="pc-title" style="color:var(--purple);">BOT via M&A</div>
+              <ul class="pc-list pro-list">
+                <li>Fastest path to Galway-based headcount</li>
+                <li>Proven M&A playbook — 5 acquisitions to date</li>
+                <li>Establishes footprint for BSC, Stryker, others</li>
+              </ul>
+              <ul class="pc-list con-list" style="margin-top:5px;">
+                <li>Most complex and capital-intensive option</li>
+                <li>No suitable Galway target identified yet</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S6: THE INDIA LESSON -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="5">
+    <div class="slide-header">
+      <h2>The Lesson From India</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">What happened — and what it means for Galway.</div>
+      <div style="background:var(--light-bg); border-radius:6px; padding:12px 18px; margin-bottom:14px; border-left:4px solid var(--navy);">
+        <div style="font-size:9px; font-weight:700; color:var(--navy); letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">John Braunfeld — Medtronic</div>
+        <div style="font-size:12px; font-style:italic; color:var(--slate); line-height:1.6;">"We failed in India because we just hired people. We hired people, hired people, hired people — and we didn't invest the time to train them."</div>
+      </div>
+      <div class="india-cols" style="flex:1;">
+        <div class="india-col" style="background:#FFF8F5; border:1px solid #FCD9C8;">
+          <h3 style="color:var(--orange); border-color:var(--orange);">India: What Went Wrong</h3>
+          <ul class="india-list">
+            <li style="--c:var(--orange)">Engineers hired without structured onboarding</li>
+            <li>No domain-specific training (FDA, CE Mark, ISO 13485)</li>
+            <li>Assumed productivity without a ramp plan</li>
+            <li>High churn — engineers left as they found better offers</li>
+            <li>Result: Center underperformed. Investment wasted.</li>
+          </ul>
+          <ul class="india-list" style="margin-top:auto;"></ul>
+        </div>
+        <div class="india-col" style="background:var(--teal-light); border:1px solid #9ECFCC;">
+          <h3 style="color:var(--teal-dark); border-color:var(--teal);">Galway: What HTEC Does Differently</h3>
+          <ul class="india-list">
+            <li>52-week structured onboarding curriculum</li>
+            <li>Medical device domain training from Day 1 (FDA, CE, MDR)</li>
+            <li>Embedded Medtronic architects (1 per 10 engineers)</li>
+            <li>Phased reviews at months 3, 6, 10 — underperformers released early</li>
+            <li>Career pathways to anchor talent post-transfer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S7: OPTION 1 SECTION -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-divider" data-idx="6">
+    <div class="div-inner">
+      <div class="big-num">01</div>
+      <h2>Transitionary Training Program</h2>
+      <div class="div-bar" style="background:var(--blue);"></div>
+      <div style="margin-top:14px; font-size:13px; color:#94A3B8;">12 months · Monthly rate + transfer fee · Recommended</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S8: OPTION 1 PROCESS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="7">
+    <div class="slide-header" style="background:var(--blue);">
+      <h2>Option 1 · Process Flow</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 12px;">12-month HTEC-led program: sourcing, hiring, onboarding and live Medtronic project training before badge transfer.</div>
+      <div class="process-flow" style="flex:1; align-items:stretch; gap:6px;">
+        <div class="process-step"><div class="process-top" style="background:var(--blue);"></div><div class="process-num" style="background:var(--blue);">1</div><div class="process-title">Source &amp; Hire</div><div class="process-desc">HTEC sources globally, screens technically and hires as HTEC employees</div><div class="process-owner" style="color:var(--blue);">HTEC · Day 1</div></div>
+        <div class="process-arrow">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--teal);"></div><div class="process-num" style="background:var(--teal);">2</div><div class="process-title">Onboard &amp; Ramp</div><div class="process-desc">HTEC delivers training on live Medtronic projects. MDT provides system access throughout.</div><div class="process-owner" style="color:var(--teal);">HTEC + MDT · Month 1</div></div>
+        <div class="process-arrow">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--orange);"></div><div class="process-num" style="background:var(--orange);">3</div><div class="process-title">Review Gate</div><div class="process-desc">Formal performance reviews at months 3, 6 and 10. Underperformers released before transfer.</div><div class="process-owner" style="color:var(--orange);">HTEC + MDT · Month 3–6</div></div>
+        <div class="process-arrow">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--purple);"></div><div class="process-num" style="background:var(--purple);">4</div><div class="process-title">MDT Acceptance</div><div class="process-desc">Medtronic reviews each engineer at month 12 and approves final transfer. Acceptance is Medtronic's decision.</div><div class="process-owner" style="color:var(--purple);">MEDTRONIC · Month 10+</div></div>
+        <div class="process-arrow">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--gold);"></div><div class="process-num" style="background:var(--gold);">5</div><div class="process-title">Badge Transfer</div><div class="process-desc">Engineer moves to Medtronic payroll, HR and benefits. HTEC employment relationship ends.</div><div class="process-owner" style="color:var(--gold);">MEDTRONIC · Month 12</div></div>
+      </div>
+      <div class="outcome-box" style="margin-top:12px;">✓ Outcome: Medtronic-badged engineer, trained on live Medtronic projects across the full 12-month program. Sourcing, hiring, onboarding and project training included. Transfer at month 12 per agreement.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S9: OPTION 1 R&R -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="8">
+    <div class="slide-header" style="background:var(--blue);">
+      <h2>Option 1 · Roles &amp; Responsibilities</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner" style="padding-top:10px;">
+      <div class="rr-header" style="margin-top:8px;">
+        <div class="rr-hcell" style="background:var(--blue);">HTEC OWNS</div>
+        <div class="rr-hcell" style="background:var(--teal);">MEDTRONIC OWNS</div>
+      </div>
+      <div class="scroll-inner">
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Sourcing &amp; Employment</div><div class="rr-cell-body">HTEC sources, interviews, hires and employs engineers as HTEC staff on its own payroll and HR systems.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Internal Process Training</div><div class="rr-cell-body">Medtronic trains engineers on internal systems, project processes, tools and operating norms.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Employee Welfare &amp; Retention</div><div class="rr-cell-body">HTEC is responsible for engineer engagement, satisfaction and retention throughout the training period.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Regulatory Onboarding</div><div class="rr-cell-body">Medtronic-specific compliance, regulatory and quality system onboarding is Medtronic's responsibility.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Workload-Based Training</div><div class="rr-cell-body">Engineers trained on actual Medtronic projects for the full 12-month period — not synthetic scenarios.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Workload &amp; Project Access</div><div class="rr-cell-body">Medtronic provides access to live workload, systems and team leads so HTEC can deliver real training.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Performance Management</div><div class="rr-cell-body">HTEC manages performance tracking. Formal reviews at months 3, 6 and 10. Underperformers released before transfer clock runs out.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Transfer Acceptance</div><div class="rr-cell-body">Medtronic approves each engineer at end of program. Final transfer is Medtronic's decision based on agreed criteria.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Transfer Coordination</div><div class="rr-cell-body">HTEC manages the structured handover process to Medtronic badge as defined in the agreement.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Post-Transfer Employment</div><div class="rr-cell-body">Once badged, engineers move fully to Medtronic HR, payroll, benefits and performance management.</div></div></div>
+        <div class="warn-box">⚠ Key assumption: HTEC trains on real Medtronic workload — not generic training. No cancellation clause prior to end of program.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S10: OPTION 2 SECTION -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-divider" data-idx="9">
+    <div class="div-inner">
+      <div class="big-num">02</div>
+      <h2>Technical Interview Services</h2>
+      <div class="div-bar" style="background:var(--teal);"></div>
+      <div style="margin-top:14px; font-size:13px; color:#94A3B8;">3-month onboarding · Monthly rate + flat interview fee</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S11: OPTION 2 PROCESS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="10">
+    <div class="slide-header" style="background:var(--teal);">
+      <h2>Option 2 · Process Flow</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 12px;">From candidate pipeline to onboarded engineer — HTEC screens and executes 3-month structured onboarding.</div>
+      <div class="process-flow" style="flex:1; align-items:stretch; gap:4px;">
+        <div class="process-step"><div class="process-top" style="background:var(--blue);"></div><div class="process-num" style="background:var(--blue); width:36px; height:36px; font-size:16px;">1</div><div class="process-title" style="font-size:9.5px;">Define Roles</div><div class="process-desc" style="font-size:8.5px;">Job descriptions, technical criteria, target start dates</div><div class="process-owner" style="color:var(--blue); font-size:7.5px;">MDT</div></div>
+        <div class="process-arrow" style="font-size:14px;">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--teal);"></div><div class="process-num" style="background:var(--teal); width:36px; height:36px; font-size:16px;">2</div><div class="process-title" style="font-size:9.5px;">Source Candidates</div><div class="process-desc" style="font-size:8.5px;">Irish market sourcing + relocation pipeline managed by Medtronic HR</div><div class="process-owner" style="color:var(--teal); font-size:7.5px;">MDT</div></div>
+        <div class="process-arrow" style="font-size:14px;">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--orange);"></div><div class="process-num" style="background:var(--orange); width:36px; height:36px; font-size:16px;">3</div><div class="process-title" style="font-size:9.5px;">Share Shortlist</div><div class="process-desc" style="font-size:8.5px;">Candidates forwarded to HTEC for screening</div><div class="process-owner" style="color:var(--orange); font-size:7.5px;">MDT</div></div>
+        <div class="process-arrow" style="font-size:14px;">▶</div>
+        <div class="process-step" style="border:2px solid var(--navy); background:var(--light-bg);"><div class="process-top" style="background:var(--navy);"></div><div class="process-num" style="background:var(--navy); width:36px; height:36px; font-size:16px;">4</div><div class="process-title" style="font-size:9.5px; color:var(--navy);">Technical Interview</div><div class="process-desc" style="font-size:8px;">Domain interviews + structured evaluation report with tech profile, risk flags &amp; onboarding plan</div><div class="process-owner" style="color:var(--navy); background:var(--light-line); font-size:7.5px; font-weight:800;">HTEC</div></div>
+        <div class="process-arrow" style="font-size:14px;">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--purple);"></div><div class="process-num" style="background:var(--purple); width:36px; height:36px; font-size:16px;">5</div><div class="process-title" style="font-size:9.5px;">Review Reports</div><div class="process-desc" style="font-size:8.5px;">HTEC evaluation report reviewed by MDT hiring manager</div><div class="process-owner" style="color:var(--purple); font-size:7.5px;">MDT</div></div>
+        <div class="process-arrow" style="font-size:14px;">▶</div>
+        <div class="process-step"><div class="process-top" style="background:var(--gold);"></div><div class="process-num" style="background:var(--gold); width:36px; height:36px; font-size:16px;">6</div><div class="process-title" style="font-size:9.5px;">Offer &amp; Onboard</div><div class="process-desc" style="font-size:8.5px;">MDT extends offers and badges. HTEC executes 3-month structured onboarding program</div><div class="process-owner" style="color:var(--gold); font-size:7.5px;">MDT + HTEC</div></div>
+      </div>
+      <div class="outcome-box" style="margin-top:12px;">✓ Outcome: Medtronic-badged engineer, hired by Medtronic and onboarded by HTEC over 3 months. No resource retraction during the onboarding period.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S12: OPTION 2 R&R -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="11">
+    <div class="slide-header" style="background:var(--teal);">
+      <h2>Option 2 · Roles &amp; Responsibilities</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner" style="padding-top:10px;">
+      <div class="rr-header" style="margin-top:8px;">
+        <div class="rr-hcell" style="background:var(--teal);">MEDTRONIC OWNS</div>
+        <div class="rr-hcell" style="background:var(--blue);">HTEC PROVIDES</div>
+      </div>
+      <div class="scroll-inner">
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Talent Sourcing</div><div class="rr-cell-body">Medtronic HR sources and manages the full candidate pipeline from the Irish market and beyond.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Domain Interviews</div><div class="rr-cell-body">Technical and engineering interviews drawing on 25+ years of med-device expertise.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Scheduling &amp; Comms</div><div class="rr-cell-body">All candidate scheduling, communications and offer logistics remain with Medtronic's recruiting team.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Evaluation Reports</div><div class="rr-cell-body">Structured per-candidate reports including technical profile, risk flags and recommended onboarding path.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Final Hiring Decisions</div><div class="rr-cell-body">Medtronic reviews HTEC's evaluation reports and makes all final hiring decisions independently.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Competency Mapping</div><div class="rr-cell-body">Assessment framework aligned to Medtronic's specific product operating model and engineering roles.</div></div></div>
+        <div class="rr-row"><div class="rr-cell"><div class="rr-cell-title" style="color:var(--teal);">Onboarding &amp; Badging</div><div class="rr-cell-body">Medtronic owns HR integration, badge issuance and system access for all hired engineers.</div></div><div class="rr-cell"><div class="rr-cell-title" style="color:var(--blue);">Onboarding Execution</div><div class="rr-cell-body">HTEC owns and executes the full 3-month onboarding program. Resources are not retractable. HTEC bears delivery risk.</div></div></div>
+        <div class="warn-box">⚠ HTEC scope: (1) technical screening and (2) 3-month onboarding. No retraction of resources. Fee = monthly rate during onboarding + flat interview service fee.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S13: BOT SECTION DIVIDER -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-divider" data-idx="12">
+    <div class="div-inner">
+      <div class="big-num">03</div>
+      <h2>BOT Build Out</h2>
+      <div class="div-bar" style="background:var(--orange);"></div>
+      <div style="margin-top:14px; font-size:13px; color:#94A3B8;">Options 3 &amp; 4 · Location-Agnostic and M&A</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S14: HOW HTEC BUILDS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="13">
+    <div class="slide-header">
+      <h2>How HTEC Builds Your Galway Team</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">Three principles that protect Medtronic's investment and ensure long-term team stability.</div>
+      <div class="card-grid grid-3" style="flex:1;">
+        <div class="card">
+          <div class="card-top" style="background:var(--blue);"></div>
+          <div class="card-body">
+            <div style="width:44px; height:44px; background:var(--blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:#fff; margin-bottom:10px;">01</div>
+            <div style="font-size:13px; font-weight:700; color:var(--navy); line-height:1.3; margin-bottom:4px;">Advisory-Led<br>Capability Building</div>
+            <div style="font-size:10px; color:var(--blue); font-style:italic; font-weight:600; margin-bottom:8px;">We don't just hire — we build a function.</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.5; margin-bottom:10px;">HTEC treats every BOT engagement as an advisory-led program. We assess what Medtronic needs, architect the right team structure, and build capability that outlasts the engagement.</div>
+            <div style="font-size:8px; font-weight:700; color:var(--blue); letter-spacing:1px; margin-bottom:5px;">FOR MEDTRONIC THIS MEANS</div>
+            <ul class="card-items"><li>Role profiling aligned to Medtronic product model</li><li>Culture embedded from day one</li><li>Capability roadmap to FY27–29</li></ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div style="width:44px; height:44px; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:#fff; margin-bottom:10px;">02</div>
+            <div style="font-size:13px; font-weight:700; color:var(--navy); line-height:1.3; margin-bottom:4px;">People-Centric<br>Transition Planning</div>
+            <div style="font-size:10px; color:var(--teal); font-style:italic; font-weight:600; margin-bottom:8px;">100% employee acceptance rate at transfer.</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.5; margin-bottom:10px;">Talent disruption is the primary failure mode in BOT engagements. HTEC's transition plans are designed to retain engineers through the badge transfer and beyond.</div>
+            <div style="font-size:8px; font-weight:700; color:var(--teal); letter-spacing:1px; margin-bottom:5px;">FOR MEDTRONIC THIS MEANS</div>
+            <ul class="card-items"><li>90-day onboarding aligned to MDT standards</li><li>Retention incentives tied to milestones</li><li>Joint communication plan throughout</li></ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--orange);"></div>
+          <div class="card-body">
+            <div style="width:44px; height:44px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:#fff; margin-bottom:10px;">03</div>
+            <div style="font-size:13px; font-weight:700; color:var(--navy); line-height:1.3; margin-bottom:4px;">Risk Management<br>&amp; Readiness</div>
+            <div style="font-size:10px; color:var(--orange); font-style:italic; font-weight:600; margin-bottom:8px;">Phased scaling. Transparent checkpoints.</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.5; margin-bottom:10px;">Rapid scaling in an unfamiliar talent market carries real risk. HTEC's phased model and transparent risk frameworks ensure performance stability at every stage.</div>
+            <div style="font-size:8px; font-weight:700; color:var(--orange); letter-spacing:1px; margin-bottom:5px;">FOR MEDTRONIC THIS MEANS</div>
+            <ul class="card-items"><li>60-day performance gates before transfer</li><li>Cohort-based hiring — 10–15 at a time</li><li>Clear no-go criteria at every phase</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S15: PRACTICAL BOT MODELS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="14">
+    <div class="slide-header">
+      <h2>Practical BOT Engagements — Three Delivery Models</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">An evolving and flexible expansion strategy proven with AMD/D-Matrix, ready for Medtronic.</div>
+      <div class="card-grid grid-3" style="flex:1;">
+        <div class="bot-card">
+          <div class="bot-tag" style="background:var(--blue);">LOWEST COMPLEXITY</div>
+          <div class="bot-body">
+            <div class="bot-title">Hybrid Model</div>
+            <div class="bot-desc">Senior leadership and selected SW roles in Galway. Hardware, embedded and scale-up teams in Serbia, Spain, or Czechia.</div>
+            <ul class="bot-bullets">
+              <li style="--c:var(--blue)">Satisfies Medtronic Galway headcount for key roles</li>
+              <li>Reduces cost by placing scale teams in lower-cost regions</li>
+              <li>Certicom team already embedded — relationship established</li>
+              <li>Immediately executable with existing HTEC talent pools</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bot-card" style="border:2px solid var(--teal);">
+          <div class="bot-tag" style="background:var(--teal);">★ RECOMMENDED PATH</div>
+          <div class="bot-body">
+            <div class="bot-title">Phased Geography Model</div>
+            <div class="bot-desc">Begin where hiring and execution risk is lowest. Expand or transition to Galway-based locations as the team matures and trust is established.</div>
+            <ul class="bot-bullets">
+              <li style="--c:var(--teal)">Phase 1: 10–15 engineers in first 90 days</li>
+              <li>Phase 2: Galway hires absorb relocated engineers</li>
+              <li>Phase 3: Full transfer to Medtronic badge at agreed milestone</li>
+              <li>Mirrors AMD engagement — proven 3-phase playbook</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bot-card">
+          <div class="bot-tag" style="background:var(--orange);">MAXIMUM SPEED</div>
+          <div class="bot-body">
+            <div class="bot-title">Dual-Track Model</div>
+            <div class="bot-desc">Begin with hardware/embedded via Certicom. Add software teams in parallel once operational foundations are stable.</div>
+            <ul class="bot-bullets">
+              <li style="--c:var(--orange)">Hardware + embedded track can start within 60 days</li>
+              <li>Software track layered in at Month 3–4</li>
+              <li>Leverages Certicom-Medtronic relationship as anchor</li>
+              <li>Certicom provides immediate regulated product depth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S16: CASE STUDIES -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="15">
+    <div class="slide-header">
+      <h2>HTEC BOT Experience — Case Studies</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">Greenfield team setup, full onboarding, and sustainable capability transfer — applied to Medtronic.</div>
+      <div class="card-grid grid-2" style="flex:1;">
+        <div class="case-card">
+          <div class="case-top" style="background:var(--blue);"></div>
+          <div class="case-body">
+            <span class="case-status" style="background:#EBF3FF; color:var(--blue);">COMPLETED</span>
+            <div class="case-title">World Leader in Semiconductor Space</div>
+            <div class="case-desc">A global semiconductor leader needed engineering operations in South-East Europe. HTEC identified a wide talent pool matched to their specific technology requirements and built a full BOT in Serbia.</div>
+            <div class="case-services-label" style="color:var(--blue);">Services Provided</div>
+            <ul class="case-services">
+              <li style="--c:var(--blue)">Labor law, HR policies and employment compliance</li>
+              <li>Local incorporation and company operations setup</li>
+              <li>Full IT infrastructure setup to client standards</li>
+              <li>BOT project planning: scope, timeline and action plan</li>
+            </ul>
+            <div class="case-stats">
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--blue);">93</div><div class="case-stat-label">Engineers Transferred</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--blue);">100%</div><div class="case-stat-label">Acceptance Rate</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--blue);">+50%</div><div class="case-stat-label">Year 1 Growth</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--blue);">Done</div><div class="case-stat-label">BOT Complete</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-top" style="background:var(--teal);"></div>
+          <div class="case-body">
+            <span class="case-status" style="background:var(--teal-light); color:var(--teal-dark);">IN EXECUTION</span>
+            <div class="case-title">Scale-Up in AI Inference Space</div>
+            <div class="case-desc">A fast-moving AI inference scale-up needed niche technology expertise and rapid execution. HTEC hired, trained and operated fully functional teams, now scaling toward full BOT completion.</div>
+            <div class="case-services-label" style="color:var(--teal);">Services Provided</div>
+            <ul class="case-services">
+              <li style="--c:var(--teal)">Facilities transfer — office leases, hardware and equipment</li>
+              <li>Finance and tax: local regulations and incentives</li>
+              <li>BOT project planning and phased execution</li>
+              <li>Scaling toward Q2/Q3 2026 BOT completion</li>
+            </ul>
+            <div class="case-stats">
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--teal);">Multi</div><div class="case-stat-label">Teams Active</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--teal);">Live</div><div class="case-stat-label">In Execution</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--teal);">Multi</div><div class="case-stat-label">Year Partnership</div></div>
+              <div class="case-stat"><div class="case-stat-val" style="color:var(--teal); font-size:14px;">Q2/Q3 26</div><div class="case-stat-label">BOT Completion</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S17: TALENT LANDSCAPE -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="16">
+    <div class="slide-header">
+      <h2>Ireland Talent Landscape &amp; Sourcing Strategy</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1; margin-top:10px;">
+        <div>
+          <div style="font-size:9px; font-weight:700; color:var(--teal); letter-spacing:2px; margin-bottom:8px; text-transform:uppercase;">Galway Market Reality</div>
+          <div class="card-grid grid-2" style="gap:8px; margin-bottom:10px;">
+            <div style="background:#fff; border:1px solid var(--light-line); border-radius:4px; padding:10px; text-align:center;"><div style="font-size:24px; font-weight:900; color:var(--blue);">~10K</div><div style="font-size:8.5px; color:var(--slate); font-weight:600; margin-top:2px;">IT Professionals in Galway</div><div style="font-size:7.5px; color:var(--med-gray);">Competitive — all major firms here</div></div>
+            <div style="background:#fff; border:1px solid var(--light-line); border-radius:4px; padding:10px; text-align:center;"><div style="font-size:24px; font-weight:900; color:var(--teal);">70+</div><div style="font-size:8.5px; color:var(--slate); font-weight:600; margin-top:2px;">Med-Device Companies</div><div style="font-size:7.5px; color:var(--med-gray);">BSC, Abbott, Stryker present</div></div>
+            <div style="background:#fff; border:1px solid var(--light-line); border-radius:4px; padding:10px; text-align:center;"><div style="font-size:24px; font-weight:900; color:var(--orange);">€62K</div><div style="font-size:8.5px; color:var(--slate); font-weight:600; margin-top:2px;">Average SW Salary</div><div style="font-size:7.5px; color:var(--med-gray);">vs US $120K+ equivalent</div></div>
+            <div style="background:#fff; border:1px solid var(--light-line); border-radius:4px; padding:10px; text-align:center;"><div style="font-size:24px; font-weight:900; color:var(--purple);">800+</div><div style="font-size:8.5px; color:var(--slate); font-weight:600; margin-top:2px;">Annual Engineering Grads</div><div style="font-size:7.5px; color:var(--med-gray);">NUI Galway + ATU Galway</div></div>
+          </div>
+          <div class="note-box">You cannot hire 60 engineers from Galway alone in 12 months. The solution: source globally, land in Galway.</div>
+        </div>
+        <div>
+          <div style="font-size:9px; font-weight:700; color:var(--teal); letter-spacing:2px; margin-bottom:8px; text-transform:uppercase;">EU Nationals Already in Ireland (Relocation Pipeline)</div>
+          <div class="sourcing-row"><div class="sourcing-stripe" style="background:var(--blue);"></div><div class="sourcing-body"><div class="sourcing-country">🇵🇱 Poland</div><div class="sourcing-pool"><strong>93,680</strong> nationals in Ireland already · Largest EU pool</div><div class="sourcing-badge" style="background:var(--teal);">HIGH</div></div></div>
+          <div class="sourcing-row"><div class="sourcing-stripe" style="background:var(--teal);"></div><div class="sourcing-body"><div class="sourcing-country">🇷🇴 Romania</div><div class="sourcing-pool"><strong>43,300</strong> nationals in Ireland · Strong tech talent</div><div class="sourcing-badge" style="background:var(--teal);">HIGH</div></div></div>
+          <div class="sourcing-row"><div class="sourcing-stripe" style="background:var(--orange);"></div><div class="sourcing-body"><div class="sourcing-country">🇮🇳 India</div><div class="sourcing-pool"><strong>45,400</strong> nationals in Ireland · Deep SW pool</div><div class="sourcing-badge" style="background:var(--teal);">HIGH</div></div></div>
+          <div class="sourcing-row"><div class="sourcing-stripe" style="background:var(--gold);"></div><div class="sourcing-body"><div class="sourcing-country">🇪🇸 Spain</div><div class="sourcing-pool"><strong>17,900</strong> in Ireland + <strong>HTEC Granada presence</strong></div><div class="sourcing-badge" style="background:var(--gold);">MED</div></div></div>
+          <div class="sourcing-row"><div class="sourcing-stripe" style="background:var(--purple);"></div><div class="sourcing-body"><div class="sourcing-country">🇷🇸 Serbia / 🇨🇿 CZ</div><div class="sourcing-pool">HTEC base markets · relocation appetite varies</div><div class="sourcing-badge" style="background:var(--med-gray);">LOW</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S18: GEOGRAPHIC COMPARISON -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="17">
+    <div class="slide-header">
+      <h2>Geographic Comparison — Sample Markets</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">Location is a portfolio decision — not a single answer. We balance talent, cost, incentives, and speed.</div>
+      <div class="card-grid grid-2" style="flex:1;">
+        <div class="geo-card"><div class="geo-top" style="background:var(--blue);"></div><div class="geo-body"><div><div class="geo-country">Ireland <span class="geo-cost" style="background:var(--orange);">Cost: Low</span></div><div class="geo-note">Excellent for key leadership and regulatory roles — highest cost and most competitive hiring market.</div><div class="geo-stat">Pool: <span>~173,400 ICT specialists</span></div><div class="geo-stat">R&D: <span>35% R&D credit</span></div><div class="geo-stat">Competitors: <span>BSC, Abbott, JNJ, Cook, GE</span></div></div></div></div>
+        <div class="geo-card"><div class="geo-top" style="background:var(--teal);"></div><div class="geo-body"><div><div class="geo-country">Serbia <span class="geo-cost" style="background:var(--teal);">Cost: High Eff.</span></div><div class="geo-note">Large enough to scale. High quality talent, less competition, cost efficient. HTEC's home market.</div><div class="geo-stat">Pool: <span>~110,000 ICT professionals</span></div><div class="geo-stat">R&D: <span>Double deduction + 80% royalty relief</span></div><div class="geo-stat">Competitors: <span>Siemens, Abbott</span></div></div></div></div>
+        <div class="geo-card"><div class="geo-top" style="background:var(--orange);"></div><div class="geo-body"><div><div class="geo-country">Spain <span class="geo-cost" style="background:var(--gold);">Cost: Medium</span></div><div class="geo-note">Large market — careful city selection needed. HTEC present in Granada. Strong relocation appetite to Ireland.</div><div class="geo-stat">Pool: <span>~1,022,600 ICT specialists</span></div><div class="geo-stat">R&D: <span>25–42% credits + add-ons</span></div><div class="geo-stat">Competitors: <span>Abbott, Stryker, BSC, GE, Philips</span></div></div></div></div>
+        <div class="geo-card"><div class="geo-top" style="background:var(--purple);"></div><div class="geo-body"><div><div class="geo-country">Czech Republic <span class="geo-cost" style="background:var(--purple);">Cost: Medium</span></div><div class="geo-note">Mid-sized EU pool. Strong wage transparency and high productivity. Solid industrial and IT base.</div><div class="geo-stat">Pool: <span>~220,000 ICT specialists</span></div><div class="geo-stat">R&D: <span>159% super deduction up to CZK 50M</span></div><div class="geo-stat">Competitors: <span>JNJ, Siemens, Philips, GE</span></div></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S19: WHY HTEC -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="18">
+    <div class="slide-header">
+      <h2>Why HTEC for This Engagement</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr) repeat(2, 1fr); gap:10px; flex:1; margin-top:10px;">
+        <div class="why-card"><div class="why-top" style="background:var(--blue);"></div><div class="why-body"><div class="why-val" style="color:var(--blue);">25+</div><div class="why-label">Years Med-Device Domain Expertise</div><div class="why-desc">Deep knowledge of Medtronic's regulatory environment, product constraints and engineering culture — not a generalist firm learning on the job.</div></div></div>
+        <div class="why-card"><div class="why-top" style="background:var(--teal);"></div><div class="why-body"><div class="why-val" style="color:var(--teal);">#1</div><div class="why-label">BOT Delivered — Named Strategic Vendor</div><div class="why-desc">Successfully delivered BOT for AMD/D-Matrix. Known process, known governance, known outcomes. The only partner in a strategic-level conversation.</div></div></div>
+        <div class="why-card"><div class="why-top" style="background:var(--orange);"></div><div class="why-body"><div class="why-val" style="color:var(--orange);">30K+</div><div class="why-label">Global Engineer Network</div><div class="why-desc">Active candidate database spanning Serbia, Spain, UK, Germany, Guatemala, Colombia, Peru and Uruguay. 5% hire rate from a global pool.</div></div></div>
+        <div class="why-card"><div class="why-top" style="background:var(--purple);"></div><div class="why-body"><div class="why-val" style="color:var(--purple);">&lt;5%</div><div class="why-label">Team Churn — Career-First Culture</div><div class="why-desc">HTEC developers build long careers here. Significantly less churn than other vendors. Noted directly by Alex Mann in prior conversations.</div></div></div>
+        <div class="why-card"><div class="why-top" style="background:var(--gold);"></div><div class="why-body"><div class="why-val" style="color:var(--gold);">2027</div><div class="why-label">South America Ready — Built to Scale</div><div class="why-desc">Already present in Latin America. Galway is the starting point, not the ceiling. South America build targeted for Spring 2027.</div></div></div>
+      </div>
+      <div style="background:var(--teal-light); border:1px solid var(--teal); border-radius:4px; padding:10px 16px; margin-top:12px; font-size:11px; font-weight:700; color:var(--teal-dark); text-align:center;">The only partner with proven med-device engineering depth, global reach, and a track record of successful BOT transitions.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S20: NEXT STEPS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-content" data-idx="19">
+    <div class="slide-header">
+      <h2>Proposed Next Steps</h2>
+      <span class="htec-badge">HTEC GROUP</span>
+    </div>
+    <div class="slide-inner">
+      <div style="font-size:11px; color:var(--med-gray); font-style:italic; margin:10px 0 14px;">A clear path from conversation to contract.</div>
+      <div class="card-grid grid-4" style="flex:1;">
+        <div class="card">
+          <div class="card-top" style="background:var(--blue);"></div>
+          <div class="card-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="width:52px; height:52px; background:var(--blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:900; color:#fff; margin-bottom:10px;">01</div>
+            <div style="font-size:8px; font-weight:700; background:var(--blue); color:#fff; padding:3px 10px; border-radius:20px; margin-bottom:8px; letter-spacing:1px;">Al + John Braunfeld</div>
+            <div style="font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px;">Get the Role List</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.55;">Obtain the detailed JD list from John Braunfeld. Without this, no financial model can be finalized. This is the critical unblocking step.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--teal);"></div>
+          <div class="card-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="width:52px; height:52px; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:900; color:#fff; margin-bottom:10px;">02</div>
+            <div style="font-size:8px; font-weight:700; background:var(--teal); color:#fff; padding:3px 10px; border-radius:20px; margin-bottom:8px; letter-spacing:1px;">HTEC Team</div>
+            <div style="font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px;">Present 3–4 Options</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.55;">Bring all four engagement models to Alex and Jay Z. Frame as a risk brainstorm — not a pitch. Let Medtronic steer toward the right model.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--orange);"></div>
+          <div class="card-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="width:52px; height:52px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:900; color:#fff; margin-bottom:10px;">03</div>
+            <div style="font-size:8px; font-weight:700; background:var(--orange); color:#fff; padding:3px 10px; border-radius:20px; margin-bottom:8px; letter-spacing:1px;">HTEC + MDT HR</div>
+            <div style="font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px;">Define Sourcing Model</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.55;">Agree: does Medtronic source and HTEC screens? Or does HTEC source globally with relocation? This decision defines the entire operating model.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top" style="background:var(--purple);"></div>
+          <div class="card-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="width:52px; height:52px; background:var(--purple); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:900; color:#fff; margin-bottom:10px;">04</div>
+            <div style="font-size:8px; font-weight:700; background:var(--purple); color:#fff; padding:3px 10px; border-radius:20px; margin-bottom:8px; letter-spacing:1px;">Al — Separate Track</div>
+            <div style="font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px;">UI/UX Conversation</div>
+            <div style="font-size:9.5px; color:var(--slate); line-height:1.55;">Separate discussion with Alex on the UX opportunity. Do not conflate with hiring. This is a nearer-term, lower-complexity win in parallel.</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--teal-light); border:1px solid var(--teal); border-radius:4px; padding:10px 16px; margin-top:12px; font-size:11px; font-weight:700; color:var(--teal-dark); text-align:center; font-style:italic;">Confident. Consultative. HTEC does not just fill jobs — we build capability that lasts.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- S21: THANK YOU -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="slide s-thanks" data-idx="20">
+    <div class="thanks-top">
+      <h1>Thank You.</h1>
+      <div class="thanks-sub">Let's build the Galway center together.</div>
+    </div>
+    <div style="padding:24px 52px 70px; flex:1;">
+      <div class="office-grid">
+        <div class="office-card"><div class="office-card-top"></div><div class="office-card-body"><div class="office-city">Palo Alto</div><div class="office-addr">101 University Avenue, Suite 301<br>Palo Alto, CA 94301, USA<br>+1 415 490 8175<br>office-sf@htecgroup.com</div></div></div>
+        <div class="office-card"><div class="office-card-top"></div><div class="office-card-body"><div class="office-city">London</div><div class="office-addr">74 Rivington Street EC2A 3AY<br>London, United Kingdom<br>+44 203 818 5916<br>office-uk@htecgroup.com</div></div></div>
+        <div class="office-card"><div class="office-card-top"></div><div class="office-card-body"><div class="office-city">Belgrade</div><div class="office-addr">Milutina Milankovica, 7D<br>Belgrade 11070, Serbia<br>+381 11 228 11 82<br>office-bg@htecgroup.com</div></div></div>
+      </div>
+      <div style="margin-top:24px; text-align:center; color:#4A5568; font-size:11px; letter-spacing:1px;">htec.com &nbsp;·&nbsp; Intellectual Property of HTEC Group Inc.</div>
+    </div>
+    <div class="footer-strip">
+      <div class="strip-1"></div>
+      <div class="strip-2"></div>
+      <div class="strip-3"></div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- ── NAVIGATION ── -->
+<div class="nav">
+  <div class="nav-brand">HTEC × Medtronic</div>
+  <div class="nav-center">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>←</button>
+    <span class="slide-counter" id="counter">1 / 21</span>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+  </div>
+  <div class="nav-right">Galway Talent Build · March 2026</div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let cur = 0;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  function initMobile() {
+    // Make all slides visible for scroll mode
+    slides.forEach(s => s.classList.add('active'));
+  }
+
+  function navigate(dir) {
+    if (isMobile) return;
+    const next = cur + dir;
+    if (next < 0 || next >= total) return;
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add(dir > 0 ? 'prev' : '');
+    setTimeout(() => slides[cur].classList.remove('prev'), 500);
+    cur = next;
+    slides[cur].classList.add('active');
+    updateNav();
+  }
+
+  function updateNav() {
+    if (isMobile) return;
+    document.getElementById('counter').textContent = `${cur + 1} / ${total}`;
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur === total - 1;
+    document.getElementById('progress').style.width = `${((cur + 1) / total) * 100}%`;
+  }
+
+  if (isMobile) {
+    initMobile();
+  } else {
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') navigate(1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+    });
+
+    // Touch swipe (for tablets in desktop mode)
+    let tx = 0;
+    document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+    document.addEventListener('touchend', e => {
+      const dx = tx - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 50) navigate(dx > 0 ? 1 : -1);
+    });
+
+    updateNav();
+  }
+</script>
+</body>
+</html>
