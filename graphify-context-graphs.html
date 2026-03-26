@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphify.md + Context Graphs — Portable Intelligence for the Neo4j Era</title>
+<meta name="description" content="Neo4j built the database for context graphs. Graphify.md builds the intelligence that goes in them. And if you're not ready for Neo4j, our .md files work everywhere.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/graphify-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/graphify-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Yarmoluk/graphify-site/main/assets/og-preview.png">
+<meta property="og:title" content="Graphify.md + Context Graphs — Portable Intelligence for the Neo4j Era">
+<meta property="og:description" content="Neo4j built the database. Graphify.md builds the intelligence. Here's how they fit together — and why you don't need to choose.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://graphifymd.com/graphify-context-graphs.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@graphifymd">
+<meta name="twitter:title" content="Graphify.md + Context Graphs">
+<meta name="twitter:description" content="Neo4j built the database for context graphs. We build the intelligence that goes in them.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Yarmoluk/graphify-site/main/assets/og-preview.png">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #1e1e1e;
+  --text: #e5e5e5;
+  --text-dim: #888888;
+  --text-bright: #ffffff;
+  --blue: #3b82f6;
+  --blue-dim: rgba(59, 130, 246, 0.15);
+  --green: #22c55e;
+  --green-dim: rgba(34, 197, 94, 0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239, 68, 68, 0.12);
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.12);
+  --yellow: #eab308;
+  --yellow-dim: rgba(234, 179, 8, 0.12);
+  --orange: #f97316;
+  --orange-dim: rgba(249, 115, 22, 0.12);
+  --cyan: #06b6d4;
+  --cyan-dim: rgba(6, 182, 212, 0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, #1e1e1e 30%, #1e1e1e 70%, transparent); margin: 0 auto; max-width: 1100px; }
+
+h1, h2, h3, h4 { color: var(--text-bright); font-weight: 700; line-height: 1.15; }
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); letter-spacing: -0.02em; margin-bottom: 16px; }
+h3 { font-size: 1.15rem; margin-bottom: 8px; }
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  max-width: 720px;
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: #2563eb; box-shadow: 0 0 30px rgba(59,130,246,0.35); transform: translateY(-1px); }
+.btn-outline { background: transparent; color: var(--blue); border: 1.5px solid var(--blue); }
+.btn-outline:hover { background: var(--blue-dim); }
+
+/* Nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+nav .container { display: flex; align-items: center; justify-content: space-between; }
+nav .logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+nav .logo .ext { color: var(--blue); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-bright); }
+
+/* Hero */
+.hero {
+  padding: 160px 0 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, rgba(59,130,246,0.06) 0%, transparent 60%);
+}
+.hero .tagline {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 20px;
+}
+.hero h1 { margin-bottom: 20px; }
+.hero .sub {
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--text-dim);
+  max-width: 740px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+
+/* Two-col grid */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 48px 0;
+}
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Cards */
+.card {
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  transition: all 0.3s ease;
+}
+.card:hover {
+  border-color: rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.card-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.card.neo4j { border-color: rgba(0, 143, 57, 0.2); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 143, 57, 0.03) 100%); }
+.card.neo4j .card-badge { background: rgba(0, 143, 57, 0.12); color: #00c853; }
+.card.neo4j h3 { color: #00c853; }
+
+.card.graphify { border-color: rgba(59, 130, 246, 0.2); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(59, 130, 246, 0.03) 100%); }
+.card.graphify .card-badge { background: var(--blue-dim); color: var(--blue); }
+.card.graphify h3 { color: var(--blue); }
+
+.card .desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+
+.card-list { list-style: none; padding: 0; }
+.card-list li {
+  position: relative;
+  padding: 8px 0 8px 24px;
+  font-size: 0.9rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.card-list li:last-child { border-bottom: none; }
+.card-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.card.neo4j .card-list li::before { background: #00c853; opacity: 0.5; }
+.card.graphify .card-list li::before { background: var(--blue); opacity: 0.6; }
+
+/* Table */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 48px 0;
+  font-size: 0.9rem;
+}
+.comparison-table th {
+  text-align: left;
+  padding: 14px 18px;
+  font-weight: 700;
+  color: var(--text-bright);
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.comparison-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+.comparison-table tr:hover td { background: var(--bg-card); }
+.comparison-table .col-label { color: var(--text-dim); font-weight: 600; white-space: nowrap; }
+
+/* Layer stack */
+.layer-stack {
+  max-width: 800px;
+  margin: 48px auto;
+}
+.layer {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  margin-bottom: -1px;
+  transition: background 0.2s;
+}
+.layer:first-child { border-radius: 12px 12px 0 0; }
+.layer:last-child { border-radius: 0 0 12px 12px; }
+.layer:hover { background: var(--bg-card-hover); }
+
+.layer-label {
+  padding: 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  border-right: 1px solid var(--border);
+}
+.layer-neo, .layer-graphify {
+  padding: 16px 20px;
+}
+.layer-neo {
+  border-right: 1px solid var(--border);
+}
+.layer-neo h4, .layer-graphify h4 { font-size: 0.88rem; margin-bottom: 2px; }
+.layer-neo p, .layer-graphify p { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+
+.layer.active-neo { background: rgba(0, 143, 57, 0.04); border-color: rgba(0, 143, 57, 0.15); }
+.layer.active-neo .layer-label { color: #00c853; }
+.layer.active-graphify { background: rgba(59, 130, 246, 0.04); border-color: rgba(59, 130, 246, 0.15); }
+.layer.active-graphify .layer-label { color: var(--blue); }
+.layer.active-both { background: linear-gradient(90deg, rgba(0, 143, 57, 0.04), rgba(59, 130, 246, 0.04)); border-color: rgba(59, 130, 246, 0.15); }
+.layer.active-both .layer-label { color: var(--purple); }
+
+/* Three-col cards */
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin: 48px 0;
+}
+@media (max-width: 768px) { .three-col { grid-template-columns: 1fr; } }
+.insight-card {
+  padding: 28px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.insight-card .num {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: block;
+}
+.insight-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.insight-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; }
+
+/* Quote */
+.quote-section { text-align: center; padding: 80px 24px; }
+.quote {
+  font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+  font-style: italic;
+  color: #ccc;
+  max-width: 780px;
+  margin: 0 auto 16px;
+  line-height: 1.6;
+}
+.quote span { color: var(--blue); font-weight: 600; font-style: normal; }
+.quote-author { font-size: 0.85rem; color: #444; }
+
+/* Readiness */
+.readiness-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 48px 0;
+}
+@media (max-width: 768px) { .readiness-grid { grid-template-columns: 1fr; } }
+.readiness-card {
+  padding: 32px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.readiness-card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.readiness-card .audience { font-size: 0.82rem; color: var(--blue); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+.readiness-card p { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; }
+.readiness-card .path {
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.readiness-card .path strong { color: var(--blue); }
+
+/* Bottom line */
+.bottom-line {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(0, 143, 57, 0.04));
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  text-align: center;
+}
+.bottom-line h3 { font-size: 1.3rem; margin-bottom: 14px; }
+.bottom-line p { font-size: 1rem; color: var(--text); max-width: 620px; margin: 0 auto; line-height: 1.7; }
+
+/* CTA */
+.cta-section { text-align: center; padding: 100px 0 60px; }
+.cta-section h2 { max-width: 600px; margin: 0 auto 12px; }
+.cta-section .subtext { color: var(--text-dim); margin-bottom: 36px; font-size: 1.05rem; }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+footer a { color: var(--blue); text-decoration: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .layer { grid-template-columns: 60px 1fr; }
+  .layer-neo { border-right: none; border-bottom: 1px solid var(--border); }
+  .comparison-table { font-size: 0.8rem; }
+  .comparison-table th, .comparison-table td { padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <a href="https://www.graphifymd.com" class="logo"><img src="assets/graphify-logo.svg" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">Graphify<span class="ext">.md</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="context-architecture.html">The Science</a>
+      <a href="what-is-md.html">What Is .md?</a>
+      <a href="verticals.html">Verticals</a>
+      <a href="graphify-vs-memory-compression.html">vs. Compression</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="tagline">Context Graphs + Graphify.md</div>
+    <h1>Neo4j built the database.<br>We build the <span style="color:var(--blue);">intelligence.</span></h1>
+    <p class="sub">Neo4j's context graph push is the biggest validation yet that structured knowledge beats flat retrieval. But most organizations aren't ready for a six-figure database platform. Graphify.md delivers structured domain intelligence today &mdash; as portable .md files that work everywhere, including Neo4j.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- What Neo4j Is Doing -->
+<section>
+  <div class="container">
+    <span class="section-label">The Landscape</span>
+    <h2>What Neo4j announced &mdash; and why it matters</h2>
+    <p class="section-desc">In early 2026, Neo4j made "context graphs" their central thesis. Their CEO Emil Eifrem argues that AI agents need institutional memory &mdash; not just what's true now, but why decisions were made. They released <code style="background:#1e1e1e;padding:2px 8px;border-radius:4px;font-size:0.9em;">neo4j-agent-memory</code>, an open-source library with three memory types for AI agents.</p>
+
+    <div class="two-col">
+      <div class="card neo4j">
+        <span class="card-badge">Neo4j Context Graphs</span>
+        <h3>The Database Infrastructure</h3>
+        <p class="desc">A graph database platform that stores and queries context graphs at runtime. Three memory types for AI agents: short-term, long-term, and reasoning memory with decision traces.</p>
+        <ul class="card-list">
+          <li>Neo4j Enterprise or AuraDB cloud instance</li>
+          <li>Python agent framework (LangChain, CrewAI, etc.)</li>
+          <li>Embedding models (OpenAI, Vertex AI)</li>
+          <li>Graph Data Science algorithms (FastRP, Louvain)</li>
+          <li>Engineering team to build and maintain</li>
+          <li>Decision trace capture over time</li>
+        </ul>
+      </div>
+      <div class="card graphify">
+        <span class="card-badge">Graphify.md</span>
+        <h3>The Portable Intelligence</h3>
+        <p class="desc">Domain knowledge extracted, structured as knowledge graphs, and compressed to .md files. Any AI tool becomes a domain expert instantly. No database. No infrastructure. No engineering team.</p>
+        <ul class="card-list">
+          <li>A .md text file &mdash; that's the whole deliverable</li>
+          <li>Works in Claude, ChatGPT, Gemini, Cursor, any LLM</li>
+          <li>No database, no API, no server required</li>
+          <li>Human-curated domain expertise extraction</li>
+          <li>Delivered in days, not months</li>
+          <li>93% token compression, 170x reasoning paths</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Not Competitive -->
+<section>
+  <div class="container">
+    <span class="section-label">The Relationship</span>
+    <h2>Complementary, not competitive</h2>
+    <p class="section-desc">Neo4j and Graphify.md solve different problems at different layers. Neo4j is the persistent runtime &mdash; the database that stores, queries, and evolves context graphs over time. Graphify.md is the intelligence layer &mdash; the structured domain knowledge that makes those graphs valuable in the first place.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th style="color:#00c853;">Neo4j</th>
+          <th style="color:var(--blue);">Graphify.md</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-label">What it is</td>
+          <td>Graph database + agent memory platform</td>
+          <td>Domain intelligence compressed to portable .md</td>
+        </tr>
+        <tr>
+          <td class="col-label">Layer</td>
+          <td>Infrastructure &amp; persistence</td>
+          <td>Knowledge architecture &amp; context</td>
+        </tr>
+        <tr>
+          <td class="col-label">Requires</td>
+          <td>Database instance, Python, embedding models, engineering team</td>
+          <td>A text file. Drop into any AI tool.</td>
+        </tr>
+        <tr>
+          <td class="col-label">Time to value</td>
+          <td>Months (infrastructure + development)</td>
+          <td>Days (intelligence sprint delivery)</td>
+        </tr>
+        <tr>
+          <td class="col-label">Cost</td>
+          <td>$100K+ enterprise licensing + engineering</td>
+          <td>$2K sprint / $2&ndash;5K per month service</td>
+        </tr>
+        <tr>
+          <td class="col-label">Target buyer</td>
+          <td>Engineering teams, platform architects</td>
+          <td>Business teams, domain experts, ops leaders</td>
+        </tr>
+        <tr>
+          <td class="col-label">Vendor lock-in</td>
+          <td>Neo4j ecosystem (Cypher, GDS, drivers)</td>
+          <td>None &mdash; .md works in every AI tool</td>
+        </tr>
+        <tr>
+          <td class="col-label">Focus</td>
+          <td>Decision traces, agent memory, audit trails</td>
+          <td>Domain knowledge, reasoning paths, context density</td>
+        </tr>
+        <tr>
+          <td class="col-label">Evolves via</td>
+          <td>Agent interactions recorded over time</td>
+          <td>Human-curated domain expertise extraction</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Two Clocks -->
+<section>
+  <div class="container">
+    <span class="section-label">The Two Clocks</span>
+    <h2>Neo4j captures the event clock. Graphify.md architects the structure clock.</h2>
+    <p class="section-desc">Neo4j's own framing describes two clocks every organization runs on: the "state clock" (what's true right now) and the "event clock" (what happened and why). There's a third clock they don't name &mdash; the structure clock: how domain knowledge, relationships, and constraints are organized in the first place.</p>
+
+    <div class="three-col">
+      <div class="insight-card">
+        <span class="num" style="color:var(--text-dim);">01</span>
+        <h3>State Clock</h3>
+        <p>What's true right now. Customer's credit limit, inventory count, account status. Traditional databases handle this. It's solved.</p>
+      </div>
+      <div class="insight-card" style="border-color:rgba(0,143,57,0.2);">
+        <span class="num" style="color:#00c853;">02</span>
+        <h3>Event Clock</h3>
+        <p>What happened and why. Decision traces, reasoning memory, audit trails. This is Neo4j's context graph thesis &mdash; and it's a real gap.</p>
+      </div>
+      <div class="insight-card" style="border-color:rgba(59,130,246,0.2);">
+        <span class="num" style="color:var(--blue);">03</span>
+        <h3>Structure Clock</h3>
+        <p>How domain knowledge is organized. Entities, relationships, constraints, decision logic. This is what Graphify.md builds &mdash; the architecture that makes both other clocks useful.</p>
+      </div>
+    </div>
+
+    <p style="text-align:center; color:var(--text); font-size:1.1rem; max-width:700px; margin:0 auto; line-height:1.7;">Without domain structure, decision traces are just logs. Without decision traces, domain structure is static. <strong style="color:var(--text-bright);">The complete context graph needs both.</strong></p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Quote -->
+<div class="quote-section">
+  <div class="quote">"We're barely at the point where semi-autonomous agents are getting deployed for some key use cases."</div>
+  <div class="quote-author">Dharmesh Shah, CTO of HubSpot &mdash; on why most companies aren't ready for full context graph infrastructure</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- The Readiness Gap -->
+<section>
+  <div class="container">
+    <span class="section-label">The Readiness Gap</span>
+    <h2>Most organizations need intelligence before infrastructure</h2>
+    <p class="section-desc">Neo4j's context graph vision is compelling. But it assumes you have an engineering team, a graph database, agent frameworks, and months of development time. Most organizations aren't there yet. Graphify.md bridges that gap.</p>
+
+    <div class="readiness-grid">
+      <div class="readiness-card">
+        <h3>Not ready for Neo4j yet?</h3>
+        <div class="audience">Most organizations today</div>
+        <p>You don't have a graph database. You don't have an agent framework. Your team uses Claude, ChatGPT, or Cursor for AI. You need structured domain intelligence, not infrastructure.</p>
+        <div class="path"><strong>Start with Graphify.md.</strong> Get structured knowledge graphs delivered as .md files. Drop them into whatever AI tools your team already uses. Instant domain expertise. Zero infrastructure.</div>
+      </div>
+      <div class="readiness-card">
+        <h3>Already running Neo4j?</h3>
+        <div class="audience">Enterprise engineering teams</div>
+        <p>You have the database. You have the agent framework. What you need is the structured domain knowledge to populate your context graph's long-term memory layer.</p>
+        <div class="path"><strong>Graphify.md feeds Neo4j.</strong> We extract and structure domain expertise &mdash; entities, relationships, decision logic, constraints &mdash; that becomes the knowledge foundation of your context graph. We do the hard part. Neo4j stores and evolves it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- The On-Ramp -->
+<section>
+  <div class="container">
+    <span class="section-label">The Path Forward</span>
+    <h2>Graphify.md is the on-ramp to context graphs</h2>
+    <p class="section-desc">The hardest part of building a context graph isn't the database. It's extracting and structuring the domain knowledge in the first place. That's what Graphify.md does.</p>
+
+    <div class="three-col">
+      <div class="insight-card">
+        <span class="num" style="color:var(--blue);">01</span>
+        <h3>Start portable</h3>
+        <p>Get structured .md knowledge graphs for your domain. Use them in Claude, ChatGPT, Cursor &mdash; whatever your team uses today. Immediate value, zero infrastructure.</p>
+      </div>
+      <div class="insight-card">
+        <span class="num" style="color:var(--purple);">02</span>
+        <h3>Scale when ready</h3>
+        <p>When your AI needs grow, the same domain knowledge that lives in .md files can be imported into Neo4j as the foundation of a persistent context graph.</p>
+      </div>
+      <div class="insight-card">
+        <span class="num" style="color:var(--green);">03</span>
+        <h3>Evolve continuously</h3>
+        <p>Neo4j captures decision traces over time. Graphify.md keeps the domain structure current. Together: a context graph that compounds institutional intelligence.</p>
+      </div>
+    </div>
+
+    <div class="bottom-line" style="margin-top:48px;">
+      <h3>The positioning</h3>
+      <p>Neo4j built the database for context graphs. Graphify.md builds the intelligence that goes in them. And if you're not ready for Neo4j yet, our .md files work in every AI tool on the planet.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>See structured context in action</h2>
+    <p class="subtext">We'll build a live knowledge graph for your domain in 30 minutes. No slides, just the delta.</p>
+    <div class="cta-buttons">
+      <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary">Book a Free Demo</a>
+      <a href="context-architecture.html" class="btn btn-outline">Read The Science</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    Graphify.md &mdash; Context Architecture for AI &middot;
+    <a href="https://www.graphifymd.com">graphifymd.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
