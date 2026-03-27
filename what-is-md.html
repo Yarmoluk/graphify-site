@@ -140,6 +140,34 @@ h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; color: #fff; mar
 .footer { text-align: center; padding: 40px; font-size: 11px; color: #333; border-top: 1px solid #1a1a1a; }
 .footer a { color: #3b82f6; text-decoration: none; }
 
+/* Nav */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,10,0.88); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #1e1e1e; padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.site-nav .nav-logo {
+  font-size: 1.15rem; font-weight: 700; color: #fff;
+  text-decoration: none; letter-spacing: -0.02em;
+}
+.site-nav .nav-logo .ext { color: #3b82f6; }
+.site-nav .nav-links { display: flex; gap: 24px; align-items: center; }
+.site-nav .nav-links a {
+  color: #777; text-decoration: none; font-size: 0.85rem;
+  font-weight: 500; transition: color 0.2s;
+}
+.site-nav .nav-links a:hover { color: #fff; }
+.site-nav .nav-links a.active { color: #3b82f6; font-weight: 600; }
+.site-nav .nav-cta {
+  background: #3b82f6; color: #fff; padding: 9px 20px;
+  border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+  text-decoration: none; transition: background 0.2s;
+}
+.site-nav .nav-cta:hover { background: #2563eb; }
+.hero { padding-top: 80px; }
+
 /* Flow diagram */
 .flow { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 32px 0; flex-wrap: wrap; }
 .flow-box { background: #111; border: 1px solid #1e1e1e; border-radius: 8px; padding: 12px 20px; font-size: 13px; font-weight: 600; color: #ccc; text-align: center; }
@@ -148,6 +176,19 @@ h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; color: #fff; mar
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Graphify<span class="ext">.md</span></a>
+  <div class="nav-links">
+    <a href="index.html#sources">Data Sources</a>
+    <a href="index.html#verticals">Verticals</a>
+    <a href="index.html#geo">GEO</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="intelligence-thesis.html">Thesis</a>
+    <a href="what-is-md.html" class="active">What Is .md?</a>
+  </div>
+  <a href="https://calendly.com/daniel-yarmoluk/30min" class="nav-cta">Book a Demo</a>
+</nav>
 
 <div class="hero">
   <div>
@@ -392,12 +433,12 @@ h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; color: #fff; mar
   <h2>See it live in 30 minutes</h2>
   <p>We'll build part of your domain graph live. No slides. Just the delta.</p>
   <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary">Book a Free Demo</a>
-  <p style="margin-top:20px;"><a href="https://www.graphifymd.com" style="color:#3b82f6;text-decoration:none;">graphifymd.com</a> &middot; <a href="https://www.graphifymd.com/context-architecture.html" style="color:#3b82f6;text-decoration:none;">The Science</a></p>
+  <p style="margin-top:20px;"><a href="index.html" style="color:#3b82f6;text-decoration:none;">← Back to Graphify.md</a> &middot; <a href="intelligence-thesis.html" style="color:#3b82f6;text-decoration:none;">Read the Thesis</a> &middot; <a href="index.html#verticals" style="color:#3b82f6;text-decoration:none;">See Verticals</a></p>
 </div>
 
 <div class="footer">
-  Graphify.md — Context Architecture for AI<br>
-  <a href="https://www.graphifymd.com">graphifymd.com</a>
+  Graphify.md — LLM-Ready Market Intelligence by Vertical<br>
+  <a href="index.html">graphifymd.com</a>
 </div>
 
 </body>

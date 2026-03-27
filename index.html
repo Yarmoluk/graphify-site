@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Graphify.md — Context Architecture for AI</title>
-<meta name="description" content="Context architecture. Graph distillation to .md. 170x context density, 93% token compression. Knowledge graphs that make every AI tool reason, not just retrieve.">
+<title>Graphify.md — LLM-Ready Market Intelligence by Vertical</title>
+<meta name="description" content="LLM-ready market intelligence by vertical. Graphify.md compresses SEC EDGAR, GDELT, USPTO, federal contracts, openFDA, and Congress PTR data into structured Knowledge Graph files — 93% fewer tokens, zero data cost, 18 verticals.">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/graphify-icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/graphify-icon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Yarmoluk/graphify-site/main/assets/og-preview.png">
-<meta property="og:title" content="Graphify.md — Context Architecture for AI">
-<meta property="og:description" content="170x context density. 93% token compression. Knowledge graphs that make every AI tool reason, not just retrieve.">
+<meta property="og:title" content="Graphify.md — LLM-Ready Market Intelligence by Vertical">
+<meta property="og:description" content="LLM-ready market intelligence by vertical. Structured Knowledge Graph files from SEC EDGAR, GDELT, USPTO — 93% fewer tokens, zero data cost. The context layer that makes AI answers accurate.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://graphifymd.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@graphifymd">
-<meta name="twitter:title" content="Graphify.md — Context Architecture for AI">
-<meta name="twitter:description" content="170x context density. 93% token compression. The knowledge graph layer for AI reasoning.">
+<meta name="twitter:title" content="Graphify.md — LLM-Ready Market Intelligence by Vertical">
+<meta name="twitter:description" content="LLM-ready market intelligence by vertical. SEC EDGAR, GDELT, USPTO compressed to .md. 93% fewer tokens. 10x cheaper AI. The GEO layer for every AI answer.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Yarmoluk/graphify-site/main/assets/og-preview.png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -935,6 +935,210 @@
     .stat-box { padding: 20px 16px; }
     .compare-card h3 { font-size: 1.25rem; }
   }
+
+  /* --- Token Tax Section --- */
+  .token-math {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    margin: 48px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .token-col {
+    padding: 36px 32px;
+    text-align: center;
+  }
+  .token-col.bad { border-right: 1px solid var(--border); }
+  .token-col.good { border-left: 1px solid var(--border); }
+  .token-col .token-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .token-col.bad .token-label { color: var(--red); }
+  .token-col.good .token-label { color: var(--green); }
+  .token-col .token-big {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .token-col.bad .token-big { color: var(--red); }
+  .token-col.good .token-big { color: var(--green); }
+  .token-col .token-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.5; }
+  .token-arrow {
+    font-size: 2rem;
+    color: var(--blue);
+    padding: 0 16px;
+    font-weight: 300;
+  }
+  .token-savings-bar {
+    background: linear-gradient(90deg, var(--red-dim), var(--blue-dim), var(--green-dim));
+    border-radius: 8px;
+    padding: 20px 28px;
+    margin: 24px 0;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .token-savings-bar strong { color: var(--text-bright); }
+  .token-savings-bar span { color: var(--green); font-weight: 700; }
+
+  /* --- Data Sources Grid --- */
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin: 48px 0 24px;
+  }
+  .source-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: all 0.25s ease;
+  }
+  .source-card:hover {
+    border-color: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .source-icon {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .source-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .source-desc {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.45;
+  }
+  .source-note {
+    font-size: 0.68rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 6px;
+    display: block;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* --- Verticals Grid --- */
+  .vertical-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 48px 0;
+  }
+  .vertical-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 18px;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .vertical-card:hover {
+    border-color: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .vertical-card.live::after {
+    content: 'LIVE';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    background: var(--green-dim);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .vertical-card .v-icon { font-size: 1.3rem; margin-bottom: 8px; display: block; }
+  .vertical-card h4 { font-size: 0.9rem; color: var(--text-bright); margin-bottom: 4px; font-weight: 700; }
+  .vertical-card p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
+
+  /* --- GEO Section --- */
+  .geo-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 48px 0;
+  }
+  .geo-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .geo-col.old { border-color: rgba(239,68,68,0.2); }
+  .geo-col.new { border-color: rgba(59,130,246,0.25); background: linear-gradient(135deg, var(--bg-card), rgba(59,130,246,0.04)); }
+  .geo-era {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .geo-col.old .geo-era { color: var(--red); }
+  .geo-col.new .geo-era { color: var(--blue); }
+  .geo-col h3 { font-size: 1.2rem; margin-bottom: 16px; }
+  .geo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .geo-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.45;
+  }
+  .geo-list li:last-child { border-bottom: none; }
+  .geo-list li .geo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .geo-col.old .geo-dot { background: var(--red); opacity: 0.5; }
+  .geo-col.new .geo-dot { background: var(--blue); }
+
+  @media (max-width: 768px) {
+    .source-grid { grid-template-columns: repeat(2, 1fr); }
+    .vertical-grid { grid-template-columns: repeat(2, 1fr); }
+    .geo-split { grid-template-columns: 1fr; }
+    .token-math { grid-template-columns: 1fr; }
+    .token-arrow { transform: rotate(90deg); padding: 8px 0; }
+    .token-col.bad { border-right: none; border-bottom: 1px solid var(--border); }
+    .token-col.good { border-left: none; border-top: 1px solid var(--border); }
+  }
 </style>
 </head>
 <body>
@@ -944,12 +1148,14 @@
   <div class="container">
     <a href="#" class="logo"><img src="assets/graphify-logo.svg" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">Graphify<span class="ext">.md</span></a>
     <div class="nav-links">
-      <a href="#case-studies">Case Studies</a>
-      <a href="context-architecture.html">The Science</a>
-      <a href="graph-demo.html">Live Graph</a>
-      <a href="verticals.html">Verticals</a>
-      <a href="agentic-ai-landscape.html" style="color:#818cf8;font-weight:600;">Agentic AI Report</a>
+      <a href="#sources">Data Sources</a>
+      <a href="#verticals">Verticals</a>
+      <a href="#geo">GEO</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="intelligence-thesis.html">Thesis</a>
+      <a href="jensen-post.html">Jensen Post</a>
       <a href="what-is-md.html">What Is .md?</a>
+      <a href="#resources">Resources</a>
     </div>
     <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary nav-cta-desktop">Book a Free Demo</a>
     <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -973,9 +1179,9 @@
 <section class="hero">
   <canvas class="hero-network" id="heroNet"></canvas>
   <div class="container">
-    <h1 class="fade-up d05">Too much data.<br>Too little <span class="accent">structure.</span></h1>
-    <p class="hero-sub fade-up d1">Persistent memory is a step. Structured Context Architecture is the leap.</p>
-    <div class="hero-metrics fade-up d1">170x context density &middot; 93% token compression &middot; Knowledge graphs compressed to .md</div>
+    <h1 class="fade-up d05">LLM-ready market intelligence.<br>10x fewer <span class="accent">tokens.</span></h1>
+    <p class="hero-sub fade-up d1">Graphify.md pulls from SEC EDGAR, GDELT, USPTO, USASpending, and openFDA — compresses public data into structured Knowledge Graph files by vertical. Zero data cost. Weekly delivery. Drop straight into any AI tool.</p>
+    <div class="hero-metrics fade-up d1">10x token cost reduction &middot; 93% compression &middot; 18 verticals &middot; 6 free public sources &middot; Zero data cost</div>
     <div class="hero-cta fade-up d2">
       <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary glow">Book a Free Demo</a>
       <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
@@ -1043,28 +1249,28 @@
 <section id="product">
   <div class="container">
     <span class="section-label">Intelligence, Not Software</span>
-    <h2>We don't build tools. We make every tool you already use smarter.</h2>
+    <h2>We don't build tools. We build the context layer every AI tool runs on top of.</h2>
 
     <div class="product-grid">
       <div class="product-card fade-up d1">
         <div class="product-icon">&#x25C8;</div>
-    <h3>Unified Domain Model</h3>
-        <p>~200 concepts, relationships, and rules about YOUR business — structured as portable markdown files that plug into any AI tool via MCP.</p>
+        <h3>Compressed Knowledge Graph Files</h3>
+        <p>Pre-structured, token-optimized market intelligence by vertical — pulled from SEC EDGAR, GDELT, USPTO, USASpending, and openFDA. Delivered weekly as .md files. Zero data cost.</p>
       </div>
       <div class="product-card fade-up d2">
         <div class="product-icon">&#x2B21;</div>
-        <h3>Deep Reasoning Hops</h3>
-        <p>AI agents that traverse 3-5 hops across your domain graph — generating insights, not just retrieving text. Multi-step reasoning at operational speed.</p>
+        <h3>GEO Placement Layer</h3>
+        <p>AI answers are the new search results. Companies in our Knowledge Graph files get cited inside LLM responses — structured entity presence that makes you the answer, not the ad.</p>
       </div>
       <div class="product-card fade-up d3">
         <div class="product-icon">&#x2B50;</div>
-        <h3>Transparent Reasoning Traces</h3>
-        <p>Every AI output traces back through the graph — node by node, hop by hop. No black boxes. Full audit trail from answer to source.</p>
+        <h3>Custom Domain Intelligence</h3>
+        <p>Your organization's knowledge — ~200 concepts, relationships, and rules — structured as portable markdown files. Plug into Claude, ChatGPT, Cursor via MCP. No new software.</p>
       </div>
       <div class="product-card fade-up d4">
         <div class="product-icon">&#x29BF;</div>
-        <h3>MCP Delivery</h3>
-        <p>Your intelligence plugs directly into Claude, ChatGPT, Cursor — any tool your team already uses. No new software. No login. Just smarter AI, instantly.</p>
+        <h3>10x Token Economics</h3>
+        <p>AI operators spend $146K/year feeding raw PDFs into LLMs. Graphify.md delivers the same intelligence at 93% fewer tokens — before reasoning quality even enters the conversation.</p>
       </div>
     </div>
   </div>
@@ -1072,74 +1278,110 @@
 
 <div class="divider"></div>
 
-<!-- The Human Layer -->
-<section id="human-layer">
+<!-- Token Tax -->
+<section id="token-tax">
   <div class="container">
-    <span class="section-label">The Human Layer</span>
-    <h2>The intelligence isn't artificial.<br>It's <span class="accent">intentional.</span></h2>
+    <span class="section-label">The Token Tax</span>
+    <h2>AI operators are paying $146K/year to feed<br>raw documents into LLMs. There's a better way.</h2>
 
-    <p style="text-align:center; color: var(--text); font-size: 1.15rem; max-width: 740px; margin: 0 auto 48px; line-height: 1.8;">
-      AI doesn't know what matters. You do. The human isn't being replaced by the graph — the human <strong style="color:#fff;">is</strong> the graph. Every relationship you name, every connection you draw, every weight you assign — that's intention. And intention is the one thing a model can't manufacture.
+    <p style="text-align:center; color:var(--text-dim); max-width:680px; margin:0 auto 0; font-size:1rem; line-height:1.7;">
+      Every PDF, filing, and article you push into a context window is mostly noise. Legal boilerplate. Redundant formatting. Filler. You pay for every token — including the ones that don't help your AI reason.
     </p>
 
-    <div class="product-grid">
-      <div class="product-card fade-up d1">
-        <div class="product-icon" style="font-size:1.6rem;">&#x1F3AF;</div>
-        <h3>Intention</h3>
-        <p>A model can process your context. It can't decide what matters. That's you — choosing which relationships to build, which connections carry weight. Intention is the input no algorithm generates.</p>
+    <div class="token-math">
+      <div class="token-col bad">
+        <span class="token-label">Raw Document</span>
+        <span class="token-big">6,000</span>
+        <span class="token-desc">tokens per SEC Form D filing<br>~90% boilerplate &amp; legal language</span>
       </div>
-      <div class="product-card fade-up d2">
-        <div class="product-icon" style="font-size:1.6rem;">&#x1F552;</div>
-        <h3>Time</h3>
-        <p>Knowledge graphs aren't snapshots. They're living structures that evolve as you learn, as your domain shifts, as your understanding deepens. Time is a dimension of intelligence, not just a timestamp.</p>
-      </div>
-      <div class="product-card fade-up d3">
-        <div class="product-icon" style="font-size:1.6rem;">&#x1F9F5;</div>
-        <h3>Texture</h3>
-        <p>Flat text is flat intelligence. When you structure your domain — the exceptions, the nuance, the context that only an expert knows — you give your AI texture. That texture is the difference between retrieval and reasoning.</p>
-      </div>
-      <div class="product-card fade-up d4">
-        <div class="product-icon" style="font-size:1.6rem;">&#x1F517;</div>
-        <h3>Relationships</h3>
-        <p>Intelligence doesn't live in the nodes. It lives in the space between them — the relationships, the flow, the structure. That's where meaning emerges. A graph database mirrors how understanding actually works.</p>
+      <div class="token-arrow">&#x2192;</div>
+      <div class="token-col good">
+        <span class="token-label">Graphify.md CKG File</span>
+        <span class="token-big">400</span>
+        <span class="token-desc">tokens, same filing<br>100% signal. Zero noise.</span>
       </div>
     </div>
 
-    <div style="max-width:700px; margin:48px auto 0; text-align:center;">
-      <p style="font-size:1.25rem; color:var(--text-bright); line-height:1.7; font-weight:500;">
-        Are you graph aware? Are you context aware? Are you <em style="color:var(--blue);">intention</em> aware?
-      </p>
-      <p style="font-size:1rem; color:var(--text-dim); margin-top:12px; line-height:1.7;">
-        Humans love on their models — they bring texture, context, purpose. The stuff that turns a glorified autocomplete into actual intelligence. That's not a feature. That's the source.
-      </p>
+    <div class="token-savings-bar">
+      <strong>10x fewer tokens. 93% compression. </strong> Same intelligence density — structured for how LLMs actually reason, not how humans read PDFs. <span>Token savings alone justify the subscription before accuracy improvements enter the conversation.</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="number">$146K</span>
+        <span class="label">Avg annual spend per enterprise AI team on raw document ingestion</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">93%</span>
+        <span class="label">Token compression rate — same intelligence, fraction of the context window</span>
+      </div>
+      <div class="stat-box">
+        <span class="number">$0</span>
+        <span class="label">Data acquisition cost — all five sources are public and free</span>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- The Graph Delta -->
-<section id="delta">
+<!-- Data Sources -->
+<section id="sources">
   <div class="container">
-    <span class="section-label">The Graph Delta</span>
-    <h2>Same model. Same prompt. One reasons — the other guesses.</h2>
+    <span class="section-label">The Six Sources</span>
+    <h2>The US government published a complete map of the economy.<br>We structure it for your AI.</h2>
 
-    <div class="delta-grid">
-      <div class="delta-card without">
-        <div class="label-bar"><span class="dot"></span> Without Graphify.md</div>
-        <div class="prompt">"Tell me about IP docketing automation"</div>
-        <div class="response">"IP docketing automation involves using software to manage intellectual property deadlines and filings. Many law firms use tools like..."</div>
-        <p style="margin-top: 14px; font-size: 0.78rem; color: var(--red); opacity: 0.7;">Generic. Wikipedia-level. Useless for decisions.</p>
+    <p style="text-align:center; color:var(--text-dim); max-width:680px; margin:0 auto 0; font-size:1rem; line-height:1.7;">
+      No data licensing. No scraping. No legal review. Six free public sources cover every private capital raise, global news event, patent filing, federal contract, drug clearance, and congressional trade in the United States — updated daily.
+    </p>
+
+    <div class="source-grid">
+      <div class="source-card">
+        <span class="source-icon">&#x1F4DC;</span>
+        <span class="source-name">SEC EDGAR</span>
+        <span class="source-desc">Every private capital raise in the US, filed within 15 days of close. Company, amount, investors, industry.</span>
+        <span class="source-note">Updated daily</span>
       </div>
-      <div class="delta-card with" style="border-color: rgba(34, 197, 94, 0.25);">
-        <div class="label-bar"><span class="dot"></span> With Graphify.md</div>
-        <div class="prompt">"Tell me about IP docketing automation"</div>
-        <div class="response">Identifies your firm's 14 docket types, maps each to its deadline rule engine, links to the 3 upstream intake workflows that feed them, and flags the 2 exception paths that cause 68% of missed deadlines.</div>
-        <p style="margin-top: 14px; font-size: 0.78rem; color: var(--green); opacity: 0.8;">Specific. Operational. Production-ready.</p>
+      <div class="source-card">
+        <span class="source-icon">&#x1F310;</span>
+        <span class="source-name">GDELT</span>
+        <span class="source-desc">Global news across 65 languages. Events, actors, and sentiment classified at the article level.</span>
+        <span class="source-note">Every 15 min</span>
+      </div>
+      <div class="source-card">
+        <span class="source-icon">&#x2696;&#xFE0F;</span>
+        <span class="source-name">USPTO</span>
+        <span class="source-desc">Patent applications and assignments. IP acquisition signals that predate press releases by months.</span>
+        <span class="source-note">Updated weekly</span>
+      </div>
+      <div class="source-card">
+        <span class="source-icon">&#x1F3DB;&#xFE0F;</span>
+        <span class="source-name">USASpending</span>
+        <span class="source-desc">Every federal contract and grant — defense, NIH, DoE. Contractor, amount, agency, period.</span>
+        <span class="source-note">Updated daily</span>
+      </div>
+      <div class="source-card">
+        <span class="source-icon">&#x1F48A;</span>
+        <span class="source-name">openFDA</span>
+        <span class="source-desc">Drug approvals, device clearances, adverse events, and recalls. The full regulatory map of life sciences.</span>
+        <span class="source-note">Updated daily</span>
+      </div>
+      <div class="source-card" style="border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.04);">
+        <span class="source-icon">&#x1F1FA;&#x1F1F8;</span>
+        <span class="source-name" style="color:var(--blue);">Congress PTR <span style="font-size:0.6rem; font-weight:700; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:4px; padding:1px 6px; margin-left:4px; letter-spacing:1px; text-transform:uppercase;">NEW</span></span>
+        <span class="source-desc">STOCK Act Periodic Transaction Reports — what members of Congress are buying and selling across committee jurisdictions. Legislative-linked trades, pre-vote signals, committee-specific patterns.</span>
+        <span class="source-note">Updated within 45 days of trade · Free via House &amp; Senate disclosure portals</span>
       </div>
     </div>
 
-    <p class="delta-tagline">The <span>intelligence</span> is the product.</p>
+    <div style="margin-top:20px; padding:16px 20px; background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.15); border-radius:10px; max-width:680px; margin-left:auto; margin-right:auto;">
+      <div style="font-size:0.7rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:8px;">Cross-Signal Architecture</div>
+      <p style="font-size:0.85rem; color:var(--text-dim); line-height:1.6;">Congress PTR data isn't just its own vertical — it's a <strong style="color:var(--text);">regulatory cross-signal</strong> embedded into every relevant CKG. Armed Services Committee member buys Palantir before an NDAA vote → that signal appears in the Defense CKG. HELP Committee member sells Pfizer before a drug pricing hearing → that enriches the Pharma CKG. A tech-committee member loads up on Nvidia → that's inside the AI vertical. One source. Every vertical that touches legislation.</p>
+    </div>
+
+    <p style="text-align:center; color:var(--text-dim); font-size:0.88rem; margin-top:16px;">
+      Each source is compressed from raw format into structured Knowledge Graph files — entities named, relationships declared, attributes attached. LLM-native from the start.
+    </p>
   </div>
 </section>
 
@@ -1149,25 +1391,25 @@
 <section id="how-it-works">
   <div class="container">
     <span class="section-label">How It Works</span>
-    <h2>From first call to production AI in weeks, not months.</h2>
+    <h2>Two ways to get LLM-ready intelligence. Both start with structure.</h2>
 
     <div class="steps">
       <div class="step">
         <div class="step-number">1</div>
-        <h3>Free Demo</h3>
-        <p>We build a section of your domain graph live, on the call. You see the delta in real time. No slides. No decks.</p>
-        <span class="price">Free</span>
+        <h3>Vertical Subscription</h3>
+        <p>Subscribe to a pre-built market intelligence vertical — life sciences, pharma, AI, defense, cybersecurity, and more. Weekly CKG files from SEC EDGAR, GDELT, USPTO, and federal data. Drop into any LLM workflow instantly.</p>
+        <span class="price">Subscription / API</span>
       </div>
       <div class="step">
         <div class="step-number">2</div>
         <h3>Intelligence Sprint</h3>
-        <p>Your domain graph — ~200 concepts, relationships, and rules — delivered as MCP context packs. Plug into your existing AI tools. Instant upgrade.</p>
+        <p>Your domain graph — ~200 concepts, relationships, and rules about your specific business — delivered as MCP context packs. Plug into your existing AI tools. Instant upgrade.</p>
         <span class="price">Starting at $2K</span>
       </div>
       <div class="step">
         <div class="step-number">3</div>
         <h3>Intelligence-as-a-Service</h3>
-        <p>Graph expansion, new verticals, monthly optimization. Your AI compounds knowledge over time — it gets smarter every month.</p>
+        <p>Graph expansion, new verticals, monthly optimization. Your AI compounds knowledge over time — getting smarter every week as new filings, news, and patents are processed.</p>
         <span class="price">$2K &ndash; $5K / mo</span>
       </div>
     </div>
@@ -1182,7 +1424,7 @@
     <span class="section-label">Track Record</span>
     <h2>The numbers don't lie. Neither does the graph.</h2>
 
-    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">Most AI shops burn tokens and guess. We measure token density, fuel efficiency, and reasoning hops — then optimize relentlessly.</p>
+    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">Pipeline live. Zero data cost. 6 CKG files across 18 verticals — life sciences, pharma, medical devices, AI, defense, cybersecurity, and congressional intelligence — with congressional trades embedded as cross-signals across all relevant verticals.</p>
 
     <div class="proof-grid">
       <div class="proof-card">
@@ -1239,69 +1481,132 @@
 
 <div class="divider"></div>
 
-<!-- Personas — Sound Familiar? -->
-<section id="personas">
+<!-- Verticals -->
+<section id="verticals">
   <div class="container">
-    <span class="section-label">Sound Familiar?</span>
-    <h2>Every role has the same problem.<br>Not enough signal. Too much noise.</h2>
+    <span class="section-label">Coverage by Vertical</span>
+    <h2>18 verticals. Weekly updates.<br>Zero data acquisition cost.</h2>
 
-    <div class="persona-grid">
+    <p style="text-align:center; color:var(--text-dim); max-width:680px; margin:0 auto 0; font-size:1rem; line-height:1.7;">
+      The same six public sources produce completely different intelligence depending on the vertical. We embed the domain knowledge — what matters, what connects to what, what signals mean — so your AI doesn't have to guess. Several verticals share regulatory cross-signals: congressional trades, FDA actions, and federal contracts enrich multiple CKGs simultaneously.
+    </p>
 
-      <div class="persona-card">
-        <div class="persona-quote">"I've got 200 accounts and no idea which 15 to call this week. My CRM tells me what happened — not what to do next."</div>
-        <div class="persona-meta">
-          <span class="persona-role">Sales Leader</span>
-          <span class="persona-pain">Territory intelligence</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> Maps your entire territory into a knowledge graph — account tiers, buying signals, competitive positioning, and next-best-action by account. Your CRM shows history. The graph shows the future.</div>
+    <div class="vertical-grid">
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1F9EC;</span>
+        <h4>Life Sciences &amp; Biotech</h4>
+        <p>Clinical trial funding, FDA pipeline, Series A/B raise signals</p>
       </div>
-
-      <div class="persona-card">
-        <div class="persona-quote">"We spend $40K a year on travel, coaching, and camps — and I still can't tell you if my daughter is developing or just busy."</div>
-        <div class="persona-meta">
-          <span class="persona-role">Sports Parent</span>
-          <span class="persona-pain">Outcome visibility</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> Built the investor intelligence model for a girls-only sports academy — mapping the entire athlete development stack, enrollment economics, and college placement pathways into a structured graph investors can underwrite.</div>
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1F48A;</span>
+        <h4>Pharmaceuticals</h4>
+        <p>Drug approvals, patent expirations, acquisition targets by indication</p>
       </div>
-
-      <div class="persona-card">
-        <div class="persona-quote">"Our ops team runs on tribal knowledge. When someone leaves, we lose six months of context."</div>
-        <div class="persona-meta">
-          <span class="persona-role">Operations Director</span>
-          <span class="persona-pain">Process & institutional knowledge</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> Extracts operational knowledge from your team's heads and encodes it as a traversable graph — processes, dependencies, exception paths, and decision rules. When someone leaves, the knowledge stays.</div>
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1FA7A;</span>
+        <h4>Medical Devices</h4>
+        <p>510(k) clearances, predicate device mapping, regulatory velocity</p>
       </div>
-
-      <div class="persona-card">
-        <div class="persona-quote">"I can see the market is moving, but I can't map the relationships fast enough. By the time I have a picture, it's already changed."</div>
-        <div class="persona-meta">
-          <span class="persona-role">Founder / CEO</span>
-          <span class="persona-pain">Competitive intelligence</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> Built a real-time strategic intelligence briefing — 4 parallel web searches, 14 entities, 16 relationships, embedded visualizations — in a single session. The graph compresses an analyst team's output into one terminal run.</div>
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1F916;</span>
+        <h4>Artificial Intelligence</h4>
+        <p>Funding rounds, acqui-hire signals, investor overlap, consolidation thesis</p>
       </div>
-
-      <div class="persona-card">
-        <div class="persona-quote">"We have 50 target accounts across 3 verticals, but our go-to-market is a spreadsheet with names and guesses."</div>
-        <div class="persona-meta">
-          <span class="persona-role">Account Manager</span>
-          <span class="persona-pain">Go-to-market strategy</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> Transformed a flat prospect list into a tiered account intelligence system with per-account strategy briefs, talking points, competitive positioning, and event-driven timing windows. The spreadsheet became a playbook.</div>
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1F6E1;&#xFE0F;</span>
+        <h4>Defense &amp; National Security</h4>
+        <p>DARPA contracts, prime contractor supply chains, OTA awards</p>
       </div>
-
-      <div class="persona-card">
-        <div class="persona-quote">"Every AI demo looks the same — they paste my data in and show me a chatbot. Where's the actual intelligence?"</div>
-        <div class="persona-meta">
-          <span class="persona-role">Technology Buyer</span>
-          <span class="persona-pain">AI ROI skepticism</span>
-        </div>
-        <div class="persona-answer"><strong>Graphify.md:</strong> We don't build chatbots. We build the knowledge layer underneath — structured domain graphs that make ANY AI tool reason with your specific context. The model is commodity. The graph is the product.</div>
+      <div class="vertical-card live">
+        <span class="v-icon">&#x1F512;</span>
+        <h4>Cybersecurity</h4>
+        <p>Venture rounds, CVE-linked patent filings, federal agency spend</p>
       </div>
-
+      <div class="vertical-card">
+        <span class="v-icon">&#x1F3DB;&#xFE0F;</span>
+        <h4>Federal Contracting</h4>
+        <p>Agency spend by category, incumbent contractors, set-aside patterns</p>
+      </div>
+      <div class="vertical-card">
+        <span class="v-icon">&#x26A1;</span>
+        <h4>Energy &amp; CleanTech</h4>
+        <p>DOE grants, patent filings, FERC regulatory signals, VC activity</p>
+      </div>
+      <div class="vertical-card">
+        <span class="v-icon">&#x1F4B3;</span>
+        <h4>Fintech &amp; Capital Markets</h4>
+        <p>SEC filings, banking charter activity, payment rail patent landscape</p>
+      </div>
+      <div class="vertical-card">
+        <span class="v-icon">&#x1F3E5;</span>
+        <h4>Healthcare Systems</h4>
+        <p>Hospital M&amp;A, NIH funding flows, payer contract landscape</p>
+      </div>
+      <div class="vertical-card">
+        <span class="v-icon">&#x2696;&#xFE0F;</span>
+        <h4>Legal Tech &amp; IP</h4>
+        <p>Patent assignment velocity, law firm M&amp;A, USPTO examiner patterns</p>
+      </div>
+      <div class="vertical-card">
+        <span class="v-icon">&#x1F3ED;</span>
+        <h4>Advanced Manufacturing</h4>
+        <p>DoD production contracts, supply chain patent filings, reshoring signals</p>
+      </div>
+      <div class="vertical-card live" style="border-color: rgba(59,130,246,0.35); position:relative;">
+        <span style="position:absolute;top:10px;right:10px;font-size:0.55rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:var(--blue);padding:2px 6px;border-radius:4px;">Cross-Signal</span>
+        <span class="v-icon">&#x1F1FA;&#x1F1F8;</span>
+        <h4>Congressional Intelligence</h4>
+        <p>STOCK Act trade disclosures mapped to committee jurisdiction — Armed Services, HELP, Senate Finance, Commerce. Trades linked to legislation timelines across all verticals.</p>
+      </div>
     </div>
+
+    <p style="text-align:center; color:var(--text-dim); font-size:0.82rem; margin-top:4px;">
+      <span style="color:var(--green); font-weight:700;">LIVE</span> = CKG files in production pipeline today &nbsp;&middot;&nbsp;
+      <span style="color:var(--blue); font-weight:700;">Cross-Signal</span> = data layer embedded across multiple vertical CKGs &nbsp;&middot;&nbsp; All others shipping Q2 2026
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GEO -->
+<section id="geo">
+  <div class="container">
+    <span class="section-label">GEO &gt; SEO</span>
+    <h2>AI answers are the new search results.<br>Structure is how you appear in them.</h2>
+
+    <p style="text-align:center; color:var(--text-dim); max-width:680px; margin:0 auto 48px; font-size:1rem; line-height:1.7;">
+      Andreessen Horowitz called it: Generative Engine Optimization replaces Search Engine Optimization. The companies that build structured entity presence now will own AI distribution in 2027. Graphify.md is the infrastructure that makes that thesis executable.
+    </p>
+
+    <div class="geo-split">
+      <div class="geo-col old">
+        <span class="geo-era">SEO Era — Getting Ranked</span>
+        <h3>Structured HTML wins on Google</h3>
+        <ul class="geo-list">
+          <li><span class="geo-dot"></span>Optimize meta tags and schema markup for crawlers</li>
+          <li><span class="geo-dot"></span>Build backlinks to signal authority to PageRank</li>
+          <li><span class="geo-dot"></span>Keyword density determines relevance score</li>
+          <li><span class="geo-dot"></span>Results are 10 blue links on a results page</li>
+          <li><span class="geo-dot"></span>Winning = appearing on page 1</li>
+        </ul>
+      </div>
+      <div class="geo-col new">
+        <span class="geo-era">GEO Era — Getting Cited</span>
+        <h3>Structured entity graphs win in AI</h3>
+        <ul class="geo-list">
+          <li><span class="geo-dot"></span>Named entities and declared relationships signal authority to LLMs</li>
+          <li><span class="geo-dot"></span>Repeated structured co-occurrence builds citation weight</li>
+          <li><span class="geo-dot"></span>Relationship density determines retrieval relevance</li>
+          <li><span class="geo-dot"></span>Results are direct citations inside AI answers</li>
+          <li><span class="geo-dot"></span>Winning = being the answer, not the ad</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:1.05rem; color:var(--text); max-width:700px; margin:0 auto; line-height:1.75;">
+      Companies in Graphify.md's Knowledge Graph files get cited inside LLM responses. AI operators get 10x cheaper context. <strong style="color:#fff;">Same file. Double-sided market.</strong>
+    </p>
   </div>
 </section>
 
@@ -1310,47 +1615,57 @@
 <!-- What's In It For Me -->
 <section id="value">
   <div class="container">
-    <span class="section-label">What's In It For You</span>
-    <h2>What changes when your AI actually knows your business.</h2>
+    <span class="section-label">Double-Sided Market</span>
+    <h2>Two buyers. One file. Both win.</h2>
+    <p style="text-align:center;color:var(--text-dim);max-width:660px;margin:0 auto 48px;font-size:1rem;line-height:1.7;">The same Compressed Knowledge Graph file that saves an AI operator $130K/year in token costs is the same file that gets a company cited inside every LLM response in their vertical. Same product. Two revenue streams.</p>
 
-    <div class="value-grid">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
 
-      <div class="value-card">
-        <div class="value-icon" style="background: var(--green-dim); color: var(--green);">&#x21E7;</div>
-        <h3>93% Token Compression</h3>
-        <p>Same intelligence in 93% fewer tokens. Your AI costs drop. Your accuracy rises. Every entity and relationship earns its place — or gets cut.</p>
+      <div style="background:var(--bg-card);border:1px solid rgba(34,197,94,0.25);border-radius:14px;padding:36px;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:16px;">Buyer 1 — AI Operators</div>
+        <h3 style="font-size:1.3rem;margin-bottom:12px;color:var(--text-bright);">Pay for token savings</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.65;margin-bottom:24px;">Data science teams, AI builders, and research ops teams currently burning $146K/year on raw document ingestion. The CKG subscription pays for itself before accuracy improvements even enter the conversation.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--green);font-weight:700;flex-shrink:0;">10x</span> fewer tokens per query
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--green);font-weight:700;flex-shrink:0;">Weekly</span> delivery — new filings, news, patents automatically processed
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--green);font-weight:700;flex-shrink:0;">Drop-in</span> to Claude, GPT, Cursor, any LLM workflow via MCP
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--green);font-weight:700;flex-shrink:0;">Zero</span> data acquisition cost — public sources only
+          </div>
+        </div>
       </div>
 
-      <div class="value-card">
-        <div class="value-icon" style="background: var(--blue-dim); color: var(--blue);">&#x27F3;</div>
-        <h3>Compounding Knowledge</h3>
-        <p>Every session builds on the last. The graph remembers. New insights layer on existing ones. Month 6 is dramatically smarter than month 1.</p>
+      <div style="background:var(--bg-card);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:36px;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Buyer 2 — Companies</div>
+        <h3 style="font-size:1.3rem;margin-bottom:12px;color:var(--text-bright);">Pay for GEO placement</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.65;margin-bottom:24px;">Companies pay to have their entity — products, pipeline, contracts, IP — accurately structured inside the vertical CKG file. That structured presence is what gets cited when an LLM answers a question about your market.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--blue);font-weight:700;flex-shrink:0;">Cited</span> inside AI answers — not ranked on a results page
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--blue);font-weight:700;flex-shrink:0;">Structured</span> entity presence across 17 verticals
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--blue);font-weight:700;flex-shrink:0;">Updated</span> weekly — new filings, approvals, and contracts reflected
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.88rem;color:var(--text);">
+            <span style="color:var(--blue);font-weight:700;flex-shrink:0;">GEO</span> over SEO — be the answer, not the ad
+          </div>
+        </div>
       </div>
 
-      <div class="value-card">
-        <div class="value-icon" style="background: rgba(155,123,247,0.12); color: #9b7bf7;">&#x2B21;</div>
-        <h3>Model Agnostic</h3>
-        <p>Your knowledge graph works across Claude, GPT, Gemini, Llama — any model. You're not locked to a vendor. You own the intelligence layer.</p>
-      </div>
+    </div>
 
-      <div class="value-card">
-        <div class="value-icon" style="background: rgba(245,158,11,0.12); color: #f59e0b;">&#x23F1;</div>
-        <h3>Hours Back in Your Week</h3>
-        <p>Research that took 2 days takes 20 minutes. Territory analysis, competitive briefs, account strategies — delivered in a single session, not a sprint.</p>
-      </div>
-
-      <div class="value-card">
-        <div class="value-icon" style="background: var(--red-dim); color: var(--red);">&#x2717;</div>
-        <h3>Kill the Hallucination</h3>
-        <p>Graphs constrain the LLM to YOUR facts, relationships, and rules. Every answer traces back through the graph — node by node. No more guessing.</p>
-      </div>
-
-      <div class="value-card">
-        <div class="value-icon" style="background: var(--green-dim); color: var(--green);">&#x1F4CE;</div>
-        <h3>Portable Intelligence</h3>
-        <p>Your graph exports as markdown. Load it into any AI tool, any model, any team member's workflow. The business owns the context — forever.</p>
-      </div>
-
+    <div style="background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(34,197,94,0.06));border:1px solid var(--border);border-radius:12px;padding:28px 32px;text-align:center;">
+      <p style="font-size:1.05rem;color:var(--text-bright);font-weight:600;margin-bottom:6px;">Same file. Double-sided market. The data infrastructure and the distribution infrastructure are the same product.</p>
+      <p style="font-size:0.88rem;color:var(--text-dim);">Every new subscriber increases file value. Every new vertical increases subscription breadth. Every GEO placement funds coverage depth. It compounds.</p>
     </div>
   </div>
 </section>
@@ -1360,9 +1675,9 @@
 <!-- Case Studies -->
 <section id="case-studies">
   <div class="container">
-    <span class="section-label">Case Studies</span>
-    <h2>Real graphs. Real results. Real businesses.</h2>
-    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">3.1 million lines of code across 9 industry verticals — every case study below was built with knowledge graph methodology and context architecture.</p>
+    <span class="section-label">Methodology in Production</span>
+    <h2>The pipeline is live. Here's what it produces.</h2>
+    <p style="color: var(--text-dim); max-width: 680px; margin: 0 auto 20px; text-align: center; font-size: 0.95rem;">Every output below was built using the same Compressed Knowledge Graph methodology — public data structured into LLM-native .md files. This is the proof that the format works before the subscription product scales.</p>
 
     <div class="case-grid">
 
@@ -1556,6 +1871,60 @@
       <a href="https://calendly.com/daniel-yarmoluk/30min" class="btn btn-primary glow">Book a Free Demo</a>
     </div>
     <p class="cta-email"><a href="mailto:daniel.yarmoluk@gmail.com">daniel.yarmoluk@gmail.com</a> · <a href="https://calendly.com/daniel-yarmoluk/30min">Schedule directly</a></p>
+  </div>
+</section>
+
+<!-- Resources -->
+<section id="resources" style="padding: 80px 0; border-top: 1px solid var(--border);">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 48px;">
+      <div style="font-size:0.7rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue); margin-bottom:12px;">Resources</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.2rem); font-weight:800; color:var(--text-bright); margin-bottom:16px;">Pitch Deck. Thesis. Intelligence Files.</h2>
+      <p style="color:var(--text-dim); max-width:560px; margin:0 auto; font-size:0.95rem;">Everything you need to understand the market opportunity, the format, and the product — in one place.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; max-width:900px; margin:0 auto;">
+
+      <a href="graphify-pitch-deck.html" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--bg-card-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-card)'">
+        <div style="font-size:1.6rem; margin-bottom:12px;">📊</div>
+        <div style="font-size:0.65rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:8px;">Investor Deck</div>
+        <div style="font-size:1rem; font-weight:700; color:var(--text-bright); margin-bottom:8px;">Pitch Deck (PDF)</div>
+        <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">8-page investor deck — token economics, business model, verticals, traction. Print-ready PDF.</div>
+        <div style="margin-top:16px; font-size:0.75rem; font-weight:700; color:var(--blue);">Open & Download PDF →</div>
+      </a>
+
+      <a href="intelligence-thesis.html" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--bg-card-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-card)'">
+        <div style="font-size:1.6rem; margin-bottom:12px;">📄</div>
+        <div style="font-size:0.65rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:8px;">Founding Thesis</div>
+        <div style="font-size:1rem; font-weight:700; color:var(--text-bright); margin-bottom:8px;">The Intelligence Infrastructure Thesis</div>
+        <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Why GEO replaces SEO, why token economics matter, and why Knowledge Graphs beat RAG.</div>
+        <div style="margin-top:16px; font-size:0.75rem; font-weight:700; color:var(--blue);">Read Thesis →</div>
+      </a>
+
+      <a href="jensen-post.html" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--bg-card-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-card)'">
+        <div style="font-size:1.6rem; margin-bottom:12px;">⚡</div>
+        <div style="font-size:0.65rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:8px;">Analysis</div>
+        <div style="font-size:1rem; font-weight:700; color:var(--text-bright); margin-bottom:8px;">Jensen Is Wrong. Andreessen Is Right.</div>
+        <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Token economics, the fidelity gap, and why structure always wins over scale.</div>
+        <div style="margin-top:16px; font-size:0.75rem; font-weight:700; color:var(--blue);">Read Post →</div>
+      </a>
+
+      <a href="what-is-md.html" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--bg-card-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-card)'">
+        <div style="font-size:1.6rem; margin-bottom:12px;">📁</div>
+        <div style="font-size:0.65rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:8px;">Format Guide</div>
+        <div style="font-size:1rem; font-weight:700; color:var(--text-bright); margin-bottom:8px;">What Is a .md Intelligence File?</div>
+        <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Why Markdown is the native format for LLM reasoning — structure, tokens, and retrieval.</div>
+        <div style="margin-top:16px; font-size:0.75rem; font-weight:700; color:var(--blue);">Learn More →</div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center; margin-top:40px; padding:24px; background:var(--bg-card); border:1px solid rgba(59,130,246,0.2); border-radius:12px; max-width:560px; margin-left:auto; margin-right:auto; margin-top:32px;">
+      <div style="font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin-bottom:10px;">Sample CKG File</div>
+      <div style="font-size:0.9rem; color:var(--text-dim); margin-bottom:16px;">Request a live Compressed Knowledge Graph file for your vertical. See the format before you subscribe.</div>
+      <a href="mailto:daniel.yarmoluk@gmail.com?subject=Sample CKG File Request&body=Hi Daniel, I'd like to see a sample CKG file for the following vertical: " style="display:inline-block; background:var(--blue); color:#fff; font-weight:700; font-size:0.85rem; padding:10px 24px; border-radius:8px; text-decoration:none;">Request a Sample File →</a>
+    </div>
+
   </div>
 </section>
 

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphify.md — Investor Pitch Deck</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090f;
+    --bg-card: #12121a;
+    --bg-card2: #1a1a26;
+    --border: #1e1e30;
+    --text: #c8cdd8;
+    --text-dim: #6b7280;
+    --text-bright: #ffffff;
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.1);
+    --blue-mid: rgba(59,130,246,0.18);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.1);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.08);
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: #1a1a2e;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* =====================
+     PAGE SYSTEM
+  ===================== */
+  .page {
+    width: 816px;
+    min-height: 1056px;
+    margin: 0 auto 32px;
+    background: var(--bg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Subtle grid overlay on every page */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-inner {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Page number */
+  .page-num {
+    position: absolute;
+    bottom: 28px;
+    right: 40px;
+    font-size: 10px;
+    color: #2a2a3e;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    z-index: 2;
+  }
+
+  /* Accent bar top */
+  .accent-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), rgba(59,130,246,0.2), transparent);
+  }
+
+  /* =====================
+     TYPOGRAPHY
+  ===================== */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .eyebrow.green { color: var(--green); }
+  .eyebrow.dim { color: var(--text-dim); }
+
+  h1 { font-size: 52px; font-weight: 800; color: var(--text-bright); letter-spacing: -0.04em; line-height: 1.05; }
+  h1 .blue { color: var(--blue); }
+  h2 { font-size: 32px; font-weight: 800; color: var(--text-bright); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 10px; }
+  h2 .blue { color: var(--blue); }
+  h3 { font-size: 16px; font-weight: 700; color: var(--text-bright); letter-spacing: -0.01em; margin-bottom: 6px; }
+  p { font-size: 13.5px; color: var(--text); line-height: 1.7; }
+  p.lead { font-size: 16px; color: #a0a8b8; line-height: 1.65; }
+
+  /* =====================
+     LAYOUT UTILITIES
+  ===================== */
+  .pad { padding: 56px 60px; }
+  .pad-sm { padding: 40px 60px; }
+  .pad-top { padding: 48px 60px 0; }
+
+  .row { display: flex; gap: 20px; }
+  .col { flex: 1; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  /* =====================
+     CARDS
+  ===================== */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+  .card.blue-border { border-color: rgba(59,130,246,0.3); }
+  .card.green-border { border-color: rgba(34,197,94,0.25); }
+  .card.red-border { border-color: rgba(239,68,68,0.2); }
+
+  /* =====================
+     STAT BOXES
+  ===================== */
+  .stat { text-align: center; }
+  .stat .num {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--blue);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .stat .num.green { color: var(--green); }
+  .stat .num.white { color: var(--text-bright); }
+  .stat .label { font-size: 11px; color: var(--text-dim); line-height: 1.45; font-weight: 500; }
+
+  /* =====================
+     DIVIDER
+  ===================== */
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 24px 0;
+  }
+
+  /* =====================
+     TAG / PILL
+  ===================== */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .tag.blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+  .tag.green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+  .tag.red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.15); }
+  .tag.live { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+
+  /* =====================
+     BULLET LIST
+  ===================== */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue); margin-top: 5px; flex-shrink: 0;
+  }
+  .bullet-list li .dot.green { background: var(--green); }
+
+  /* =====================
+     COMPARISON
+  ===================== */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .compare-col { padding: 20px 22px; }
+  .compare-col.bad { border-right: 1px solid var(--border); background: rgba(239,68,68,0.04); }
+  .compare-col.good { border-left: 1px solid var(--border); background: rgba(34,197,94,0.04); }
+  .compare-head { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; display: block; }
+  .compare-col.bad .compare-head { color: var(--red); }
+  .compare-col.good .compare-head { color: var(--green); }
+  .compare-num { font-size: 30px; font-weight: 900; letter-spacing: -0.03em; display: block; margin-bottom: 4px; }
+  .compare-col.bad .compare-num { color: var(--red); }
+  .compare-col.good .compare-num { color: var(--green); }
+  .compare-sub { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; }
+  .compare-arrow { display: flex; align-items: center; justify-content: center; padding: 0 14px; font-size: 20px; color: var(--blue); background: var(--bg-card); }
+
+  /* =====================
+     FOOTER BAR (per page)
+  ===================== */
+  .page-footer {
+    padding: 16px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+  .page-footer .brand { font-size: 12px; font-weight: 700; color: #3a3a50; letter-spacing: -0.01em; }
+  .page-footer .brand span { color: var(--blue); }
+  .page-footer .pg { font-size: 10px; color: #2a2a3e; font-weight: 600; letter-spacing: 0.08em; }
+
+  /* =====================
+     VERTICAL CHIP
+  ===================== */
+  .v-chip {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 11px 14px;
+    font-size: 11.5px;
+    color: var(--text);
+    font-weight: 500;
+    position: relative;
+  }
+  .v-chip.live { border-color: rgba(34,197,94,0.25); }
+  .v-chip.live::after {
+    content: 'LIVE';
+    position: absolute; top: 7px; right: 9px;
+    font-size: 7.5px; font-weight: 800; letter-spacing: 0.1em;
+    color: var(--green);
+  }
+  .v-chip .v-name { font-weight: 700; color: var(--text-bright); margin-bottom: 2px; font-size: 12px; }
+
+  /* =====================
+     SOURCE CARD
+  ===================== */
+  .source-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .source-item:last-child { border-bottom: none; }
+  .source-icon-wrap {
+    width: 36px; height: 36px;
+    background: var(--blue-dim);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .source-body h4 { font-size: 12.5px; font-weight: 700; color: var(--text-bright); margin-bottom: 2px; }
+  .source-body p { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; }
+  .source-cadence { font-size: 10px; font-weight: 700; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; display: block; }
+
+  /* =====================
+     PRINT STYLES
+  ===================== */
+  @media print {
+    body { background: #09090f !important; }
+    .page { margin: 0 !important; page-break-after: always; width: 100% !important; min-height: 100vh; }
+    .page:last-child { page-break-after: avoid; }
+    .print-bar { display: none !important; }
+  }
+
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+
+  .print-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9999;
+    background: rgba(9,9,15,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e1e30;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .print-bar .pb-brand {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .print-bar .pb-brand span { color: #3b82f6; }
+  .print-bar .pb-right { display: flex; align-items: center; gap: 12px; }
+  .print-bar .pb-hint {
+    font-size: 11px;
+    color: #6b7280;
+  }
+  .print-bar .pb-btn {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .print-bar .pb-btn:hover { background: #2563eb; }
+  .print-bar .pb-back {
+    font-size: 12px;
+    color: #6b7280;
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid #1e1e30;
+    border-radius: 7px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .print-bar .pb-back:hover { color: #fff; border-color: #3b82f6; }
+
+  body { padding-top: 56px; }
+</style>
+</head>
+<body>
+
+<!-- Print bar -->
+<div class="print-bar">
+  <div class="pb-brand">Graphify<span>.md</span> &nbsp;·&nbsp; <span style="color:#6b7280;font-weight:500;font-size:13px;">Investor Pitch Deck 2026</span></div>
+  <div class="pb-right">
+    <span class="pb-hint">Set destination to "Save as PDF" · enable Background graphics</span>
+    <a href="index.html" class="pb-back">← Back to Site</a>
+    <button class="pb-btn" onclick="window.print()">
+      ↓ &nbsp;Download PDF
+    </button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 1: COVER ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+
+    <!-- Top nav strip -->
+    <div style="padding:28px 60px 0;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:18px;font-weight:800;color:var(--text-bright);letter-spacing:-0.02em;">
+        Graphify<span style="color:var(--blue);">.md</span>
+      </div>
+      <div style="font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;">Investor Pitch · 2026</div>
+    </div>
+
+    <!-- Cover content -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 60px;">
+
+      <span class="eyebrow" style="margin-bottom:20px;">Market Intelligence Infrastructure</span>
+
+      <h1 style="margin-bottom:28px;">The Context<br>Layer<span class="blue">.</span></h1>
+
+      <p class="lead" style="max-width:520px;margin-bottom:48px;">
+        LLM-ready market intelligence from public data — structured Knowledge Graph files by vertical, delivered weekly. <strong style="color:#fff;">10x fewer tokens. Zero data cost. Double-sided market.</strong>
+      </p>
+
+      <!-- Three hero stats -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:560px;margin-bottom:48px;">
+        <div class="card" style="text-align:center;padding:20px 16px;">
+          <span style="font-size:28px;font-weight:900;color:var(--blue);display:block;letter-spacing:-0.03em;">10x</span>
+          <span style="font-size:10.5px;color:var(--text-dim);">token cost reduction</span>
+        </div>
+        <div class="card" style="text-align:center;padding:20px 16px;">
+          <span style="font-size:28px;font-weight:900;color:var(--green);display:block;letter-spacing:-0.03em;">$0</span>
+          <span style="font-size:10.5px;color:var(--text-dim);">data acquisition cost</span>
+        </div>
+        <div class="card" style="text-align:center;padding:20px 16px;">
+          <span style="font-size:28px;font-weight:900;color:var(--text-bright);display:block;letter-spacing:-0.03em;">18</span>
+          <span style="font-size:10.5px;color:var(--text-dim);">verticals + cross-signals</span>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div style="display:flex;gap:32px;align-items:center;">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-bright);">Daniel Yarmoluk</div>
+          <div style="font-size:11.5px;color:var(--text-dim);">Founder &amp; CEO · Graphify.md</div>
+        </div>
+        <div style="width:1px;height:32px;background:var(--border);"></div>
+        <div style="font-size:11.5px;color:var(--text-dim);">
+          daniel.yarmoluk@gmail.com &nbsp;·&nbsp; graphifymd.com
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">1 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 2: THE PROBLEM ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">The Problem</span>
+      <h2>AI operators are paying a<br><span class="blue">$146K token tax</span> — every year.</h2>
+      <p class="lead" style="margin:16px 0 28px;max-width:580px;">The way enterprises feed data into LLMs today is broken. Raw PDFs, unstructured filings, and verbose documents flood context windows with noise. You pay for every token — including the 90% that don't help your model reason.</p>
+
+      <!-- Token math comparison -->
+      <div class="compare-row">
+        <div class="compare-col bad">
+          <span class="compare-head">Raw Document Ingestion</span>
+          <span class="compare-num">6,000</span>
+          <span class="compare-sub">tokens per SEC Form D filing<br>~90% boilerplate &amp; legal language<br>$146K+/year at scale</span>
+        </div>
+        <div class="compare-arrow">→</div>
+        <div class="compare-col good">
+          <span class="compare-head">Graphify.md CKG File</span>
+          <span class="compare-num" style="color:var(--green);">400</span>
+          <span class="compare-sub">tokens — same filing<br>100% signal, zero noise<br>Same intelligence. 10x cheaper.</span>
+        </div>
+      </div>
+
+      <!-- Supporting stats -->
+      <div class="grid-3" style="margin-top:20px;">
+        <div class="card" style="text-align:center;padding:18px 12px;">
+          <span class="num" style="font-size:26px;font-weight:900;color:var(--red);display:block;margin-bottom:4px;">93%</span>
+          <span style="font-size:11px;color:var(--text-dim);">token waste in raw document ingestion</span>
+        </div>
+        <div class="card" style="text-align:center;padding:18px 12px;">
+          <span class="num" style="font-size:26px;font-weight:900;color:var(--blue);display:block;margin-bottom:4px;">$146K</span>
+          <span style="font-size:11px;color:var(--text-dim);">avg annual token spend per enterprise AI team</span>
+        </div>
+        <div class="card" style="text-align:center;padding:18px 12px;">
+          <span class="num" style="font-size:26px;font-weight:900;color:var(--text-bright);display:block;margin-bottom:4px;">170x</span>
+          <span style="font-size:11px;color:var(--text-dim);">more reasoning paths from structured vs. raw context</span>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+      <p style="font-size:12.5px;color:var(--text-dim);font-style:italic;">"Cheap tokens don't fix bad data. They just make it cheaper to be wrong at scale." — Graphify.md founding thesis</p>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">2 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 3: THE SOLUTION ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">The Solution</span>
+      <h2>Compressed Knowledge Graph files.<br><span class="blue">LLM-native. Zero data cost.</span></h2>
+      <p class="lead" style="margin:16px 0 28px;max-width:580px;">Graphify.md pulls from six free public sources, extracts signal, declares relationships explicitly, and compresses everything into structured .md files — the format LLMs were designed to reason on.</p>
+
+      <!-- 6 sources — 2 columns -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-bottom:4px;">
+        <div>
+          <div class="source-item">
+            <div class="source-icon-wrap">&#x1F4DC;</div>
+            <div class="source-body">
+              <h4>SEC EDGAR Form D</h4>
+              <p>Every private capital raise in the US, filed within 15 days of close.</p>
+              <span class="source-cadence">Updated daily</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-icon-wrap">&#x1F310;</div>
+            <div class="source-body">
+              <h4>GDELT Global News</h4>
+              <p>65 languages. Events, actors, and sentiment at the article level.</p>
+              <span class="source-cadence">Every 15 minutes</span>
+            </div>
+          </div>
+          <div class="source-item" style="border-bottom:none;">
+            <div class="source-icon-wrap">&#x2696;&#xFE0F;</div>
+            <div class="source-body">
+              <h4>USPTO Patent Assignments</h4>
+              <p>IP acquisition signals that predate press releases by months.</p>
+              <span class="source-cadence">Updated weekly</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="source-item">
+            <div class="source-icon-wrap">&#x1F3DB;</div>
+            <div class="source-body">
+              <h4>USASpending.gov</h4>
+              <p>Every federal contract and grant — DoD, NIH, DoE. Contractor, amount, agency.</p>
+              <span class="source-cadence">Updated daily</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-icon-wrap">&#x1F48A;</div>
+            <div class="source-body">
+              <h4>openFDA</h4>
+              <p>Drug approvals, device clearances, adverse events, and recalls.</p>
+              <span class="source-cadence">Updated daily</span>
+            </div>
+          </div>
+          <div class="source-item" style="border-bottom:none;border-left:1px solid rgba(59,130,246,0.25);padding-left:12px;">
+            <div class="source-icon-wrap" style="background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.3);">&#x1F1FA;&#x1F1F8;</div>
+            <div class="source-body">
+              <h4 style="color:var(--blue);">Congress PTR <span style="font-size:8px;font-weight:800;letter-spacing:0.08em;color:var(--blue);background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);padding:1px 5px;border-radius:3px;">NEW</span></h4>
+              <p>STOCK Act trade disclosures — committee members, stock positions, legislation timelines. <strong style="color:var(--text);">Cross-signal across all regulated verticals.</strong></p>
+              <span class="source-cadence">Within 45 days of trade</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card blue-border" style="margin-top:14px;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--text);font-weight:500;">No data licensing. No scraping. No legal review. Six public sources.</span>
+        <span style="font-size:13px;font-weight:800;color:var(--green);">$0 data acquisition cost.</span>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">3 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 4: BUSINESS MODEL ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">Business Model</span>
+      <h2>Two buyers. One file.<br><span class="blue">Both compounding.</span></h2>
+      <p class="lead" style="margin:16px 0 28px;max-width:580px;">The same CKG file that saves an AI operator $130K/year in token costs is the same file that gets a company cited inside every LLM response in their vertical.</p>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+
+        <div class="card green-border" style="padding:28px;">
+          <span class="tag green" style="margin-bottom:14px;">Buyer 1 — AI Operators</span>
+          <h3 style="font-size:17px;margin-bottom:10px;">Pay for token savings</h3>
+          <p style="font-size:12.5px;margin-bottom:18px;">Data science teams, AI builders, and research ops paying $146K/year on raw document ingestion. Subscription pays for itself on token savings alone.</p>
+          <ul class="bullet-list">
+            <li><span class="dot green"></span>10x fewer tokens per query</li>
+            <li><span class="dot green"></span>Weekly delivery — new filings auto-processed</li>
+            <li><span class="dot green"></span>Drop into Claude, GPT, Cursor via MCP</li>
+            <li><span class="dot green"></span>Model-agnostic — vendor-independent</li>
+          </ul>
+        </div>
+
+        <div class="card blue-border" style="padding:28px;">
+          <span class="tag blue" style="margin-bottom:14px;">Buyer 2 — Companies</span>
+          <h3 style="font-size:17px;margin-bottom:10px;">Pay for GEO placement</h3>
+          <p style="font-size:12.5px;margin-bottom:18px;">Companies pay to have their entity structured inside the vertical CKG file. That presence is what gets cited when an LLM answers a question about their market.</p>
+          <ul class="bullet-list">
+            <li><span class="dot"></span>Cited inside AI answers — not ranked on pages</li>
+            <li><span class="dot"></span>Structured entity presence, 17 verticals</li>
+            <li><span class="dot"></span>Updated weekly as filings and approvals land</li>
+            <li><span class="dot"></span>GEO &gt; SEO — be the answer, not the ad</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="card" style="text-align:center;padding:18px 24px;background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(34,197,94,0.06));border-color:var(--border);">
+        <p style="font-size:13px;color:var(--text-bright);font-weight:600;">The data infrastructure and distribution infrastructure are the same product.<br><span style="color:var(--text-dim);font-weight:400;">Every new subscriber increases file value. Every GEO placement funds coverage depth. It compounds.</span></p>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">4 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 5: VERTICALS ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">Coverage</span>
+      <h2>18 verticals. <span class="blue">7 live today.</span><br>Congressional trades as cross-signal.</h2>
+      <p class="lead" style="margin:16px 0 20px;max-width:580px;">Domain knowledge embedded per vertical. The same six sources produce completely different intelligence per vertical — and Congress PTR data is a cross-signal layer embedded inside every regulated vertical CKG.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+        <div class="v-chip live"><div class="v-name">Life Sciences</div>Clinical funding, FDA pipeline</div>
+        <div class="v-chip live"><div class="v-name">Pharmaceuticals</div>Approvals, patent expirations</div>
+        <div class="v-chip live"><div class="v-name">Medical Devices</div>510(k) clearances, predicates</div>
+        <div class="v-chip live"><div class="v-name">Artificial Intelligence</div>Funding, acqui-hire signals</div>
+        <div class="v-chip live"><div class="v-name">Defense &amp; Security</div>DARPA, OTA, prime contractors</div>
+        <div class="v-chip live"><div class="v-name">Cybersecurity</div>VC rounds, federal agency spend</div>
+        <div class="v-chip live" style="border-color:rgba(59,130,246,0.4);background:rgba(59,130,246,0.06);"><div class="v-name" style="color:var(--blue);">Congressional Intel ★</div>STOCK Act PTRs, committee trades</div>
+        <div class="v-chip"><div class="v-name">Federal Contracting</div>Agency spend, set-asides</div>
+        <div class="v-chip"><div class="v-name">Energy &amp; CleanTech</div>DOE grants, patent filings</div>
+        <div class="v-chip"><div class="v-name">Fintech</div>SEC filings, charter activity</div>
+        <div class="v-chip"><div class="v-name">Healthcare Systems</div>Hospital M&amp;A, NIH flows</div>
+        <div class="v-chip"><div class="v-name">Legal Tech &amp; IP</div>Patent velocity, law firm M&amp;A</div>
+      </div>
+
+      <div style="padding:10px 14px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:12px;">
+        <strong style="color:var(--blue);">★ Cross-Signal:</strong> Congressional Intelligence isn't just its own vertical — committee member trades are embedded as leading indicators inside Defense, Pharma, AI, Medical Devices, and Cybersecurity CKGs. Armed Services buys Palantir before NDAA → shows up in Defense. HELP Committee sells Pfizer before pricing hearing → shows up in Pharma.
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="grid-3">
+        <div style="text-align:center;">
+          <span style="font-size:26px;font-weight:900;color:var(--green);display:block;margin-bottom:4px;">7</span>
+          <span style="font-size:11px;color:var(--text-dim);">CKG files in production today</span>
+        </div>
+        <div style="text-align:center;">
+          <span style="font-size:26px;font-weight:900;color:var(--blue);display:block;margin-bottom:4px;">18</span>
+          <span style="font-size:11px;color:var(--text-dim);">verticals in pipeline</span>
+        </div>
+        <div style="text-align:center;">
+          <span style="font-size:26px;font-weight:900;color:var(--text-bright);display:block;margin-bottom:4px;">6</span>
+          <span style="font-size:11px;color:var(--text-dim);">free public sources, zero licensing</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">5 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 6: TRACTION ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">Traction</span>
+      <h2>Pipeline live. Methodology<br><span class="blue">validated in production.</span></h2>
+      <p class="lead" style="margin:16px 0 28px;max-width:580px;">Built by a solo founder in 50 days. Not a concept — a working pipeline generating intelligence files across 18 verticals from six public data sources at zero data cost. Congressional trading intelligence now live as a cross-signal layer.</p>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Pipeline Stats</div>
+          <ul class="bullet-list">
+            <li><span class="dot green"></span>7 CKG files in production across 18 verticals</li>
+            <li><span class="dot green"></span>3.1M lines of code shipped in 50 days</li>
+            <li><span class="dot green"></span>400M+ tokens processed — one Mac Mini, no cloud cluster</li>
+            <li><span class="dot green"></span>93% context compression vs raw document ingestion</li>
+            <li><span class="dot green"></span>Weekly automated update cadence across all 6 sources</li>
+            <li><span class="dot green"></span>Congress PTR cross-signal live in Defense, Pharma, AI CKGs</li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Methodology Validation</div>
+          <ul class="bullet-list">
+            <li><span class="dot"></span>Agentic AI market map — $20.8B capital mapped, 92 companies, 10 categories</li>
+            <li><span class="dot"></span>Healthcare network KG — 40,000+ employee organization mapped</li>
+            <li><span class="dot"></span>Multi-vertical GTM system — 50+ accounts, per-account strategy briefs</li>
+            <li><span class="dot"></span>Investor intelligence model — PropCo/OpCo deal structured from raw data</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="grid-3">
+        <div class="card" style="text-align:center;padding:16px;">
+          <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;">Academic Platform</span>
+          <p style="font-size:12px;color:var(--text);">Graduate faculty, Univ. of St. Thomas — SEIS 666: Generative AI. Direct pipeline to AI practitioners and early adopters.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:16px;">
+          <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;">Enterprise Network</span>
+          <p style="font-size:12px;color:var(--text);">AI enablement lead at Slalom — Fortune 500 buyer relationships across healthcare, financial services, and defense.</p>
+        </div>
+        <div class="card" style="text-align:center;padding:16px;">
+          <span style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;">Format Standard</span>
+          <p style="font-size:12px;color:var(--text);">CKG .md format is live and validated. The moat is curation depth and vertical coverage — not proprietary data.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">6 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 7: TEAM + WHY NOW ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">Team &amp; Why Now</span>
+      <h2>The founder who built it.<br><span class="blue">The thesis that makes it inevitable.</span></h2>
+
+      <div class="grid-2" style="margin:24px 0;">
+
+        <div class="card" style="padding:28px;">
+          <div style="margin-bottom:16px;">
+            <div style="font-size:17px;font-weight:800;color:var(--text-bright);margin-bottom:2px;">Daniel Yarmoluk</div>
+            <div style="font-size:11.5px;color:var(--blue);">Founder &amp; CEO</div>
+          </div>
+          <ul class="bullet-list">
+            <li><span class="dot"></span>Enterprise AI consultant, Slalom — leading AI enablement for Fortune 500 clients across healthcare, finance, and defense</li>
+            <li><span class="dot"></span>Graduate faculty, University of St. Thomas — SEIS 666: Generative AI &amp; The New Software Paradigm</li>
+            <li><span class="dot"></span>Built Graphify.md's working pipeline in a single session — SEC EDGAR + GDELT live at zero data cost</li>
+            <li><span class="dot"></span>Daily practitioner: Claude Code, GPT-4o, agentic pipelines in production</li>
+            <li><span class="dot"></span>Operating at the intersection of enterprise AI adoption and LLM-native product design</li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">Why Now</div>
+
+          <div class="card" style="padding:18px 20px;margin-bottom:12px;border-color:rgba(59,130,246,0.2);">
+            <h3 style="font-size:13px;margin-bottom:6px;">GEO replaces SEO</h3>
+            <p style="font-size:11.5px;">a16z published "GEO over SEO" — Graphify.md is the infrastructure that makes that thesis executable. The market is being named; the product doesn't exist yet.</p>
+          </div>
+
+          <div class="card" style="padding:18px 20px;margin-bottom:12px;border-color:rgba(34,197,94,0.2);">
+            <h3 style="font-size:13px;margin-bottom:6px;">Token economics create urgency</h3>
+            <p style="font-size:11.5px;">Enterprise AI spend is scaling. Every team building on LLMs is paying the token tax today. The savings are immediate and measurable — not a future promise.</p>
+          </div>
+
+          <div class="card" style="padding:18px 20px;border-color:rgba(245,158,11,0.2);">
+            <h3 style="font-size:13px;margin-bottom:6px;">Public data window is open</h3>
+            <p style="font-size:11.5px;">Five free sources cover the entire US economy. This works today. The moat is curation speed and vertical depth — first-mover compounds.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card" style="text-align:center;padding:14px 24px;background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);">
+        <p style="font-size:12.5px;color:var(--text);">Seeking a technical co-founder with data engineering or NLP background. Currently: solo founder, part-time, enterprise credibility + technical execution.</p>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">7 / 8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 8: THE ASK ===================== -->
+<div class="page">
+  <div class="accent-bar"></div>
+  <div class="page-inner">
+    <div class="pad">
+
+      <span class="eyebrow">The Ask</span>
+      <h2>Pre-seed capital to scale<br><span class="blue">what already works.</span></h2>
+      <p class="lead" style="margin:16px 0 28px;max-width:580px;">The pipeline is live. The format standard is set. The moat is curation depth and vertical coverage. Capital accelerates both.</p>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Use of Funds</div>
+          <ul class="bullet-list">
+            <li><span class="dot green"></span><strong style="color:var(--text-bright);">Data engineer hire</strong> — automate pipeline, scale vertical coverage from 6 to 17+</li>
+            <li><span class="dot green"></span><strong style="color:var(--text-bright);">Enterprise pilot</strong> — run first paid subscription with a Fortune 500 AI team</li>
+            <li><span class="dot green"></span><strong style="color:var(--text-bright);">API buildout</strong> — programmatic CKG delivery for developer integrations</li>
+            <li><span class="dot green"></span><strong style="color:var(--text-bright);">GEO product</strong> — build company placement workflow and pricing</li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">Why Graphify.md · Why a16z</div>
+          <ul class="bullet-list">
+            <li><span class="dot"></span>a16z published the GEO thesis — we execute it</li>
+            <li><span class="dot"></span>Infrastructure play, not an app — the context layer every AI workflow runs on top of</li>
+            <li><span class="dot"></span>Token economics justify subscription before intelligence value enters the conversation</li>
+            <li><span class="dot"></span>Bootstrapped to working pipeline — capital compounds, not creates</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- Closing statement -->
+      <div style="text-align:center;padding:20px 0 10px;">
+        <div style="font-size:28px;font-weight:800;color:var(--text-bright);letter-spacing:-0.025em;margin-bottom:10px;">
+          Graphify<span style="color:var(--blue);">.md</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:20px;">LLM-ready market intelligence by vertical. The context layer that makes AI cheaper, more accurate, and more present in the answers that matter.</p>
+        <div style="display:flex;justify-content:center;gap:32px;">
+          <div style="font-size:12px;color:var(--text-dim);">daniel.yarmoluk@gmail.com</div>
+          <div style="font-size:12px;color:var(--blue);">graphifymd.com</div>
+          <div style="font-size:12px;color:var(--text-dim);">Minneapolis, MN</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="page-footer">
+      <div class="brand">Graphify<span>.md</span></div>
+      <div class="pg">8 / 8</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
